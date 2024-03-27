@@ -13,7 +13,9 @@ export default function Filter() {
   return (
     <div className="filter">
       <div className="filter-container">
-        <div className="filter-inner flex gap-[40px] items-center">
+        <div className="filter-inner flex gap-[40px]  items-center">
+
+
           <div className="navigation flex gap-5 items-center">
             <Link to={"/"}>
               <Badge className="px-6 py-3 rounded-[8px] bg-[#00B8A9] text-lg cursor-pointer hover:bg-[#FFFFFF] border border-transparent hover:text-[#00B8A9] hover:border-[#00B8A9]">
@@ -26,6 +28,10 @@ export default function Filter() {
               </Badge>
             </Link>
           </div>
+
+
+
+
           <div className="date-filters">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(filterSubmit)} className="flex gap-5">
