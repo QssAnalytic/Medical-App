@@ -4,12 +4,14 @@ import { Form, FormField, FormItem } from "@/common/components/ui/form";
 import { useForm } from "react-hook-form";
 import { SelectBox } from "./components/select-box";
 import { months, years } from "@/common/static";
+import { Button } from "../ui/button";
+import Count from '../../../../public/icons/count.svg'
+import Price from '../../../../public/icons/price.svg'
+import Patients from '../../../../public/icons/patients.svg'
 
 export default function Filter() {
   const form = useForm();
-
   const filterSubmit = (data: any) => console.log("filter datas", data);
-
   return (
     <div className="filter">
       <div className="filter-container">
@@ -36,35 +38,46 @@ export default function Filter() {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(filterSubmit)} className="flex gap-5">
                 <FormField
-                control={form.control}
+                  control={form.control}
                   name="year"
-                  render={({}) => (
+                  render={({ }) => (
                     <FormItem>
-                      <SelectBox className="" multiple={false} onSelect={()=>{}} name={'Year'} data={years}/>
+                      <SelectBox className="" multiple={false} onSelect={() => { }} name={'Year'} data={years} />
                     </FormItem>
                   )}
                 />
                 <FormField
-                control={form.control}
+                  control={form.control}
                   name="month"
-                  render={({}) => (
+                  render={({ }) => (
                     <FormItem>
-                      <SelectBox className="" multiple={false} onSelect={()=>{}} name={'Month'} data={months}/>
+                      <SelectBox className="" multiple={false} onSelect={() => { }} name={'Month'} data={months} />
                     </FormItem>
                   )}
                 />
                 <FormField
-                control={form.control}
+                  control={form.control}
                   name="day"
-                  render={({}) => (
+                  render={({ }) => (
                     <FormItem>
-                      <SelectBox className="" multiple={false} onSelect={()=>{}} name={'Day'} data={[]}/>
+                      <SelectBox className="" multiple={false} onSelect={() => { }} name={'Day'} data={[]} />
                     </FormItem>
                   )}
                 />
               </form>
             </Form>
           </div>
+
+
+
+          <div className="flex justify-end ml-auto gap-6">
+            <div ><Button variant={"outline"} className="gap-1">Price <span><img width={17} src={Price} alt="" /></span></Button></div>
+            <div><Button variant={"outline"} className="gap-1">Count <span><img width={17} src={Count} alt="" /></span></Button></div>
+            <div><Button variant={"outline"} className="gap-1">Number of patients <span><img width={17} src={Patients} alt="" /></span></Button></div>
+          </div>
+
+
+
         </div>
       </div>
     </div>

@@ -28,7 +28,7 @@ export const years = [
 ];
 
 export const hospitals = [
-  { data: "Baku City Hospital", index: 0 },
+  { data: "Baku City Hospital", index: 0 ,  color:'' },
   { data: "Ege Hospital", index: 1 },
   { data: "Liv Bonadea Hospital", index: 2 },
   { data: "Avrasiya Hospital", index: 3 },
@@ -38,5 +38,18 @@ export const hospitals = [
   { data: "Uniklinika", index: 7 },
   { data: "New Med Hospital", index: 8 },
   { data: "Istanbul NS Hospital", index: 9 },
-  // { data: "2024", index: 10 },
+  { data: "2024", index: 10 },
+];
+
+
+export const services = [
+  { data: "Qanın  klinik analizi", index: 0 },
+  { data: "Vitamin D", index: 1 },
+  { data: "Calcium (Ca)", index: 2 },
+  { data: "Vitamin B12", index: 3 },
+  { data: "ALAT", index: 4 },
+  { data: "ASAT", index: 5 },
+  { data: "Creatinin", index: 6 },
+  { data: "Insulin", index: 7 },
+  { data: "HbA1c", index: 8 },
 ];

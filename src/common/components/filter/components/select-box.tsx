@@ -11,31 +11,26 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
   const [open, setOpen] = useState(false);
   const [selectedValues, setSelectedValues] = useState<TSelectItem[]>([]);
 
-  const handleSelect = (currentValue: string) => {
-    const selectedItem = data.find(item => item.data === currentValue);
-    if (!selectedItem) {
-      return;
-    }
-  
+  const handleSelect = (currentValue: TSelectItem) => {
     if (multiple) {
       setSelectedValues(prevSelected => {
-        const isSelected = prevSelected.some(value => value === selectedItem);
+        const isSelected = prevSelected.includes(currentValue);
         if (isSelected) {
-          return prevSelected.filter(value => value !== selectedItem);
+          return prevSelected.filter(value => value !== currentValue);
         } else {
-          return [...prevSelected, selectedItem];
+          return [...prevSelected, currentValue];
         }
       });
     } else {
-      setSelectedValues([selectedItem]);
+      setSelectedValues([currentValue]);
       setOpen(false);
     }
-    onSelect(selectedItem);
+    onSelect(currentValue); 
   };
 
   const isSelected = (value: string) => {
-    return selectedValues.some(item => item.data === value);
-  }
+    return selectedValues.includes(value);
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen} >
@@ -58,12 +53,12 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
             <CommandGroup >
               {data?.filter((item: TSelectItem) => item.data.toLowerCase()).map((item: TSelectItem) => (
                 <CommandItem
-                  className="hover:cursor-pointer"
+                  className="ITEMS hover:cursor-pointer"
                   key={item.index}
                   value={item.data}
                   onSelect={() => handleSelect(item.data)}>
                   {item.data}
-                    {multiple && <CheckIcon className={cn("ml-auto h-4 w-4", isSelected(item.data) ? "opacity-100" : "opacity-0")} />}
+                  {multiple && <CheckIcon className={cn("ml-auto h-4 w-4", isSelected(item.data) ? "opacity-100" : "opacity-0")} />}
                 </CommandItem>
               ))}
             </CommandGroup>
