@@ -40,7 +40,7 @@ export default function Filter() {
                   name="year"
                   render={({}) => (
                     <FormItem>
-                      <SelectBox  name={'Year'} data={years}/>
+                      <SelectBox className="" multiple={false} onSelect={()=>{}} name={'Year'} data={years}/>
                     </FormItem>
                   )}
                 />
@@ -49,7 +49,7 @@ export default function Filter() {
                   name="month"
                   render={({}) => (
                     <FormItem>
-                      <SelectBox  name={'Month'} data={months}/>
+                      <SelectBox className="" multiple={false} onSelect={()=>{}} name={'Month'} data={months}/>
                     </FormItem>
                   )}
                 />
@@ -58,7 +58,7 @@ export default function Filter() {
                   name="day"
                   render={({}) => (
                     <FormItem>
-                      <SelectBox  name={'Day'} data={[]}/>
+                      <SelectBox className="" multiple={false} onSelect={()=>{}} name={'Day'} data={[]}/>
                     </FormItem>
                   )}
                 />

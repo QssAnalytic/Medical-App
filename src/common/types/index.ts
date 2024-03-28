@@ -1,7 +1,9 @@
 type TSelectProps = {
   name: string;
   data: TSelectItem[];
-  className:string
+  className: string;
+  onSelect: (selectedItem: TSelectItem) => void; 
+  multiple:Boolean
 };
 
 type TSelectItem = {
