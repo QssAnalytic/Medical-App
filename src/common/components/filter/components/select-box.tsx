@@ -11,26 +11,31 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
   const [open, setOpen] = useState(false);
   const [selectedValues, setSelectedValues] = useState<TSelectItem[]>([]);
 
-  const handleSelect = (currentValue: TSelectItem) => {
+  const handleSelect = (currentValue: string) => {
+    const selectedItem = data.find(item => item.data === currentValue);
+    if (!selectedItem) {
+      return;
+    }
+  
     if (multiple) {
       setSelectedValues(prevSelected => {
-        const isSelected = prevSelected.includes(currentValue);
+        const isSelected = prevSelected.some(value => value === selectedItem);
         if (isSelected) {
-          return prevSelected.filter(value => value !== currentValue);
+          return prevSelected.filter(value => value !== selectedItem);
         } else {
-          return [...prevSelected, currentValue];
+          return [...prevSelected, selectedItem];
         }
       });
     } else {
-      setSelectedValues([currentValue]);
+      setSelectedValues([selectedItem]);
       setOpen(false);
     }
-    onSelect(currentValue); 
+    onSelect(selectedItem);
   };
 
   const isSelected = (value: string) => {
-    return selectedValues.includes(value);
-  };
+    return selectedValues.some(item => item.data === value);
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen} >
@@ -58,7 +63,7 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
                   value={item.data}
                   onSelect={() => handleSelect(item.data)}>
                   {item.data}
-                  {multiple && <CheckIcon className={cn("ml-auto h-4 w-4", isSelected(item.data) ? "opacity-100" : "opacity-0")} />}
+                    {multiple && <CheckIcon className={cn("ml-auto h-4 w-4", isSelected(item.data) ? "opacity-100" : "opacity-0")} />}
                 </CommandItem>
               ))}
             </CommandGroup>
