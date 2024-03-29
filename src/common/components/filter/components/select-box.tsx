@@ -11,7 +11,7 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
   const [open, setOpen] = useState(false);
   const [selectedValues, setSelectedValues] = useState<TSelectItem[]>([]);
 
-  const handleSelect = (currentValue: TSelectItem) => {
+  const handleSelect = (currentValue: any) => {
     if (multiple) {
       setSelectedValues(prevSelected => {
         const isSelected = prevSelected.includes(currentValue);
@@ -25,10 +25,10 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
       setSelectedValues([currentValue]);
       setOpen(false);
     }
-    onSelect(currentValue); 
+    onSelect(currentValue);
   };
 
-  const isSelected = (value: string) => {
+  const isSelected = (value: any) => {
     return selectedValues.includes(value);
   };
 
@@ -41,7 +41,7 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
           aria-expanded={open}
           className={cn("py-6 px-7 text-base w-full bg-[#E3F2F1] border border-[#E8E8E8] hover:border-[#70BFB9] hover:text-[#048076] hover:bg-[#D4F8F6]", className)}
         >
-          { `${name}`}
+          {`${name}`}
           <TriangleDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -55,7 +55,7 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
                 <CommandItem
                   className="ITEMS hover:cursor-pointer"
                   key={item.index}
-                  value={item.data}
+                  value={item} 
                   onSelect={() => handleSelect(item.data)}>
                   {item.data}
                   {multiple && <CheckIcon className={cn("ml-auto h-4 w-4", isSelected(item.data) ? "opacity-100" : "opacity-0")} />}
@@ -68,3 +68,4 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
     </Popover>
   );
 }
+
