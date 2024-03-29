@@ -4,14 +4,14 @@ import Filter from "../filter";
 export default function Layout() {
   return (
     <>
-      <header className="header">
+      <header className="header font-inter">
         <div className="header-container p-8">
           <div className="header-inner">
             <Filter />
           </div>
         </div>
       </header>
-      <main className="main">
+      <main className="main font-inter ">
         <div className="main-container px-8">
           <div className="main-inner">
             <Outlet />

@@ -78,3 +78,7 @@
 .eee::-webkit-scrollbar{
   width: 0;
 }
+
+.scroll::-webkit-scrollbar{
+  width: 0;
+}

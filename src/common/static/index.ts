@@ -28,15 +28,27 @@ export const years = [
 ];
 
 export const hospitals = [
-  { data: "Baku City Hospital", index: 0 },
-  { data: "Ege Hospital", index: 1 },
-  { data: "Liv Bonadea Hospital", index: 2 },
-  { data: "Avrasiya Hospital", index: 3 },
-  { data: "Baku Health Center", index: 4 },
-  { data: "Baku Medical Plaza", index: 5 },
-  { data: "Stimul Hospital", index: 6 },
-  { data: "Uniklinika", index: 7 },
-  { data: "New Med Hospital", index: 8 },
-  { data: "Istanbul NS Hospital", index: 9 },
-  // { data: "2024", index: 10 },
+  { data: "Baku City Hospital", index: 0, color: '#068F84' },
+  { data: "Ege Hospital", index: 1, color: '#29CD74' },
+  { data: "Liv Bonadea Hospital", index: 2, color: '#1EA66D' },
+  { data: "Avrasiya Hospital", index: 3, color: '#149393' },
+  { data: "Baku Health Center", index: 4, color: '#388EB4' },
+  { data: "Baku Medical Plaza", index: 5, color: '#50ACD4' },
+  { data: "Stimul Hospital", index: 6, color: '#728892' },
+  { data: "Uniklinika", index: 7, color: '#6F9CBC' },
+  { data: "New Med Hospital", index: 8, color: '#A3D4F7' },
+  { data: "Istanbul NS Hospital", index: 9, color: '#ACC3FE' },
+];
+
+
+export const services = [
+  { data: "Qanın  klinik analizi", index: 0 },
+  { data: "Vitamin D", index: 1 },
+  { data: "Calcium (Ca)", index: 2 },
+  { data: "Vitamin B12", index: 3 },
+  { data: "ALAT", index: 4 },
+  { data: "ASAT", index: 5 },
+  { data: "Creatinin", index: 6 },
+  { data: "Insulin", index: 7 },
+  { data: "HbA1c", index: 8 },
 ];

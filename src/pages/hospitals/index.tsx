@@ -1,17 +1,19 @@
-import CompareAllHospitals from "./components/compare-all-hospitals";
-import DifferenceHospitals from "./components/difference-hospitals";
+import HospitalsCharts from "./hospital-charts"
+import HospitalsBars from "./hospitals-bars"
 
-
-export default function Hospitals() {
+const Hospitals = () => {
   return (
-    <section className="w-full flex gap-3">
-      <div className="w-1/3 ">
-        <CompareAllHospitals />
+    <div className="border rounded-lg px-4 py-3 relative ml-3 mb-10">
+      <div>
+        <p className="absolute transform -rotate-90  w-72  text-center text-base text-[#068F84] font-medium right-[91%] top-[24%]">Services  Comparsion</p>
+        <HospitalsBars />
       </div>
-      <div className="w-2/3 ">
-        <DifferenceHospitals />
+      <div>
+        <p className="absolute transform -rotate-90  w-72  text-center text-base text-[#068F84] font-medium right-[91%] top-[78%]" >Time Series Analysis</p>
+        <HospitalsCharts />
       </div>
-
-    </section>
+    </div>
   )
 }
+
+export default Hospitals

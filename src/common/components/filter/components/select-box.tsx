@@ -1,4 +1,4 @@
-import { TriangleDownIcon, CheckIcon } from "@radix-ui/react-icons";
+import {  CheckIcon } from "@radix-ui/react-icons";
 import { cn } from "@/common/lib/utils";
 import { Button } from "@/common/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/common/components/ui/command";
@@ -6,36 +6,32 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/common/components/ui/
 import { CommandList } from "cmdk";
 import { TSelectItem, TSelectProps } from "@/common/types";
 import { useState } from "react";
+import Vector from '../../../../../public/icons/vector.svg'
 
 export function SelectBox({ name, data, className, multiple, onSelect }: TSelectProps) {
   const [open, setOpen] = useState(false);
   const [selectedValues, setSelectedValues] = useState<TSelectItem[]>([]);
 
-  const handleSelect = (currentValue: string) => {
-    const selectedItem = data.find(item => item.data === currentValue);
-    if (!selectedItem) {
-      return;
-    }
-  
+  const handleSelect = (currentValue: any) => {
     if (multiple) {
       setSelectedValues(prevSelected => {
-        const isSelected = prevSelected.some(value => value === selectedItem);
+        const isSelected = prevSelected.includes(currentValue);
         if (isSelected) {
-          return prevSelected.filter(value => value !== selectedItem);
+          return prevSelected.filter(value => value !== currentValue);
         } else {
-          return [...prevSelected, selectedItem];
+          return [...prevSelected, currentValue];
         }
       });
     } else {
-      setSelectedValues([selectedItem]);
+      setSelectedValues([currentValue]);
       setOpen(false);
     }
-    onSelect(selectedItem);
+    onSelect(currentValue);
   };
 
-  const isSelected = (value: string) => {
-    return selectedValues.some(item => item.data === value);
-  }
+  const isSelected = (value: any) => {
+    return selectedValues.includes(value);
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen} >
@@ -44,10 +40,11 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn("py-6 px-7 text-base w-full bg-[#E3F2F1] border border-[#E8E8E8] hover:border-[#70BFB9] hover:text-[#048076] hover:bg-[#D4F8F6]", className)}
+          className={cn("py-6 px-7 text-base w-full gap-3 bg-[#E3F2F1] border border-[#E8E8E8] hover:border-[#70BFB9] hover:text-[#048076] hover:bg-[#D4F8F6]", className)}
         >
-          { `${name}`}
-          <TriangleDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          {`${name}`}
+          {/* <TriangleDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
+          <img src={Vector} alt="" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
@@ -58,12 +55,12 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
             <CommandGroup >
               {data?.filter((item: TSelectItem) => item.data.toLowerCase()).map((item: TSelectItem) => (
                 <CommandItem
-                  className="hover:cursor-pointer"
+                  className="ITEMS hover:cursor-pointer"
                   key={item.index}
-                  value={item.data}
+                  value={item.data} 
                   onSelect={() => handleSelect(item.data)}>
                   {item.data}
-                    {multiple && <CheckIcon className={cn("ml-auto h-4 w-4", isSelected(item.data) ? "opacity-100" : "opacity-0")} />}
+                  {multiple && <CheckIcon className={cn("ml-auto h-4 w-4", isSelected(item.data) ? "opacity-100" : "opacity-0")} />}
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -73,3 +70,4 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
     </Popover>
   );
 }
+
