@@ -57,7 +57,7 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
                 <CommandItem
                   className="ITEMS hover:cursor-pointer"
                   key={item.index}
-                  value={item} 
+                  value={item.data} 
                   onSelect={() => handleSelect(item.data)}>
                   {item.data}
                   {multiple && <CheckIcon className={cn("ml-auto h-4 w-4", isSelected(item.data) ? "opacity-100" : "opacity-0")} />}
