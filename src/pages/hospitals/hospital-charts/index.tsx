@@ -10,7 +10,7 @@ const HospitalsCharts = () => {
     return (
         <div className="flex flex-col items-center justify-center">
             <div className="my-4">
-                <div className="date-filters">
+                <div className="date-filters text-base">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(filterSubmit)} className="flex gap-5">
                             <FormField
@@ -18,7 +18,7 @@ const HospitalsCharts = () => {
                                 name="year"
                                 render={({ }) => (
                                     <FormItem>
-                                        <SelectBox className="" multiple={false} onSelect={() => { }} name={'Year'} data={years} />
+                                        <SelectBox className="text-base px-16" multiple={false} onSelect={() => { }} name={'Year'} data={years} />
                                     </FormItem>
                                 )}
                             />
@@ -27,7 +27,7 @@ const HospitalsCharts = () => {
                                 name="month"
                                 render={({ }) => (
                                     <FormItem>
-                                        <SelectBox className="" multiple={false} onSelect={() => { }} name={'Month'} data={months} />
+                                        <SelectBox className="text-base px-16" multiple={false} onSelect={() => { }} name={'Month'} data={months} />
                                     </FormItem>
                                 )}
                             />

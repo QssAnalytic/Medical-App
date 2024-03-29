@@ -99,13 +99,13 @@ export default function Chart() {
     return (
         <div className="border rounded-lg ">
             <LineChart
-            width={430}
+            width={420}
             height={306}
             data={data}
             margin={{
                 top: 15,
                 right: 30,
-                left: 0,
+                left: -20,
                 bottom: 0
               }}
               
@@ -116,6 +116,7 @@ export default function Chart() {
             tickCount={10} 
             axisLine={{ stroke: '#d8d8d8' }} 
             tickLine={false}
+            tick={{fontSize:12,  fill:'#2f2f2f'}}
 
             />
             <YAxis 
@@ -123,6 +124,8 @@ export default function Chart() {
             tickCount={10} ticks={[10, 20, 30, 40, 50, 60, 70, 80]}
             axisLine={{ stroke: '#d8d8d8' }} 
             tickLine={false}
+            tick={{fontSize:14 ,  fill:'#2f2f2f'}}
+
              />
             <Tooltip />
                 {hospitals.map(hospital => (

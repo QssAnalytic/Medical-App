@@ -1,4 +1,4 @@
-import { TriangleDownIcon, CheckIcon } from "@radix-ui/react-icons";
+import {  CheckIcon } from "@radix-ui/react-icons";
 import { cn } from "@/common/lib/utils";
 import { Button } from "@/common/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/common/components/ui/command";
@@ -6,6 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/common/components/ui/
 import { CommandList } from "cmdk";
 import { TSelectItem, TSelectProps } from "@/common/types";
 import { useState } from "react";
+import Vector from '../../../../../public/icons/vector.svg'
 
 export function SelectBox({ name, data, className, multiple, onSelect }: TSelectProps) {
   const [open, setOpen] = useState(false);
@@ -39,10 +40,11 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn("py-6 px-7 text-base w-full bg-[#E3F2F1] border border-[#E8E8E8] hover:border-[#70BFB9] hover:text-[#048076] hover:bg-[#D4F8F6]", className)}
+          className={cn("py-6 px-7 text-base w-full gap-3 bg-[#E3F2F1] border border-[#E8E8E8] hover:border-[#70BFB9] hover:text-[#048076] hover:bg-[#D4F8F6]", className)}
         >
           {`${name}`}
-          <TriangleDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          {/* <TriangleDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
+          <img src={Vector} alt="" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">

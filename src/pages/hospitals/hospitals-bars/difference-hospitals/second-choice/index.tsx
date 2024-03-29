@@ -4,11 +4,12 @@ import { hospitals, services } from "@/common/static"
 const SecondChoice = () => {
   return (
     <div className="h-full w-full bg-white rounded p-3 ">
-      <div className="flex items-center justify-end ">
-        <h2 className="mr-4">Hospitals</h2>
+      <div className="flex items-center justify-end mb-1 ">
+      <h2 className="mr-5 font-semibold text-[#104C48]">Hospitals</h2>
+
         <div className="w-1/2">
         <SelectBox
-            className="w-full py-0 text-lg"
+            className="w-full py-0 text-base"
             data={services}
             onSelect={() => { }}
             multiple={true}
@@ -16,7 +17,7 @@ const SecondChoice = () => {
         </div>
 
       </div>
-      <div className="scroll overflow-y-auto h-[19rem] mt-2">
+      <div className="scroll overflow-y-auto h-[19rem]">
         {/*
          <ul>
                         {selectedHospitals.map((hospital, index) => (
@@ -33,17 +34,18 @@ const SecondChoice = () => {
             </ul> 
         */}
         <ul>
-          {
+        {
             hospitals.map((hospital, index) => (
-              <div key={index} className="flex justify-between items-center mt-3 gap-4 px-5 text-sm">
+              <div key={index} className="flex justify-between items-center mt-3 gap-3 pl-3  text-sm">
                 <li className="">{index + 1}</li>
                 <li className=" w-full text-end">{hospital.data}</li>
-                <div className="w-full ">
+                <div className="w-full pl-5">
                   <div className="w-full rounded h-3 bg-[#d8d8d8]">
-                    <div className="bg-red-400 h-3 rounded" style={{ 'width': '45%' }}></div>
+                  <div className="h-3 rounded-sm" style={{ width: `${(-index*3)+97}%`, backgroundColor: hospital.color }}></div>
+
                   </div>
                 </div>
-                <span className="">{index + 102}</span>
+                <span className="">{-index + 150}</span>
               </div>
             ))
           }
