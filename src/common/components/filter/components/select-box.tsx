@@ -1,4 +1,4 @@
-import {  CheckIcon } from "@radix-ui/react-icons";
+import { CheckIcon } from "@radix-ui/react-icons";
 import { cn } from "@/common/lib/utils";
 import { Button } from "@/common/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/common/components/ui/command";
@@ -50,17 +50,18 @@ export function SelectBox({ name, data, className, multiple, onSelect }: TSelect
       <PopoverContent className="w-[200px] p-0">
         <Command>
           <CommandInput placeholder={`Search ${name.toLowerCase()}...`} className="h-9" />
-          {data.length === 0 && <CommandEmpty>No framework found.</CommandEmpty>}
+          {data?.length === 0 && <CommandEmpty>No framework found.</CommandEmpty>}
           <CommandList className="h-[200px] overflow-y-scroll eee">
             <CommandGroup >
-              {data?.filter((item: TSelectItem) => item.data.toLowerCase()).map((item: TSelectItem) => (
+              {data?.filter((item: TSelectItem) => item.name).map((item: TSelectItem) => (
                 <CommandItem
                   className="ITEMS hover:cursor-pointer"
-                  key={item.index}
-                  value={item.data} 
-                  onSelect={() => handleSelect(item.data)}>
-                  {item.data}
-                  {multiple && <CheckIcon className={cn("ml-auto h-4 w-4", isSelected(item.data) ? "opacity-100" : "opacity-0")} />}
+                  key={item.id}
+                  value={item.name}
+                  onSelect={() => handleSelect(item.name)}>
+                  {item.name}
+                  {multiple && <CheckIcon className={cn("ml-auto h-4 w-4", isSelected(item.name) ? "opacity-100" : "opacity-0")}
+                  />}
                 </CommandItem>
               ))}
             </CommandGroup>

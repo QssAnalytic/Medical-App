@@ -12,13 +12,13 @@ const FirstChoice = () => {
             data={services}
             onSelect={() => { }}
             multiple={true}
-            name={'Services'} />
+            name={'Services'}
+          />
         </div>
 
       </div>
       <div className="scroll overflow-y-auto h-[19rem]">
-        {/*
-         <ul>
+        {/* <ul>
                         {selectedHospitals.map((hospital, index) => (
                             <div key={index} className="flex justify-between items-center mt-3 px-5 text-base ">
                                 <li className="">{index + 1}</li>
@@ -30,8 +30,7 @@ const FirstChoice = () => {
                                 </div>
                             </div>
                         ))}
-            </ul> 
-        */}
+            </ul>  */}
         <ul>
           {
             hospitals.map((hospital, index) => (
@@ -40,7 +39,7 @@ const FirstChoice = () => {
                 <li className=" w-full text-end">{hospital.data}</li>
                 <div className="w-full pl-5">
                   <div className="w-full rounded h-3 bg-[#d8d8d8]">
-                  <div className="h-3 rounded-sm" style={{ width: `${(-index*3)+97}%`, backgroundColor: hospital.color }}></div>
+                    <div className="h-3 rounded-sm" style={{ width: `${(-index * 3) + 97}%`, backgroundColor: hospital.color }}></div>
 
                   </div>
                 </div>

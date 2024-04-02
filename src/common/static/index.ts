@@ -9,7 +9,7 @@ export const months = [
   { data: "August", index: 7 },
   { data: "September", index: 8 },
   { data: "October", index: 9 },
-  { data: "November", index: 10 },
+  { data: "November", index: 10 }, 
   { data: "December", index: 11 },
 ];
 

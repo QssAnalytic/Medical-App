@@ -1,10 +1,11 @@
 import { hospitals } from "@/common/static";
+import { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 
 const data = [
     {
         name: "2017",
-        "Baku City Hospital": '0', 
+        "Baku City Hospital": '0',
         "Ege Hospital": '0',
         "Liv Bonadea Hospital": '0',
         "Avrasiya Hospital": '0',
@@ -19,7 +20,7 @@ const data = [
         name: "2018",
         "Baku City Hospital": '7',
         "Ege Hospital": '9',
-        "Liv Bonadea Hospital": '3',
+        "Liv Bonadea Hospital": '   ',
         "Avrasiya Hospital": '5',
         "Baku Health Center": '11',
         "Baku Medical Plaza": '4',
@@ -96,43 +97,71 @@ const data = [
 ];
 
 export default function Chart() {
+    const [hoveredInfo, setHoveredInfo] = useState(null);
+
+    const handleMouseOver = (info:any) => {
+        setHoveredInfo(info);
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredInfo(null);
+    };
+
     return (
         <div className="border rounded-lg ">
             <LineChart
-            width={420}
-            height={306}
-            data={data}
-            margin={{
-                top: 15,
-                right: 30,
-                left: -20,
-                bottom: 0
-              }}
-              
-        >
-            <CartesianGrid strokeLinecap="square" vertical={false}/>
-            <XAxis 
-            dataKey="name" 
-            tickCount={10} 
-            axisLine={{ stroke: '#d8d8d8' }} 
-            tickLine={false}
-            tick={{fontSize:12,  fill:'#2f2f2f'}}
-
-            />
-            <YAxis 
-            dataKey="count" 
-            tickCount={10} ticks={[10, 20, 30, 40, 50, 60, 70, 80]}
-            axisLine={{ stroke: '#d8d8d8' }} 
-            tickLine={false}
-            tick={{fontSize:14 ,  fill:'#2f2f2f'}}
-
-             />
-            <Tooltip />
-                {hospitals.map(hospital => (
-                    <Line key={hospital.data}    dataKey={hospital.data} stroke={`#${Math.floor(Math.random()*16777215).toString(16)}`}  />
+                width={410}
+                height={306}
+                data={data}
+                margin={{
+                    top: 15,
+                    right: 30,
+                    left: -20,
+                    bottom: 0
+                }}
+            >
+                <CartesianGrid strokeLinecap="square" vertical={false} />
+                <XAxis
+                    dataKey="name"
+                    tickCount={10}
+                    axisLine={{ stroke: '#d8d8d8' }}
+                    tickLine={false}
+                    tick={{ fontSize: 12, fill: '#2f2f2f' }}
+                />
+                <YAxis
+                    dataKey="count"
+                    tickCount={10}
+                    ticks={[10, 20, 30, 40, 50, 60, 70, 80]}
+                    axisLine={{ stroke: '#d8d8d8' }}
+                    tickLine={false}
+                    tick={{ fontSize: 14, fill: '#2f2f2f' }}
+                />
+                <Tooltip content={<CustomTooltip hoveredInfo={hoveredInfo} />} />
+                {hospitals.map((hospital, index) => (
+                    <Line
+                        key={index}
+                        dataKey={hospital.data}
+                        dot={false}
+                        strokeWidth={2}
+                        activeDot={false}
+                        stroke={`#${Math.floor(Math.random() * 16777215).toString(16)}`}
+                        onMouseOver={() => handleMouseOver(hospital)}
+                        onMouseLeave={handleMouseLeave}
+                    />
                 ))}
-     
-        </LineChart>
+            </LineChart>
         </div>
     );
 }
+
+const CustomTooltip = ({ hoveredInfo }) => {
+    return (
+        <div style={{ backgroundColor: 'white', padding: '5px' }}>
+            {hoveredInfo && (
+                <p>
+                    Hospital: {hoveredInfo.country}, Count: {hoveredInfo.name}
+                </p>
+            )}
+        </div>
+    );
+};

@@ -8,8 +8,9 @@ type TSelectProps = {
 };
 
 type TSelectItem = {
-  index: number;
-  data: string;
+  id: number;
+  name: string;
 };
 
 export type { TSelectProps, TSelectItem };
+ 
