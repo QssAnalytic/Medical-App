@@ -1,3 +1,9 @@
+type TSelectItem = {
+  id: number;
+  name: string;
+  color?: string;
+};
+
 type TSelectProps = {
   name: string;
   data: TSelectItem[];
@@ -7,10 +13,7 @@ type TSelectProps = {
   
 };
 
-type TSelectItem = {
-  id: number;
-  name: string;
-};
+
 
 export type { TSelectProps, TSelectItem };
  

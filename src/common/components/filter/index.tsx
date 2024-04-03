@@ -80,8 +80,6 @@ export default function Filter() {
             </Form>
           </div>
 
-
-
           <div className="flex justify-end ml-auto gap-5">
             <div>
               <Button onClick={() => changeColor("white")} size={"default"} className={`gap-2 py-6 px-5 text-base ${color === 'white' ? 'bg-[#068F84]' : ''}`}>Price

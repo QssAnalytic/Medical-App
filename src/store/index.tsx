@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export interface Filter {
-    hospitals: string | undefined;
+    hospitals:  undefined;
     year: string | undefined;
     month: string | undefined;
     services: string | undefined;
