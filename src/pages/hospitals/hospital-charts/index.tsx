@@ -35,10 +35,10 @@ const HospitalsCharts = () => {
                     </Form>
                 </div>
             </div>
-            <div className="flex justify-between items-center gap-5">
-                <div><Chart/></div>
-                <div><Chart/></div>
-                <div><Chart/></div>
+            <div className="w-full  flex items-center justify-between">
+                <div><Chart /></div>
+                <div><Chart /></div>
+                <div><Chart /></div>
             </div>
         </div>
     )

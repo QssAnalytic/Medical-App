@@ -8,10 +8,22 @@ import { Button } from "../ui/button";
 import Count from '../../../../public/icons/count.svg'
 import Price from '../../../../public/icons/price.svg'
 import Patients from '../../../../public/icons/patients.svg'
+import { useEffect, useState } from "react";
 
 export default function Filter() {
+
+  const [color, setColor] = useState('white')
+
+  useEffect(() => {
+    document.body.style.backgroundColor = color
+  }, [color])
+
+  const changeColor = (color:string) => {
+    setColor(color)
+  }
+
   const form = useForm();
-  const filterSubmit = (data: any) => console.log("filter datas", data);
+  const filterSubmit = (data :any) => console.log("filter datas", data);
   return (
     <div className="filter">
       <div className="filter-container">
@@ -71,9 +83,27 @@ export default function Filter() {
 
 
           <div className="flex justify-end ml-auto gap-5">
-            <div ><Button size={"default"} className="gap-2 py-6 px-5 text-base bg-[#068F84]">Price <span><img width={22} className="text-white" src={Price} alt="" /></span></Button></div>
-            <div><Button size={"lg"} variant={"outline"} className="gap-2 py-6 px-5  text-base">Count <span><img width={22} src={Count} alt="" /></span></Button></div>
-            <div><Button size={"lg"} variant={"outline"} className="gap-2 py-6 px-5  text-base">Number of patients <span><img width={22} src={Patients} alt="" /></span></Button></div>
+            <div>
+              <Button onClick={() => changeColor("white")} size={"default"} className={`gap-2 py-6 px-5 text-base ${color === 'white' ? 'bg-[#068F84]' : ''}`}>Price
+                <span>
+                  <img width={22} className={color === 'white' ? "text-white" : ""} src={Price} alt="" />
+                </span>
+              </Button>
+            </div>
+            <div>
+              <Button onClick={() => changeColor("blue")} size={"lg"} variant={"outline"} className={`gap-2 py-6 px-5 text-base ${color === 'blue' ? 'bg-[#068F84]' : ''}`}>Count
+                <span>
+                  <img width={22} className={color === 'blue' ? "text-white" : ""} src={Count} alt="" />
+                </span>
+              </Button>
+            </div>
+            <div>
+              <Button onClick={() => changeColor("green")} size={"lg"} variant={"outline"} className={`gap-2 py-6 px-5 text-base ${color === 'green' ? 'bg-[#068F84]' : ''}`}>Number of patients
+                <span>
+                  <img width={22} className={color === 'green' ? "text-white" : ""} src={Patients} alt="" />
+                </span>
+              </Button>
+            </div>
           </div>
 
 
