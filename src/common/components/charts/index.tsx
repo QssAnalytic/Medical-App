@@ -99,7 +99,7 @@ const data = [
 export default function Chart() {
     const [hoveredInfo, setHoveredInfo] = useState(null);
 
-    const handleMouseOver = (info:any) => {
+    const handleMouseOver = (info: any) => {
         setHoveredInfo(info);
     };
 
@@ -140,7 +140,7 @@ export default function Chart() {
                 {hospitals.map((hospital, index) => (
                     <Line
                         key={index}
-                        dataKey={hospital.data}
+                        dataKey={hospital.name}
                         dot={false}
                         strokeWidth={2}
                         activeDot={false}
@@ -154,7 +154,7 @@ export default function Chart() {
     );
 }
 
-const CustomTooltip = ({ hoveredInfo }) => {
+const CustomTooltip = ({ hoveredInfo }: any) => {
     return (
         <div style={{ backgroundColor: 'white', padding: '5px' }}>
             {hoveredInfo && (

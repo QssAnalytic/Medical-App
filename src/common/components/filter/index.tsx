@@ -23,7 +23,7 @@ export default function Filter() {
   }
 
   const form = useForm();
-  const filterSubmit = (data: any) => console.log("filter datas", data);
+  const filterSubmit = (data :any) => console.log("filter datas", data);
   return (
     <div className="filter">
       <div className="filter-container">
