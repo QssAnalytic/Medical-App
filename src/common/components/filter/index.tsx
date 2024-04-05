@@ -17,15 +17,11 @@ import { useFormContext } from "react-hook-form";
 
 export default function Filter() {
 
-
-
   const form = useFormContext()
 
   const filterSubmit = (data: any) => console.log("filter datas", data);
 
   console.log('form watch', form.watch('date'))
-
-
 
   return (
     <div className="filter">
@@ -44,185 +40,226 @@ export default function Filter() {
             </Link>
           </div>
 
-
-
-          <div>
+          <div className="w-full">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(filterSubmit)} className="">
-                <FormField
-                  control={form.control}
-                  name="date"
-                  render={({ field }) => (
-                    <div className="flex gap-6  ml-5">
+                <div className="flex justify-between">
 
-                      <FormItem className="flex flex-col">
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button
-                                variant="outline"
-                                role="combobox"
-                                className={cn("w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3", !field.value && "text-muted-foreground")}
-                              >
-                                {field.value?.year ? years.find((years) => years.name === field.value?.year)?.name : "Year"}
-                                <img src={Vector} alt="" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-[200px] p-0">
-                            <Command>
-                              <CommandInput placeholder="Search year" />
-                              <CommandList>
-                                <CommandEmpty>No year found.</CommandEmpty>
+                  {/* DATE */}
+                  <div>
+                    <FormField control={form.control}
+                      name="date"
+                      render={({ field }) => (
+                        <div className="flex gap-7  ml-10">
 
-                                <CommandGroup>
-                                  {years.map((item: { name: string, id: number }) => (
-                                    <CommandItem
-                                      value={item.name}
-                                      key={item.name}
-                                      onSelect={() => {
-                                        form.setValue("date", { ...form.watch("date"), year: item.name })
-                                      }}
-                                    >
-                                      <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
-                                      {item.name}
-                                    </CommandItem>
-                                  ))}
-                                </CommandGroup>
-                              </CommandList>
-                            </Command>
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
+                          <FormItem className="flex flex-col">
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button
+                                    variant="outline"
+                                    role="combobox"
+                                    className={cn("w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3", !field.value && "text-muted-foreground")}
+                                  >
+                                    {field.value?.year ? years.find((years) => years.name === field.value?.year)?.name : "Year"}
+                                    <img src={Vector} alt="" />
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-[200px] p-0">
+                                <Command>
+                                  <CommandInput placeholder="Search year" />
+                                  <CommandList>
+                                    <CommandEmpty>No year found.</CommandEmpty>
 
-                      <FormItem className="flex flex-col">
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button variant="outline" role="combobox"
-                                className={cn("w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3", !field.value && "text-muted-foreground")}
-                              >
-                                {field.value?.month
-                                  ? months.find(
-                                    (months) => months.name === field.value?.month
-                                  )?.name
-                                  : "Month"}
-                                <img src={Vector} alt="" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-[200px] p-0">
-                            <Command>
-                              <CommandInput placeholder="Search month..." />
-                              <CommandList>
-                                <CommandEmpty>No month found.</CommandEmpty>
+                                    <CommandGroup>
+                                      {years.map((item: { name: string, id: number }) => (
+                                        <CommandItem
+                                          value={item.name}
+                                          key={item.name}
+                                          onSelect={() => {
+                                            form.setValue("date", { ...form.watch("date"), year: item.name })
+                                          }}
+                                        >
+                                          <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
+                                          {item.name}
+                                        </CommandItem>
+                                      ))}
+                                    </CommandGroup>
+                                  </CommandList>
+                                </Command>
+                              </PopoverContent>
+                            </Popover>
+                            <FormMessage />
+                          </FormItem>
 
-                                <CommandGroup>
-                                  {months.map((item: { name: string, id: number }) => (
-                                    <CommandItem
-                                      value={item.name}
-                                      key={item.name}
-                                      onSelect={() => {
-                                        form.setValue("date", { ...form.watch("date"), month: item.name })
-                                      }}
-                                    >
-                                      <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
-                                      {item.name}
-                                    </CommandItem>
-                                  ))}
-                                </CommandGroup>
-                              </CommandList>
-                            </Command>
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
+                          <FormItem className="flex flex-col">
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button variant="outline" role="combobox"
+                                    className={cn("w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3", !field.value && "text-muted-foreground")}
+                                  >
+                                    {field.value?.month
+                                      ? months.find(
+                                        (months) => months.name === field.value?.month
+                                      )?.name
+                                      : "Month"}
+                                    <img src={Vector} alt="" />
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-[200px] p-0">
+                                <Command>
+                                  <CommandInput placeholder="Search month..." />
+                                  <CommandList>
+                                    <CommandEmpty>No month found.</CommandEmpty>
 
-                      <FormItem className="flex flex-col">
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button
-                                variant="outline"
-                                role="combobox"
-                                className={cn("w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3", !field.value && "text-muted-foreground")}
-                              >
-                                {field.value?.day
-                                  ? days.find(
-                                    (days) => days.name === field.value?.day
-                                  )?.name
-                                  : "Day"}
-                                <img src={Vector} alt="" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-[200px] p-0">
-                            <Command>
-                              <CommandInput placeholder="Search day..." />
-                              <CommandList>
-                                <CommandEmpty>No day found.</CommandEmpty>
+                                    <CommandGroup>
+                                      {months.map((item: { name: string, id: number }) => (
+                                        <CommandItem
+                                          value={item.name}
+                                          key={item.name}
+                                          onSelect={() => {
+                                            form.setValue("date", { ...form.watch("date"), month: item.name })
+                                          }}
+                                        >
+                                          <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
+                                          {item.name}
+                                        </CommandItem>
+                                      ))}
+                                    </CommandGroup>
+                                  </CommandList>
+                                </Command>
+                              </PopoverContent>
+                            </Popover>
+                            <FormMessage />
+                          </FormItem>
 
-                                <CommandGroup>
-                                  {days.map((item: { name: string, id: number }) => (
-                                    <CommandItem
-                                      value={item.name}
-                                      key={item.name}
-                                      onSelect={() => {
-                                        form.setValue("date", { ...form.watch("date"), day: item.name })
-                                      }}
-                                    >
-                                      <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
-                                      {item.name}
-                                    </CommandItem>
-                                  ))}
-                                </CommandGroup>
-                              </CommandList>
-                            </Command>
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
+                          <FormItem className="flex flex-col">
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button
+                                    variant="outline"
+                                    role="combobox"
+                                    className={cn("w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3", !field.value && "text-muted-foreground")}
+                                  >
+                                    {field.value?.day
+                                      ? days.find(
+                                        (days) => days.name === field.value?.day
+                                      )?.name
+                                      : "Day"}
+                                    <img src={Vector} alt="" />
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-[200px] p-0">
+                                <Command>
+                                  <CommandInput placeholder="Search day..." />
+                                  <CommandList>
+                                    <CommandEmpty>No day found.</CommandEmpty>
+
+                                    <CommandGroup>
+                                      {days.map((item: { name: string, id: number }) => (
+                                        <CommandItem
+                                          value={item.name}
+                                          key={item.name}
+                                          onSelect={() => {
+                                            form.setValue("date", { ...form.watch("date"), day: item.name })
+                                          }}
+                                        >
+                                          <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
+                                          {item.name}
+                                        </CommandItem>
+                                      ))}
+                                    </CommandGroup>
+                                  </CommandList>
+                                </Command>
+                              </PopoverContent>
+                            </Popover>
+                            <FormMessage />
+                          </FormItem>
+                        </div>
+                      )}
+                    />
+                  </div>
+
+
+                  {/* MODES */}
+                  <div className="flex justify-end ml-auto gap-7 ">
+                    <div>
+                      <FormField
+                        control={form.control}
+                        name="price"
+                        render={({ field }) => (
+                          <FormControl>
+                            <Button
+                              {...field}
+                              className="px-6 py-6 flex justify-between text-sm gap-2 font-semibold bg-[#068F84] border border-[#E8E8E8]"
+                              onClick={() => console.log('Price data:', form.watch('price'))}
+                            >
+                              Price
+                              <span>
+                                <img width={22} src={Price} alt="" />
+                              </span>
+                            </Button>
+                          </FormControl>
+                        )}
+                      />
+
                     </div>
 
-                  )}
-                />
+                    <div>
+                      <FormField
+                        control={form.control}
+                        name="count"
+                        render={({ field }) => (
+                          <FormControl>
+                            <Button
+                              {...field}
+                              className="px-6 py-6 flex justify-between text-sm gap-2 font-semibold bg-white border border-[#E8E8E8] text-[#7A7A7A]"
+                              onClick={() => console.log('Count data:', form.watch('count'))}
+                            >
+                              Count
+                              <span>
+                                <img width={22} src={Count} alt="" />
+                              </span>
+                            </Button>
+                          </FormControl>
+                        )}
+                      />
+
+                    </div>
+
+                    <div>
+                      <FormField
+                        control={form.control}
+                        name="patients"
+                        render={({ field }) => (
+                          <FormControl>
+                            <Button
+                              {...field}
+                              className="px-6 py-6 flex justify-between text-sm gap-2 font-semibold bg-white border border-[#E8E8E8] text-[#7A7A7A]"
+                              onClick={() => console.log('Patients data:', form.watch('patients'))}
+                            >
+                              Patients
+                              <span>
+                                <img width={22} src={Patients} alt="" />
+                              </span>
+                            </Button>
+                          </FormControl>
+                        )}
+                      />
+
+                    </div>
+                  </div>
+
+                </div>
               </form>
             </Form>
           </div>
 
-
-
-
-          <div className="flex justify-end ml-auto gap-5 BU_BUTTONLAR">
-            <div>
-              <Button className="px-6 py-6 flex justify-between text-sm gap-2 font-semibold bg-[#068F84] border border-[#E8E8E8]" >
-                Price
-                <span>
-                  <img width={22}
-                    src={Price} alt="" />
-                </span>
-              </Button>
-            </div>
-            <div>
-              <Button className="px-6 py-6 flex justify-between text-sm gap-2 font-semibold bg-white border border-[#E8E8E8] text-[#7A7A7A]" >
-                Count
-                <span>
-                  <img width={22}
-                    src={Count} alt="" />
-                </span>
-              </Button>
-            </div>
-            <div>
-              <Button className="px-6 py-6 flex justify-between text-sm gap-2 font-semibold bg-white border border-[#E8E8E8] text-[#7A7A7A]" >
-                Number of patients
-                <span>
-                  <img width={22}
-                    src={Patients} alt="" />
-                </span>
-              </Button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
