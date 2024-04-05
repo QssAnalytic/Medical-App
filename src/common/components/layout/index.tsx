@@ -1,23 +1,28 @@
 import { Outlet } from "react-router-dom";
 import Filter from "../filter";
+import { FormProvider, useForm } from "react-hook-form";
 
 export default function Layout() {
+
+  const form = useForm()
+
   return (
-    <div className="theme-  bg-current ">
-      <header className="header font-inter">
-        <div className="header-container p-8">
-          <div className="header-inner">
+    <FormProvider {...form}>
+      <div className="theme-  bg-current ">
+        <header >
+          <div className="p-8">
             <Filter />
           </div>
-        </div>
-      </header>
-      <main className="main font-inter">
-        <div className="main-container px-8">
-          <div className="main-inner">
-            <Outlet />
+        </header>
+
+        <main>
+          <div>
+            <div>
+              <Outlet />
+            </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </FormProvider>
   );
 }

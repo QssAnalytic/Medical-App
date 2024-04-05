@@ -1,4 +1,4 @@
-import { SelectBox } from "@/common/components/filter/components/select-box"
+// import { SelectBox } from "@/common/components/filter/components/select-box"
 import { TSelectItem } from "@/common/types"
 
 interface ChoicesProps {
@@ -12,13 +12,13 @@ const Choices: React.FC<ChoicesProps> = ({ data }) => {
             <div className="flex items-center  mb-1 justify-end ">
                 <h2 className="mx-5  font-semibold text-[#104C48]">Hospitals</h2>
                 <div className="w-[45%]">
-                    <SelectBox
+                    {/* <SelectBox
                         className="w-full py-0 text-base"
                         data={data}
                         onSelect={() => { }}
                         multiple={true}
                         name={'Services'}
-                    />
+                    /> */}
                 </div>
             </div>
             <div className="scroll overflow-y-auto h-[19rem]">
