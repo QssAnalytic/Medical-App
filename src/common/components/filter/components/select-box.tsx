@@ -1,74 +1,87 @@
-import { CheckIcon } from "@radix-ui/react-icons";
-import { cn } from "@/common/lib/utils";
-import { Button } from "@/common/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/common/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/common/components/ui/popover";
-import { CommandList } from "cmdk";
-import { TSelectItem, TSelectProps } from "@/common/types";
-import { useState } from "react";
-import Vector from '../../../../../public/icons/vector.svg'
+// import { CheckIcon } from "@radix-ui/react-icons";
+// import { cn } from "@/common/lib/utils";
+// import { Button } from "@/common/components/ui/button";
+// import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/common/components/ui/command";
+// import { Popover, PopoverContent, PopoverTrigger } from "@/common/components/ui/popover";
+// import { CommandList } from "cmdk";
+// import { TSelectItem, TSelectProps } from "@/common/types";
+// import { useState } from "react";
+// import Vector from '../../../../../public/icons/vector.svg'
 
-export function SelectBox({ name, data, className, multiple, onSelect }: TSelectProps) {
-  const [open, setOpen] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<TSelectItem[]>([]);
+// export function SelectBox({ name, data, className, multiple, onSelect }: TSelectProps) {
+//   const [open, setOpen] = useState(false);
+//   const [selectedValues, setSelectedValues] = useState<TSelectItem[]>([]);
 
-  const handleSelect = (currentValue: any) => {
-    if (multiple) {
-      setSelectedValues(prevSelected => {
-        const isSelected = prevSelected.includes(currentValue);
-        if (isSelected) {
-          return prevSelected.filter(value => value !== currentValue);
-        } else {
-          return [...prevSelected, currentValue];
-        }
-      });
-    } else {
-      setSelectedValues([currentValue]);
-      setOpen(false);
-    }
-    onSelect(currentValue);
-  };
+//   const handleSelect = (currentValue: any) => {
+//     if (multiple) {
+//       setSelectedValues(prevSelected => {
+//         const isSelected = prevSelected.includes(currentValue);
+//         if (isSelected) {
+//           return prevSelected.filter(value => value !== currentValue);
+//         } else {
+//           return [...prevSelected, currentValue];
+//         }
+//       });
+//     } else {
+//       setSelectedValues([currentValue]);
+//       setOpen(false);
+//     }
+//     onSelect(currentValue);
+//   };
 
-  const isSelected = (value: any) => {
-    return selectedValues.includes(value);
-  };
+//   const isSelected = (value: any) => {
+//     return selectedValues.includes(value);
+//   };
 
-  return (
-    <Popover open={open} onOpenChange={setOpen} >
-      <PopoverTrigger asChild >
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className={cn("py-6 px-7 text-base w-full gap-3 bg-[#E3F2F1] border border-[#E8E8E8] hover:border-[#70BFB9] hover:text-[#048076] hover:bg-[#D4F8F6]", className)}
-        >
-          {`${name}`}
-          {/* <TriangleDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
-          <img src={Vector} alt="" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandInput placeholder={`Search ${name.toLowerCase()}...`} className="h-9" />
-          {data?.length === 0 && <CommandEmpty>No framework found.</CommandEmpty>}
-          <CommandList className="h-[200px] overflow-y-scroll eee">
-            <CommandGroup >
-              {data?.filter((item: TSelectItem) => item.name).map((item: TSelectItem) => (
-                <CommandItem
-                  className="ITEMS hover:cursor-pointer"
-                  key={item.id}
-                  value={item.name}
-                  onSelect={() => handleSelect(item.name)}>
-                  {item.name}
-                  {multiple && <CheckIcon className={cn("ml-auto h-4 w-4", isSelected(item.name) ? "opacity-100" : "opacity-0")}
-                  />}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-}
+//   return (
+//     <Popover>
+//     <PopoverTrigger asChild>
+//       <FormControl>
+//         <Button
+//           variant="outline"
+//           role="combobox"
+//           className={cn(
+//             "w-[200px] justify-between",
+//             !field.value && "text-muted-foreground"
+//           )}
+//         >
+//           {field.value
+//             ? languages.find(
+//                 (language) => language.value === field.value
+//               )?.label
+//             : "Select language"}
+//           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+//         </Button>
+//       </FormControl>
+//     </PopoverTrigger>
+//     <PopoverContent className="w-[200px] p-0">
+//       <Command>
+//         <CommandInput placeholder="Search language..." />
+//         <CommandEmpty>No language found.</CommandEmpty>
+//         <CommandGroup>
+//           {languages.map((language) => (
+//             <CommandItem
+//               value={language.label}
+//               key={language.value}
+//               onSelect={() => {
+//                 form.setValue("language", language.value)
+//               }}
+//             >
+//               <Check
+//                 className={cn(
+//                   "mr-2 h-4 w-4",
+//                   language.value === field.value
+//                     ? "opacity-100"
+//                     : "opacity-0"
+//                 )}
+//               />
+//               {language.label}
+//             </CommandItem>
+//           ))}
+//         </CommandGroup>
+//       </Command>
+//     </PopoverContent>
+//   </Popover>
+//   );
+// }
 

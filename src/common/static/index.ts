@@ -1,3 +1,16 @@
+export const days = [
+  { name: "1", id: 0 },
+  { name: "2", id: 1 },
+  { name: "3", id: 2 },
+  { name: "4", id: 3 },
+  { name: "5", id: 4 },
+  { name: "6", id: 5 },
+  { name: "7", id: 6 },
+  { name: "8", id: 7 },
+  { name: "9", id: 8 },
+  { name: "10", id: 9 },
+];
+
 export const months = [
   { name: "January", id: 0 },
   { name: "February", id: 1 },
@@ -9,7 +22,7 @@ export const months = [
   { name: "August", id: 7 },
   { name: "September", id: 8 },
   { name: "October", id: 9 },
-  { name: "November", id: 10 }, 
+  { name: "November", id: 10 },
   { name: "December", id: 11 },
 ];
 

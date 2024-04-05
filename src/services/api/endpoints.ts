@@ -4,8 +4,8 @@ interface FilterEndpoints {
 }
 
 const filterEndpoints: FilterEndpoints = {
-  hospitals: (hos) => `api/${hos}/`,
-  services: "api/services/",
+  hospitals: (hospital) => `${hospital}/`,
+  services: "services/",
 };
 
 export { filterEndpoints };
