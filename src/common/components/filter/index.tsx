@@ -21,8 +21,6 @@ export default function Filter() {
 
   const filterSubmit = (data: any) => console.log("filter datas", data);
 
-  console.log('form watch', form.watch('date'))
-
   return (
     <div className="filter">
       <div className="filter-container">
@@ -48,7 +46,7 @@ export default function Filter() {
                   {/* DATE */}
                   <div>
                     <FormField control={form.control}
-                      name="date"
+                      name="dates"
                       render={({ field }) => (
                         <div className="flex gap-7  ml-10">
 
@@ -78,7 +76,9 @@ export default function Filter() {
                                           value={item.name}
                                           key={item.name}
                                           onSelect={() => {
-                                            form.setValue("date", { ...form.watch("date"), year: item.name })
+                                            form.setValue("dates", { ...form.watch("dates"), year: item.name })
+                                            // form.setValue("hospital_ids", [...form.watch('hospital_ids'), form.watch('hospital_ids').find((id : string)=> id !== item.name ? item.name : '')])
+
                                           }}
                                         >
                                           <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
@@ -121,7 +121,7 @@ export default function Filter() {
                                           value={item.name}
                                           key={item.name}
                                           onSelect={() => {
-                                            form.setValue("date", { ...form.watch("date"), month: item.name })
+                                            form.setValue("dates", { ...form.watch("dates"), month: item.id })
                                           }}
                                         >
                                           <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
@@ -166,7 +166,7 @@ export default function Filter() {
                                           value={item.name}
                                           key={item.name}
                                           onSelect={() => {
-                                            form.setValue("date", { ...form.watch("date"), day: item.name })
+                                            form.setValue("dates", { ...form.watch("dates"), day: item.name })
                                           }}
                                         >
                                           <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
@@ -187,72 +187,58 @@ export default function Filter() {
 
 
                   {/* MODES */}
-                  <div className="flex justify-end ml-auto gap-7 ">
-                    <div>
-                      <FormField
-                        control={form.control}
-                        name="price"
-                        render={({ field }) => (
-                          <FormControl>
-                            <Button
-                              {...field}
-                              className="px-6 py-6 flex justify-between text-sm gap-2 font-semibold bg-[#068F84] border border-[#E8E8E8]"
-                              onClick={() => console.log('Price data:', form.watch('price'))}
-                            >
-                              Price
-                              <span>
-                                <img width={22} src={Price} alt="" />
-                              </span>
-                            </Button>
-                          </FormControl>
-                        )}
-                      />
+                  <div className="flex justify-end ml-auto gap-7  ">
 
-                    </div>
+                    <FormField
+                      control={form.control}
+                      name="annotate_type"
+                      render={({ field }) => (
+                        <div className="flex gap-7">
+                          <FormItem>
+                            <FormControl>
+                              <Button
+                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${field.value === 'price' ? 'bg-[#068F84] text-white' : 'bg-white text-[#7A7A7A] border border-[#E8E8E8]'}`}
+                                onClick={() => {form.setValue('annotate_type', 'price')}}
+                              >
+                                Price
+                                <span>
+                                  <img width={22} src={Price} alt="" />
+                                </span>
+                              </Button>
+                            </FormControl>
+                          </FormItem>
 
-                    <div>
-                      <FormField
-                        control={form.control}
-                        name="count"
-                        render={({ field }) => (
-                          <FormControl>
-                            <Button
-                              {...field}
-                              className="px-6 py-6 flex justify-between text-sm gap-2 font-semibold bg-white border border-[#E8E8E8] text-[#7A7A7A]"
-                              onClick={() => console.log('Count data:', form.watch('count'))}
-                            >
-                              Count
-                              <span>
-                                <img width={22} src={Count} alt="" />
-                              </span>
-                            </Button>
-                          </FormControl>
-                        )}
-                      />
+                          <FormItem>
+                            <FormControl>
+                              <Button
+                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${field.value === 'count' ? 'bg-[#068F84] text-white' : 'bg-white text-[#7A7A7A] border border-[#E8E8E8]'}`}
+                                onClick={() => { form.setValue('annotate_type', 'count') }}
+                              >
+                                Count
+                                <span>
+                                  <img width={22} src={Count} alt="" />
+                                </span>
+                              </Button>
+                            </FormControl>
+                          </FormItem>
 
-                    </div>
+                          <FormItem>
+                            <FormControl>
+                              <Button
+                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${field.value === 'Patients' ? 'bg-[#068F84] text-white' : 'bg-white text-[#7A7A7A] border border-[#E8E8E8]'}`}
+                                onClick={() => { form.setValue('annotate_type', 'Patients') }}
+                              >
+                                Patients
+                                <span>
+                                  <img width={22} src={Patients} alt="" />
+                                </span>
+                              </Button>
+                            </FormControl>
+                          </FormItem>
+                        </div>
+                      )}
+                    />
 
-                    <div>
-                      <FormField
-                        control={form.control}
-                        name="patients"
-                        render={({ field }) => (
-                          <FormControl>
-                            <Button
-                              {...field}
-                              className="px-6 py-6 flex justify-between text-sm gap-2 font-semibold bg-white border border-[#E8E8E8] text-[#7A7A7A]"
-                              onClick={() => console.log('Patients data:', form.watch('patients'))}
-                            >
-                              Patients
-                              <span>
-                                <img width={22} src={Patients} alt="" />
-                              </span>
-                            </Button>
-                          </FormControl>
-                        )}
-                      />
-
-                    </div>
                   </div>
 
                 </div>
