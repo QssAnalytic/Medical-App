@@ -7,12 +7,11 @@ import { PopoverContent } from "@/common/components/ui/popover";
 import { useFilterStore } from "@/store";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { Check } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { cn } from "@/common/lib/utils";
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import Vector from '/icons/vector.svg'
 import useSWRMutation from "swr/mutation"
-
 import useSWR from "swr";
 import axios from 'axios';
 
@@ -25,29 +24,6 @@ const CompareAllHospitals = () => {
             : null,
         Fetcher);
 
-
-    const [selectedHospitals, setSelectedHospitals] = useState<string[]>([]);
-
-    const handleHospitalSelect = (selectedHospital: any) => {
-        console.log('selectedHospital', selectedHospital)
-        setSelectedHospitals(prevSelected => {
-            if (prevSelected.includes(selectedHospital)) {
-                return prevSelected.filter(hospital => hospital !== selectedHospital);
-            } else {
-                return [...prevSelected, selectedHospital];
-            }
-        });
-    };
-
-    const handleHospitalSelectForm = (item: { id: number }) => {
-        const currValues = form.watch('hospital_ids');
-        if (!currValues.includes(item.id)) {
-            form.setValue('hospital_ids', [...currValues, item.id]);
-        } else {
-            form.setValue('hospital_ids', currValues.filter((val: any) => val !== item.id));
-        }
-    }
-
     useEffect(() => {
         {
             setFilter({
@@ -58,14 +34,21 @@ const CompareAllHospitals = () => {
             })
         }
     }, [])
+
+
     const form = useFormContext()
     useFieldArray({ name: 'hospital_ids', control: form.control })
 
 
     const postData = async (path: string, { arg }: { arg: unknown }) => (await axios.post(path, arg)).data;
+
+    console.log()
+
     const url = 'https://medicalprojectback-production.up.railway.app/hospitals/services/line-bar/'
 
-    const { data: xeyal, trigger: posting } = useSWRMutation(form.getValues() ? url : null, postData)
+    const { data: AllDatas, trigger: posting } = useSWRMutation(form.getValues() ? url : null, postData)
+    console.log(AllDatas)
+    console.log()
 
     const testFn = async () => {
         try {
@@ -78,17 +61,7 @@ const CompareAllHospitals = () => {
 
     useEffect(() => { testFn() }, [form.formState])
 
-    const max = xeyal?.max_count
-
-    // const count = xeyal?.statistics?.map((i: any) => (i?.data))
-    console.log(max)
-
-    // const WiD = () => {
-    //     const percent = count * 100 / max
-    // }
-    // const WidthPercent = `${DDD}%`
-
-    
+    const max = AllDatas?.max_count
 
     return (
         <div>
@@ -130,8 +103,12 @@ const CompareAllHospitals = () => {
                                                                                 value={item.name}
                                                                                 key={item.name}
                                                                                 onSelect={() => {
-                                                                                    handleHospitalSelect(item.name);
-                                                                                    handleHospitalSelectForm(item);
+                                                                                    const currValues = form.watch('hospital_ids');
+                                                                                    if (!currValues.includes(item.id)) {
+                                                                                        form.setValue('hospital_ids', [...currValues, item.id]);
+                                                                                    } else {
+                                                                                        form.setValue('hospital_ids', currValues.filter((val: any) => val !== item.id));
+                                                                                    }
                                                                                 }}
                                                                             >
                                                                                 <Check className={cn("mr-2 h-4 w-4", field.value?.find((id: number) => id === item.id) ? "opacity-100" : "opacity-0")} />
@@ -154,24 +131,25 @@ const CompareAllHospitals = () => {
                     </Form>
                 </div>
 
-
-
                 <div className="scroll overflow-y-auto h-80">
                     <ul>
-                        {selectedHospitals.map((hospital, index) => (
-
-                            <div key={index} className="flex justify-between items-center mt-3 px-5 text-sm ">
-                                <li className="">{index + 1}</li>
-                                <li className="  w-40 text-end">{hospital}</li>
-                                <div className="w-[11rem] pl-2">
-                                    <div className=" bg-[#d8d8d8] rounded h-3">
-                                        <div className="bg-gray-600 h-3 rounded" style={{ width: '10%' }}></div>
+                        {AllDatas?.statistics?.map((item :any, index: number) => {
+                            return (
+                                <div key={index} className="flex justify-between items-center mt-3 px-5 text-sm">
+                                    <li className="">{index + 1}</li>
+                                    <li className="w-40 text-end">{item?.name}</li>
+                                    <div className="w-[11rem] pl-2">
+                                        <div className="bg-[#d8d8d8] rounded h-3">
+                                            <div className="bg-gray-600 h-3 rounded" style={{ width: `${(item?.data / max) * 100}%` }}></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </ul>
+
                 </div>
+
             </div>
         </div>
     );
