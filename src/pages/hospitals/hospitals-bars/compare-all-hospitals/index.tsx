@@ -42,20 +42,18 @@ const CompareAllHospitals = () => {
 
     const postData = async (path: string, { arg }: { arg: unknown }) => (await axios.post(path, arg)).data;
 
-    console.log()
 
     const url = 'https://medicalprojectback-production.up.railway.app/hospitals/services/line-bar/'
 
     const { data: AllDatas, trigger: posting } = useSWRMutation(form.getValues() ? url : null, postData)
-    console.log(AllDatas)
-    console.log()
+    
 
     const testFn = async () => {
         try {
             const postedData = form.getValues()
             await posting(postedData)
         } catch (err) {
-            console.log(err)
+            console.log('err')
         }
     }
 
@@ -63,69 +61,69 @@ const CompareAllHospitals = () => {
 
     const max = AllDatas?.max_count
 
+    console.log(AllDatas)
+
     return (
         <div>
             <h3 className="text-center text-sm mb-2 text-[#068F84]">Compare hospitals by all services based on price</h3>
             <div className="border rounded-lg p-3 h-96 ">
                 <div className="w-full">
                     <Form {...form}>
-                        <form className="">
-                            <div className="flex justify-between ">
+                        <form className="flex justify-between">
 
-                                <div className='w-full'>
-                                    <FormField control={form.control}
-                                        name="hospital_ids"
-                                        render={({ field }) => (
-                                            <div className="flex gap-7  ml-1 ">
-                                                <FormItem className="flex flex-col w-full">
-                                                    <Popover>
-                                                        <PopoverTrigger asChild>
-                                                            <FormControl>
-                                                                <Button
-                                                                    variant="outline"
-                                                                    role="combobox"
-                                                                    className={cn("w-full h-10 flex justify-center bg-[#E3F2F1] gap-3", !field.value && "text-muted-foreground")}
-                                                                >
-                                                                    {field.value ? hospitalsData.find((hospital: any) => field.value.includes(hospital.id))?.name : "Hospital"}
-                                                                    <img src={Vector} alt="" />
-                                                                </Button>
-                                                            </FormControl>
-                                                        </PopoverTrigger>
-                                                        <PopoverContent className="w-[200px] p-0">
-                                                            <Command>
-                                                                <CommandInput placeholder="Search hospital" />
-                                                                <CommandList>
-                                                                    <CommandEmpty>No hospital found.</CommandEmpty>
 
-                                                                    <CommandGroup>
-                                                                        {hospitalsData?.map((item: { name: string, id: number }) => (
-                                                                            <CommandItem
-                                                                                value={item.name}
-                                                                                key={item.name}
-                                                                                onSelect={() => {
-                                                                                    const currValues = form.watch('hospital_ids');
-                                                                                    if (!currValues.includes(item.id)) {
-                                                                                        form.setValue('hospital_ids', [...currValues, item.id]);
-                                                                                    } else {
-                                                                                        form.setValue('hospital_ids', currValues.filter((val: any) => val !== item.id));
-                                                                                    }
-                                                                                }}
-                                                                            >
-                                                                                <Check className={cn("mr-2 h-4 w-4", field.value?.find((id: number) => id === item.id) ? "opacity-100" : "opacity-0")} />
-                                                                                {item.name}
-                                                                            </CommandItem>
-                                                                        ))}
-                                                                    </CommandGroup>
-                                                                </CommandList>
-                                                            </Command>
-                                                        </PopoverContent>
-                                                    </Popover>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            </div>
-                                        )}
-                                    />
-                                </div>
+                            <div className='w-full'>
+                                <FormField control={form.control}
+
+                                    name="hospital_ids"
+                                    render={({ field }) => (
+                                        <FormItem className="flex flex-col w-full">
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <FormControl>
+                                                        <Button
+                                                            variant="outline"
+                                                            role="combobox"
+                                                            className={cn("w-full h-10 flex justify-center bg-[#E3F2F1] gap-3", !field.value && "text-muted-foreground")}
+                                                        >
+                                                            {field.value ? hospitalsData.find((hospital: any) => field.value.includes(hospital.id))?.name : "Hospital"}
+                                                            <img src={Vector} alt="" />
+                                                        </Button>
+                                                    </FormControl>
+                                                </PopoverTrigger>
+                                                <PopoverContent className="w-[200px] p-0">
+                                                    <Command>
+                                                        <CommandInput placeholder="Search hospital" />
+                                                        <CommandList>
+                                                            <CommandEmpty>No hospital found.</CommandEmpty>
+
+                                                            <CommandGroup>
+                                                                {hospitalsData?.map((item: { name: string, id: number }) => (
+                                                                    <CommandItem
+                                                                        value={item.id}
+                                                                        key={item.name}
+                                                                        onSelect={() => {
+                                                                            const currValues = form.watch('hospital_ids');
+                                                                            if (!currValues.includes(item.id)) {
+                                                                                form.setValue('hospital_ids', [...currValues, item.id]);
+                                                                            } else {
+                                                                                form.setValue('hospital_ids', currValues.filter((val: any) => val !== item.id));
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        <Check className={cn("mr-2 h-4 w-4", field.value?.find((id: number) => id === item.id) ? "opacity-100" : "opacity-0")} />
+                                                                        {item.name}
+                                                                    </CommandItem>
+                                                                ))}
+                                                            </CommandGroup>
+                                                        </CommandList>
+                                                    </Command>
+                                                </PopoverContent>
+                                            </Popover>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
                             </div>
                         </form>
                     </Form>
@@ -133,15 +131,17 @@ const CompareAllHospitals = () => {
 
                 <div className="scroll overflow-y-auto h-80">
                     <ul>
-                        {AllDatas?.statistics?.map((item :any, index: number) => {
+                        {AllDatas?.statistics?.map((item: any, index: number) => {
                             return (
                                 <div key={index} className="flex justify-between items-center mt-3 px-5 text-sm">
                                     <li className="">{index + 1}</li>
                                     <li className="w-40 text-end">{item?.name}</li>
+                                    <div>
                                     <div className="w-[11rem] pl-2">
                                         <div className="bg-[#d8d8d8] rounded h-3">
                                             <div className="bg-gray-600 h-3 rounded" style={{ width: `${(item?.data / max) * 100}%` }}></div>
                                         </div>
+                                    </div>
                                     </div>
                                 </div>
                             );

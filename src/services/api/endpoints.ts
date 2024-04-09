@@ -9,7 +9,7 @@ const filterEndpoints: FilterEndpoints = {
     
   
 
-  services: "services/",
+  services: "hospitals/services/",
 };
 
 export { filterEndpoints };
