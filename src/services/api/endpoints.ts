@@ -1,10 +1,14 @@
 interface FilterEndpoints {
-  hospitals: (hos: string) => string;
+  hospitals: string,
   services: string;
 }
 
 const filterEndpoints: FilterEndpoints = {
-  hospitals: (hospital) => `${hospital}/`,
+  hospitals: 'hospitals/',
+  // hospitals/services/line-bar
+    
+  
+
   services: "services/",
 };
 

@@ -4,23 +4,24 @@ import { FormProvider, useForm } from "react-hook-form";
 
 export default function Layout() {
 
-  const form = useForm()
+  const form = useForm({mode : 'onChange'})
+
 
   return (
     <FormProvider {...form}>
       <div className="theme-  bg-current ">
-        <header >
-          <div className="p-8">
+      <header className="header">
+        <div className="header-container p-8">
+          <div className="header-inner">
             <Filter />
           </div>
-        </header>
+        </div>
+      </header>
 
         <main>
-          <div>
-            <div>
+            <div className="px-8">
               <Outlet />
             </div>
-          </div>
         </main>
       </div>
     </FormProvider>
