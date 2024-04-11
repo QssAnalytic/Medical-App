@@ -10,8 +10,9 @@ export function clearUndefinedValues(obj: TFormValues) {
   return Object.entries(obj)
     ?.map(([key, value]) => {
       if (
-        (value !== undefined && value?.length > 0) ||
-        (typeof value === "object" && Object.values(value)?.length > 0)
+        (value !== undefined && typeof value !== "object") ||
+        (Array.isArray(value) && value.length > 0) ||
+       (typeof value === 'object' && Object.keys(value).length > 0)
       ) {
         return {
           [key]: value,
