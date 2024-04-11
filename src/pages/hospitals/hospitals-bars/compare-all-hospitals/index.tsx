@@ -11,8 +11,8 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/common/co
 import { PopoverContent } from "@/common/components/ui/popover";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { Check } from "lucide-react";
-import { useEffect } from "react";
-import { cn } from "@/common/lib/utils";
+import { useEffect, useState } from "react";
+import { clearUndefinedValues, cn, mergeObjects } from "@/common/lib/utils";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import Vector from "/icons/vector.svg";
 import useSWRMutation from "swr/mutation";
@@ -24,6 +24,7 @@ import { colorsForHospital } from "@/common/static";
 
 const CompareAllHospitals = () => {
   const form = useFormContext();
+  const [open, setOpen] = useState<boolean>(false)
   useFieldArray({ name: "hospital_ids", control: form.control });
 
   const { data: hospitals } = useSWR<THospital[]>(hospitalEndpoints.base, getData);
@@ -32,38 +33,16 @@ const CompareAllHospitals = () => {
     getDataViaPost,
   );
 
-  function mergeObjects(obj1: any, obj2: any) {
-    const merged = { ...obj1 };
-    for (const key in obj2) {
-      if (obj2.hasOwnProperty(key)) {
-        if (typeof obj2[key] === "object" && !Array.isArray(obj2[key])) {
-          merged[key] = mergeObjects(obj1[key] || {}, obj2[key]);
-        } else {
-          merged[key] = obj2[key];
-        }
-      }
-    }
-    return merged;
-  }
-
-  const postedParams = Object.entries(form.getValues())
-    ?.map(([key, value]) => {
-      if (
-        value !== undefined &&
-        ((typeof value === "string" && value.trim().length > 0) ||
-          (Array.isArray(value) && value.length > 0) ||
-          (typeof value === "object" && Object.keys(value).length > 0))
-      ) {
-        return {
-          [key]: value,
-        };
-      }
-    })
-    .filter((item) => item !== undefined)
-    .reduce((acc, obj) => mergeObjects(acc, obj), {});
+  // Important key-values for comparing all hospitals
+  const postedParams = clearUndefinedValues({
+    dates: form.watch("dates"),
+    annotate_type: form.watch("annotate_type"),
+    hospital_ids: form.watch("hospital_ids"),
+  }).reduce((acc, obj) => mergeObjects(acc, obj), {});
 
   const getLineBars = async () => {
     try {
+      console.log("posted params", postedParams);
       await postParams(postedParams);
     } catch (err) {
       console.log("err");
@@ -87,7 +66,7 @@ const CompareAllHospitals = () => {
                   name="hospital_ids"
                   render={({ field }) => (
                     <FormItem className="flex flex-col w-full">
-                      <Popover>
+                      <Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
@@ -118,11 +97,13 @@ const CompareAllHospitals = () => {
                                       const currValues = form.watch("hospital_ids");
                                       if (!currValues.includes(item.id)) {
                                         form.setValue("hospital_ids", [...currValues, item.id]);
+                                        setOpen(false)
                                       } else {
                                         form.setValue(
                                           "hospital_ids",
                                           currValues.filter((val: any) => val !== item.id),
                                         );
+                                        setOpen(false)
                                       }
                                     }}>
                                     <Check
