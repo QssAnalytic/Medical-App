@@ -3,25 +3,23 @@ import Filter from "../filter";
 import { FormProvider, useForm } from "react-hook-form";
 
 export default function Layout() {
-
-  const form = useForm({mode : 'onChange'})
-
+  const form = useForm({ mode: "onChange", defaultValues: { annotate_type: "price" } });
 
   return (
     <FormProvider {...form}>
-      <div className="theme-  bg-current ">
-      <header className="header">
-        <div className="header-container p-8">
-          <div className="header-inner">
-            <Filter />
+      <div className="theme-bg-current">
+        <header className="header">
+          <div className="header-container p-8">
+            <div className="header-inner">
+              <Filter />
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
         <main>
-            <div className="px-8">
-              <Outlet />
-            </div>
+          <div className="px-8">
+            <Outlet />
+          </div>
         </main>
       </div>
     </FormProvider>

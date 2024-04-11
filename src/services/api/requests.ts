@@ -1,7 +1,6 @@
 import { instance } from ".";
 
-const Fetcher = async (path :string) => 
-(await instance.get(path)).data;
+const getData = async (path: string) => (await instance.get(path)).data;
+const getDataViaPost = async (path: string, { arg }: { arg: unknown }) => (await instance.post(path, arg)).data;
 
-export { Fetcher };
- 
+export { getData, getDataViaPost };

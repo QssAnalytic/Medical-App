@@ -1,4 +1,3 @@
-import { hospitals } from "@/common/static";
 import { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 

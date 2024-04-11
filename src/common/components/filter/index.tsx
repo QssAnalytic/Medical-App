@@ -1,25 +1,28 @@
-import { Form, FormControl, FormField, FormItem, FormMessage, } from "../ui/form"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, } from "../ui/command"
-import { Popover, PopoverContent, PopoverTrigger, } from "../ui/popover"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Check } from "lucide-react";
 import { cn } from "@/common/lib/utils";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { CommandList } from "cmdk";
-import Count from '/icons/count.svg'
-import Price from '/icons/price.svg'
-import Vector from '/icons/vector.svg'
-import Patients from '/icons/patients.svg'
+import Count from "/icons/count.svg";
+import Price from "/icons/price.svg";
+import Vector from "/icons/vector.svg";
+import Patients from "/icons/patients.svg";
 import { days, months, years } from "@/common/static";
 import { useFormContext } from "react-hook-form";
-
+import { useEffect } from "react";
+import {TDay, TMonth, TYear } from "@/pages/hospitals/types";
 
 export default function Filter() {
-
-  const form = useFormContext()
+  const form = useFormContext();
 
   const filterSubmit = (data: any) => console.log("filter datas", data);
+  useEffect(() => {
+    console.log("form dates", form.watch("dates"));
+  }, [form.watch("dates")?.year, form.watch("dates")?.month, form.watch("dates")?.day]);
 
   return (
     <div className="filter">
@@ -40,16 +43,15 @@ export default function Filter() {
 
           <div className="w-full">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(filterSubmit)} className="">
+              <form onSubmit={form.handleSubmit(filterSubmit)}>
                 <div className="flex justify-between">
-
                   {/* DATE */}
                   <div>
-                    <FormField control={form.control}
+                    <FormField
+                      control={form.control}
                       name="dates"
                       render={({ field }) => (
                         <div className="flex gap-7  ml-10">
-
                           <FormItem className="flex flex-col">
                             <Popover>
                               <PopoverTrigger asChild>
@@ -57,9 +59,13 @@ export default function Filter() {
                                   <Button
                                     variant="outline"
                                     role="combobox"
-                                    className={cn("w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3", !field.value && "text-muted-foreground")}
-                                  >
-                                    {field.value?.year ? years.find((years) => years.name === field.value?.year)?.name : "Year"}
+                                    className={cn(
+                                      "w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3",
+                                      !field.value && "text-muted-foreground",
+                                    )}>
+                                    {field.value?.year
+                                      ? years.find((years) => years.data === field.value?.year)?.data
+                                      : "Year"}
                                     <img src={Vector} alt="" />
                                   </Button>
                                 </FormControl>
@@ -69,20 +75,21 @@ export default function Filter() {
                                   <CommandInput placeholder="Search year" />
                                   <CommandList>
                                     <CommandEmpty>No year found.</CommandEmpty>
-
                                     <CommandGroup>
-                                      {years.map((item: { name: string, id: number }) => (
+                                      {years.map((item: TYear) => (
                                         <CommandItem
-                                          value={item.name}
-                                          key={item.name}
+                                          value={item.data.toString()}
+                                          key={item.data}
                                           onSelect={() => {
-                                            form.setValue("dates", { ...form.watch("dates"), year: item.name })
-                                            // form.setValue("hospital_ids", [...form.watch('hospital_ids'), form.watch('hospital_ids').find((id : string)=> id !== item.name ? item.name : '')])
-
-                                          }}
-                                        >
-                                          <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
-                                          {item.name}
+                                            form.setValue("dates", { ...form.watch("dates"), year: item.data });
+                                          }}>
+                                          <Check
+                                            className={cn(
+                                              "mr-2 h-4 w-4",
+                                              item.data === field.value?.year ? "opacity-100" : "opacity-0",
+                                            )}
+                                          />
+                                          {item.data}
                                         </CommandItem>
                                       ))}
                                     </CommandGroup>
@@ -91,19 +98,21 @@ export default function Filter() {
                               </PopoverContent>
                             </Popover>
                             <FormMessage />
-                          </FormItem> 
+                          </FormItem>
 
                           <FormItem className="flex flex-col">
                             <Popover>
                               <PopoverTrigger asChild>
                                 <FormControl>
-                                  <Button variant="outline" role="combobox"
-                                    className={cn("w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3", !field.value && "text-muted-foreground")}
-                                  >
+                                  <Button
+                                    variant="outline"
+                                    role="combobox"
+                                    className={cn(
+                                      "w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3",
+                                      !field.value && "text-muted-foreground",
+                                    )}>
                                     {field.value?.month
-                                      ? months.find(
-                                        (months) => months.name === field.value?.month
-                                      )?.name
+                                      ? months.find((months) => months.data === field.value?.month)?.data
                                       : "Month"}
                                     <img src={Vector} alt="" />
                                   </Button>
@@ -116,16 +125,20 @@ export default function Filter() {
                                     <CommandEmpty>No month found.</CommandEmpty>
 
                                     <CommandGroup>
-                                      {months.map((item: { name: string, id: number }) => (
+                                      {months.map((item: TMonth) => (
                                         <CommandItem
-                                          value={item.name}
-                                          key={item.name}
+                                          value={item.data}
+                                          key={item.data}
                                           onSelect={() => {
-                                            form.setValue("dates", { ...form.watch("dates"), month: item.id })
-                                          }}
-                                        >
-                                          <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
-                                          {item.name}
+                                            form.setValue("dates", { ...form.watch("dates"), month: item.id });
+                                          }}>
+                                          <Check
+                                            className={cn(
+                                              "mr-2 h-4 w-4",
+                                              item.data === field.value?.year ? "opacity-100" : "opacity-0",
+                                            )}
+                                          />
+                                          {item.data}
                                         </CommandItem>
                                       ))}
                                     </CommandGroup>
@@ -143,12 +156,12 @@ export default function Filter() {
                                   <Button
                                     variant="outline"
                                     role="combobox"
-                                    className={cn("w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3", !field.value && "text-muted-foreground")}
-                                  >
+                                    className={cn(
+                                      "w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3",
+                                      !field.value && "text-muted-foreground",
+                                    )}>
                                     {field.value?.day
-                                      ? days.find(
-                                        (days) => days.name === field.value?.day
-                                      )?.name
+                                      ? days.find((days) => days.data === field.value?.day)?.data
                                       : "Day"}
                                     <img src={Vector} alt="" />
                                   </Button>
@@ -159,18 +172,21 @@ export default function Filter() {
                                   <CommandInput placeholder="Search day..." />
                                   <CommandList>
                                     <CommandEmpty>No day found.</CommandEmpty>
-
                                     <CommandGroup>
-                                      {days.map((item: { name: string, id: number }) => (
+                                      {days.map((item: TDay) => (
                                         <CommandItem
-                                          value={item.name}
-                                          key={item.name}
+                                          value={item.data.toString()}
+                                          key={item.data}
                                           onSelect={() => {
-                                            form.setValue("dates", { ...form.watch("dates"), day: item.name })
-                                          }}
-                                        >
-                                          <Check className={cn("mr-2 h-4 w-4", item.name === field.value?.year ? "opacity-100" : "opacity-0")} />
-                                          {item.name}
+                                            form.setValue("dates", { ...form.watch("dates"), day: item.data });
+                                          }}>
+                                          <Check
+                                            className={cn(
+                                              "mr-2 h-4 w-4",
+                                              item.data === field.value?.year ? "opacity-100" : "opacity-0",
+                                            )}
+                                          />
+                                          {item.data}
                                         </CommandItem>
                                       ))}
                                     </CommandGroup>
@@ -185,10 +201,8 @@ export default function Filter() {
                     />
                   </div>
 
-
                   {/* MODES */}
                   <div className="flex justify-end ml-auto gap-7  ">
-
                     <FormField
                       control={form.control}
                       name="annotate_type"
@@ -197,9 +211,14 @@ export default function Filter() {
                           <FormItem>
                             <FormControl>
                               <Button
-                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${field.value === 'price' ? 'bg-[#068F84] text-white' : 'bg-white text-[#7A7A7A] border border-[#E8E8E8]'}`}
-                                onClick={() => {form.setValue('annotate_type', 'price')}}
-                              >
+                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
+                                  field.value === "price"
+                                    ? "bg-[#068F84] text-white"
+                                    : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
+                                }`}
+                                onClick={() => {
+                                  form.setValue("annotate_type", "price");
+                                }}>
                                 Price
                                 <span>
                                   <img width={22} src={Price} alt="" />
@@ -211,9 +230,14 @@ export default function Filter() {
                           <FormItem>
                             <FormControl>
                               <Button
-                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${field.value === 'count' ? 'bg-[#068F84] text-white' : 'bg-white text-[#7A7A7A] border border-[#E8E8E8]'}`}
-                                onClick={() => { form.setValue('annotate_type', 'count') }}
-                              >
+                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
+                                  field.value === "count"
+                                    ? "bg-[#068F84] text-white"
+                                    : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
+                                }`}
+                                onClick={() => {
+                                  form.setValue("annotate_type", "count");
+                                }}>
                                 Count
                                 <span>
                                   <img width={22} src={Count} alt="" />
@@ -225,9 +249,14 @@ export default function Filter() {
                           <FormItem>
                             <FormControl>
                               <Button
-                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${field.value === 'Patients' ? 'bg-[#068F84] text-white' : 'bg-white text-[#7A7A7A] border border-[#E8E8E8]'}`}
-                                onClick={() => { form.setValue('annotate_type', 'Patients') }}
-                              >
+                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
+                                  field.value === "Patients"
+                                    ? "bg-[#068F84] text-white"
+                                    : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
+                                }`}
+                                onClick={() => {
+                                  form.setValue("annotate_type", "Patients");
+                                }}>
                                 Patients
                                 <span>
                                   <img width={22} src={Patients} alt="" />
@@ -238,14 +267,11 @@ export default function Filter() {
                         </div>
                       )}
                     />
-
                   </div>
-
                 </div>
               </form>
             </Form>
           </div>
-
         </div>
       </div>
     </div>

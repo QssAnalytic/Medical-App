@@ -9,7 +9,7 @@ export default function HospitalsBars( ) {
         <CompareAllHospitals />
       </div>
       <div className="w-2/3 ">
-        <DifferenceHospitals />
+        {/* <DifferenceHospitals /> */}
       </div>
 
     </section>
