@@ -1,4 +1,4 @@
-import Chart from "@/common/components/charts";
+// import Chart from "@/common/components/charts";
 // import { SelectBox } from "@/common/components/filter/components/select-box";
 // import { Form, FormField, FormItem } from "@/common/components/ui/form";
 // import { months, years } from "@/common/static";
@@ -36,9 +36,9 @@ const HospitalsCharts = () => {
                 </div>
             </div>
             <div className="w-full  flex items-center justify-between">
+                {/* <div><Chart /></div>
                 <div><Chart /></div>
-                <div><Chart /></div>
-                <div><Chart /></div>
+                <div><Chart /></div> */}
             </div>
         </div>
     )

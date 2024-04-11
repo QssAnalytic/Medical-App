@@ -1,15 +1,8 @@
-interface FilterEndpoints {
-  hospitals: string,
-  services: string;
-}
+const hospitalEndpoints = new (class {
+  base = "hospitals/";
+  services = `${this.base}services/`;
+  lineBar = `${this.services}line-bar/`;
+  charts = `${this.services}charts/`;
+})();
 
-const filterEndpoints: FilterEndpoints = {
-  hospitals: 'hospitals/',
-  // hospitals/services/line-bar
-    
-  
-
-  services: "services/",
-};
-
-export { filterEndpoints };
+export { hospitalEndpoints };
