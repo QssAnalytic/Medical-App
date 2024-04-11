@@ -23,7 +23,7 @@ import { TFormValues } from "@/common/types";
 
 const Choices = ({ mainKey }: { mainKey: string }) => {
   const form = useFormContext();
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false);
 
   const { data: services } = useSWR(hospitalEndpoints.services, getData);
   const {
@@ -34,14 +34,15 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
 
   const postServicesParams = async () => {
     try {
-      const postedData: TFormValues = {
-        ...form.getValues(),
-        service_id: form.watch(`service_id_${mainKey}`),
-      };
-      delete postedData?.[`service_id_st`];
-      delete postedData?.[`service_id_nd`];
-      await postParams(postedData);
-      console.log("posted data", postedData);
+      if (form.watch(`service_id_${mainKey}`)) {
+        const postedData: TFormValues = {
+          ...form.getValues(),
+          service_id: form.watch(`service_id_${mainKey}`),
+        };
+        delete postedData?.[`service_id_st`];
+        delete postedData?.[`service_id_nd`];
+        await postParams(postedData);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -49,7 +50,12 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
 
   useEffect(() => {
     postServicesParams();
-  }, [form.watch(`service_id_${mainKey}`)]);
+  }, [
+    form.watch(`service_id_${mainKey}`),
+    form.watch("hospital_ids"),
+    form.watch("dates"),
+    form.watch("annotate_type"),
+  ]);
 
   return (
     <div className="border rounded-lg  bg-white">
@@ -93,7 +99,7 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
                                   key={item.name}
                                   onSelect={() => {
                                     form.setValue(`service_id_${mainKey}`, item.id);
-                                    setOpen(false)
+                                    setOpen(false);
                                   }}>
                                   {/* <Check className={cn("mr-2 h-4 w-4", (field.value) && field.value.find && field.value.find((id: number) => id === item.id) ? "opacity-100" : "opacity-0")} /> */}
                                   {item.name}
