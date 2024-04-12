@@ -1,5 +1,5 @@
-import{ useRef } from "react";
-import { LineChart, CartesianGrid, XAxis, YAxis, Line } from "recharts";
+import { useRef } from "react";
+import { LineChart, CartesianGrid, XAxis, YAxis, Line, DotProps } from "recharts";
 
 interface HospitalStatistics {
   date: string;
@@ -16,7 +16,7 @@ interface ChartProps {
 }
 
 export default function Chart({ chartsInfo }: ChartProps) {
-  const tooltipRef = useRef<HTMLDivElement>(null); // Specify the type of the ref
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   const chartData: any[] = [];
 
@@ -37,15 +37,13 @@ export default function Chart({ chartsInfo }: ChartProps) {
       <div
         className="tooltip absolute border shadow rounded-md bg-gray-50 w-64 h-16 p-2 z-50 text-sm text-prettier break-all"
         ref={tooltipRef}
-        hidden
-      ></div>
+        hidden></div>
       <LineChart
         className="relative"
         width={500}
         height={350}
         data={chartData}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" interval="preserveStartEnd" />
         <YAxis width={30} />
@@ -55,16 +53,18 @@ export default function Chart({ chartsInfo }: ChartProps) {
             key={hospital.hospital__name}
             type="monotone"
             dot={{
-              onMouseMove: (e) => {
+              onMouseMove: (e: DotProps & { dataKey: string; value: number }) => {
                 if (tooltipRef.current) {
                   tooltipRef.current.hidden = false;
                   const value = e.value;
                   const x = e.cx;
                   const y = e.cy;
 
+                  console.log("ee", e);
+
                   tooltipRef.current.innerHTML = `<p>Hospital : ${e.dataKey}</p> <p>Price : ${value}</p>`;
                   if (tooltipRef.current.style) {
-                    tooltipRef.current.style.top = `${y - 72}px`;
+                    tooltipRef.current.style.top = `${(y || 0) - 72}px`;
                     tooltipRef.current.style.left = `${x}px`;
                   }
                 }
