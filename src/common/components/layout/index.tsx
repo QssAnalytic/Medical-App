@@ -7,7 +7,7 @@ export default function Layout() {
 
   return (
     <FormProvider {...form}>
-      <div className="theme-bg-current">
+      <div className="theme-bg-current flex flex-col size-full">
         <header className="header">
           <div className="header-container p-8">
             <div className="header-inner">
@@ -16,8 +16,8 @@ export default function Layout() {
           </div>
         </header>
 
-        <main>
-          <div className="px-8">
+        <main className="grow">
+          <div className="px-8 h-full">
             <Outlet />
           </div>
         </main>

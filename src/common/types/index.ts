@@ -19,9 +19,9 @@ type TFormValues = {
   service_id_st?: number;
   service_id_nd?: number;
   dates?: {
-    year: number;
-    month: number;
-    day: number;
+    year?: number;
+    month?: number;
+    day?: number;
   };
 };
 

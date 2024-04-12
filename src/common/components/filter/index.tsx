@@ -1,4 +1,4 @@
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import { Form, FormControl, FormField, FormItem} from "../ui/form";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Check } from "lucide-react";
@@ -14,7 +14,7 @@ import Patients from "/icons/patients.svg";
 import { days, months, years } from "@/common/static";
 import { useFormContext } from "react-hook-form";
 import { useEffect } from "react";
-import {TDay, TMonth, TYear } from "@/pages/hospitals/types";
+import { TDay, TMonth, TYear } from "@/pages/hospitals/types";
 
 export default function Filter() {
   const form = useFormContext();
@@ -72,7 +72,7 @@ export default function Filter() {
                               </PopoverTrigger>
                               <PopoverContent className="w-[200px] p-0">
                                 <Command>
-                                  <CommandInput placeholder="Search year" />
+                                  <CommandInput placeholder="Search..." />
                                   <CommandList>
                                     <CommandEmpty>No year found.</CommandEmpty>
                                     <CommandGroup>
@@ -97,10 +97,9 @@ export default function Filter() {
                                 </Command>
                               </PopoverContent>
                             </Popover>
-                            <FormMessage />
                           </FormItem>
 
-                          <FormItem className="flex flex-col">
+                          <FormItem>
                             <Popover>
                               <PopoverTrigger asChild>
                                 <FormControl>
@@ -108,7 +107,7 @@ export default function Filter() {
                                     variant="outline"
                                     role="combobox"
                                     className={cn(
-                                      "w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3",
+                                      "w-36 h-12 flex justify-between bg-[#E3F2F1] gap-3",
                                       !field.value && "text-muted-foreground",
                                     )}>
                                     {field.value?.month
@@ -118,13 +117,13 @@ export default function Filter() {
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
-                              <PopoverContent className="w-[200px] p-0">
+                              <PopoverContent>
                                 <Command>
-                                  <CommandInput placeholder="Search month..." />
+                                  <CommandInput placeholder="Search..." />
                                   <CommandList>
                                     <CommandEmpty>No month found.</CommandEmpty>
 
-                                    <CommandGroup>
+                                    <CommandGroup className="h-36 overflow-y-scroll">
                                       {months.map((item: TMonth) => (
                                         <CommandItem
                                           value={item.data}
@@ -134,7 +133,6 @@ export default function Filter() {
                                           }}>
                                           <Check
                                             className={cn(
-                                              "mr-2 h-4 w-4",
                                               item.data === field.value?.year ? "opacity-100" : "opacity-0",
                                             )}
                                           />
@@ -146,7 +144,6 @@ export default function Filter() {
                                 </Command>
                               </PopoverContent>
                             </Popover>
-                            <FormMessage />
                           </FormItem>
 
                           <FormItem className="flex flex-col">
@@ -167,12 +164,12 @@ export default function Filter() {
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
-                              <PopoverContent className="w-[200px] p-0">
+                              <PopoverContent>
                                 <Command>
-                                  <CommandInput placeholder="Search day..." />
+                                  <CommandInput placeholder="Search..." />
                                   <CommandList>
                                     <CommandEmpty>No day found.</CommandEmpty>
-                                    <CommandGroup>
+                                    <CommandGroup className="h-36 overflow-y-scroll">
                                       {days.map((item: TDay) => (
                                         <CommandItem
                                           value={item.data.toString()}
@@ -182,7 +179,6 @@ export default function Filter() {
                                           }}>
                                           <Check
                                             className={cn(
-                                              "mr-2 h-4 w-4",
                                               item.data === field.value?.year ? "opacity-100" : "opacity-0",
                                             )}
                                           />
@@ -194,7 +190,6 @@ export default function Filter() {
                                 </Command>
                               </PopoverContent>
                             </Popover>
-                            <FormMessage />
                           </FormItem>
                         </div>
                       )}
