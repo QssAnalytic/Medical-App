@@ -12,18 +12,18 @@ export const days = [
 ];
 
 export const months = [
-  { data: "January", id: 0 },
-  { data: "February", id: 1 },
-  { data: "March", id: 2 },
-  { data: "April", id: 3 },
-  { data: "May", id: 4 },
-  { data: "June", id: 5 },
-  { data: "July", id: 6 },
-  { data: "August", id: 7 },
-  { data: "September", id: 8 },
-  { data: "October", id: 9 },
-  { data: "November", id: 10 },
-  { data: "December", id: 11 },
+  { data: "January", id: 1 },
+  { data: "February", id: 2 },
+  { data: "March", id: 3 },
+  { data: "April", id: 4 },
+  { data: "May", id: 5 },
+  { data: "June", id: 6 },
+  { data: "July", id: 7 },
+  { data: "August", id: 8 },
+  { data: "September", id: 9 },
+  { data: "October", id: 10 },
+  { data: "November", id: 11 },
+  { data: "December", id: 12 },
 ];
 
 export const years = [

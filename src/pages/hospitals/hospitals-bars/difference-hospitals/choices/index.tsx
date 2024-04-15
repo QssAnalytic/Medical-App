@@ -20,6 +20,7 @@ import { getData, getDataViaPost } from "@/services/api/requests";
 import { useEffect, useState } from "react";
 import { Loader } from "lucide-react";
 import { TFormValues } from "@/common/types";
+import { colorsForHospital } from "@/common/static";
 
 const Choices = ({ mainKey }: { mainKey: string }) => {
   const form = useFormContext();
@@ -35,6 +36,9 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
   const postServicesParams = async () => {
     try {
       if (form.watch(`service_id_${mainKey}`)) {
+        // !!Important
+        // const filteredKeys = Object.entries(form.getValues()).filter(([key, value ] : any)=> value !== undefined && value?.length > 0)
+        // console.log('filteredKeys', filteredKeys)
         const postedData: TFormValues = {
           ...form.getValues(),
           service_id: form.watch(`service_id_${mainKey}`),
@@ -133,7 +137,7 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
                         <div className="bg-[#d8d8d8] rounded h-3">
                           <div
                             className="bg-gray-600 h-3 rounded"
-                            style={{ width: `${(item?.data / lineBars?.max_count) * 100}%` }}></div>
+                            style={{ width: `${(item?.data / lineBars?.max_count) * 100}%`,  background: `${colorsForHospital[index]}`, }}></div>
                         </div>
                       </div>
                       <div className=" w-5">{item?.data}</div>
