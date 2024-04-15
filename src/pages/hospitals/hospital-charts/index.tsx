@@ -39,7 +39,7 @@ const HospitalsCharts = () => {
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                "w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3",
+                                "w-52 h-12 flex justify-center bg-[#E3F2F1] gap-3",
                                 !field.value && "text-muted-foreground",
                               )}>
                               {field.value?.year
@@ -85,11 +85,11 @@ const HospitalsCharts = () => {
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                "w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3",
+                                "w-52 h-12 flex justify-center bg-[#E3F2F1] gap-3",
                                 !field.value && "text-muted-foreground",
                               )}>
                               {field.value?.month
-                                ? months.find((month) => month.data === field.value?.month)?.data
+                                ? months.find((month) => month.id === field.value?.month)?.data
                                 : "Month"}
                               <img src={Vector} alt="" />
                             </Button>
@@ -106,7 +106,7 @@ const HospitalsCharts = () => {
                                     value={item.data.toString()}
                                     key={item.data}
                                     onSelect={() => {
-                                      form.setValue("chart_date", { ...form.watch("chart_date"), month: item.data });
+                                      form.setValue("chart_date", { ...form.watch("chart_date"), month: item.id });
                                     }}>
                                     <Check
                                       className={cn(

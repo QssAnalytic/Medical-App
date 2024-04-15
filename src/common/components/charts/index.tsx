@@ -15,7 +15,7 @@ interface ChartProps {
   chartsInfo?: HospitalInfo[];
 }
 
-export default function Chart({ chartsInfo }: ChartProps) {
+export default function Chart({ chartsInfo}: ChartProps) {
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const chartData: any[] = [];
@@ -44,9 +44,9 @@ export default function Chart({ chartsInfo }: ChartProps) {
         height={350}
         data={chartData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" interval="preserveStartEnd" />
-        <YAxis width={30} />
+        <CartesianGrid horizontal={true} vertical={false} verticalFill={['#D9D9D9']}/>
+        <XAxis  dataKey="name" interval="preserveStartEnd"  />
+        <YAxis width={30} tickSize={1}/>
 
         {chartsInfo?.map((hospital: HospitalInfo) => (
           <Line

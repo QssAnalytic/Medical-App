@@ -10,7 +10,7 @@ import {
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/common/components/ui/form";
 import { PopoverContent } from "@/common/components/ui/popover";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
-import { Check } from "lucide-react";
+import { Check, Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { clearUndefinedValues, cn, mergeObjects } from "@/common/lib/utils";
 import { useFieldArray, useFormContext } from "react-hook-form";
@@ -24,14 +24,15 @@ import { colorsForHospital } from "@/common/static";
 
 const CompareAllHospitals = () => {
   const form = useFormContext();
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false);
   useFieldArray({ name: "hospital_ids", control: form.control });
 
   const { data: hospitals } = useSWR<THospital[]>(hospitalEndpoints.base, getData);
-  const { data: lineBars, trigger: postParams } = useSWRMutation(
-    form.watch("hospital_ids") ? hospitalEndpoints.lineBar : null,
-    getDataViaPost,
-  );
+  const {
+    data: lineBars,
+    trigger: postParams,
+    isMutating: loading,
+  } = useSWRMutation(form.watch("hospital_ids") ? hospitalEndpoints.lineBar : null, getDataViaPost);
 
   // Important key-values for comparing all hospitals
   const postedParams = clearUndefinedValues({
@@ -51,6 +52,7 @@ const CompareAllHospitals = () => {
 
   useEffect(() => {
     getLineBars();
+    console.log('annotate_type compare all', form.watch('annotate_type') )
   }, [form.watch("hospital_ids", form.watch("annotate_type")), form.watch("dates")]);
 
   return (
@@ -97,13 +99,13 @@ const CompareAllHospitals = () => {
                                       const currValues = form.watch("hospital_ids");
                                       if (!currValues.includes(item.id)) {
                                         form.setValue("hospital_ids", [...currValues, item.id]);
-                                        setOpen(false)
+                                        setOpen(false);
                                       } else {
                                         form.setValue(
                                           "hospital_ids",
                                           currValues.filter((val: any) => val !== item.id),
                                         );
-                                        setOpen(false)
+                                        setOpen(false);
                                       }
                                     }}>
                                     <Check
@@ -131,26 +133,32 @@ const CompareAllHospitals = () => {
 
         <div className="scroll overflow-y-auto h-80">
           <ul>
-            {lineBars?.statistics?.map((item: THospitalSecondary, index: number) => {
-              return (
-                <div key={index} className="flex justify-between items-center mt-3 px-5 text-sm">
-                  <li className="">{index + 1}</li>
-                  <li className="w-40 text-end">{item?.name}</li>
-                  <div>
-                    <div className="w-[11rem] pl-2">
-                      <div className="bg-[#d8d8d8] rounded h-3">
-                        <div
-                          className="h-3 rounded"
-                          style={{
-                            width: `${(item?.data / lineBars?.max_count) * 100}%`,
-                            background: `${colorsForHospital[index]}`,
-                          }}></div>
+            {!loading ? (
+              lineBars?.statistics?.map((item: THospitalSecondary, index: number) => {
+                return (
+                  <div key={index} className="flex justify-between items-center mt-3 px-5 text-sm">
+                    <li className="">{index + 1}</li>
+                    <li className="w-40 text-end">{item?.name}</li>
+                    <div>
+                      <div className="w-[11rem] pl-2">
+                        <div className="bg-[#d8d8d8] rounded h-3">
+                          <div
+                            className="h-3 rounded"
+                            style={{
+                              width: `${(item?.data / lineBars?.max_count) * 100}%`,
+                              background: `${colorsForHospital[index]}`,
+                            }}></div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className="flex h-80 justify-center items-center">
+                <Loader size={30} className="animate-spin" />
+              </div>
+            )}
           </ul>
         </div>
       </div>

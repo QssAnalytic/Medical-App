@@ -30,7 +30,7 @@ export default function CompareByCharts() {
     }
   };
   return (
-    <div className="h-[400px] bg-[#FFFFFF] border border-[#E8E8E8] rounded p-3 grow">
+    <div className="h-[360px] bg-[#FFFFFF] border border-[#E8E8E8] rounded p-3 grow">
       <Chart chartsInfo={charts} />
     </div>
   );
