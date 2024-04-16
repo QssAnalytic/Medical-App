@@ -18,7 +18,7 @@ import useSWR from "swr";
 import { hospitalEndpoints } from "@/services/api/endpoints";
 import { getData, getDataViaPost } from "@/services/api/requests";
 import { useEffect, useState } from "react";
-import { Loader } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import { TFormValues } from "@/common/types";
 import { colorsForHospital } from "@/common/static";
 
@@ -36,11 +36,14 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
   const postServicesParams = async () => {
     try {
       if (form.watch(`service_id_${mainKey}`)) {
-        // !!Important
-        // const filteredKeys = Object.entries(form.getValues()).filter(([key, value ] : any)=> value !== undefined && value?.length > 0)
-        // console.log('filteredKeys', filteredKeys)
+        const filteredKeys = Object.fromEntries(
+          Object.entries(form.getValues()).filter(
+            ([_, value]: any) => (value !== undefined && typeof value !== "object") || value?.length > 0,
+          ),
+        );
+
         const postedData: TFormValues = {
-          ...form.getValues(),
+          ...filteredKeys,
           service_id: form.watch(`service_id_${mainKey}`),
         };
         delete postedData?.[`service_id_st`];
@@ -137,7 +140,10 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
                         <div className="bg-[#d8d8d8] rounded h-3">
                           <div
                             className="bg-gray-600 h-3 rounded"
-                            style={{ width: `${(item?.data / lineBars?.max_count) * 100}%`,  background: `${colorsForHospital[index]}`, }}></div>
+                            style={{
+                              width: `${(item?.data / lineBars?.max_count) * 100}%`,
+                              background: `${colorsForHospital[index]}`,
+                            }}></div>
                         </div>
                       </div>
                       <div className=" w-5">{item?.data}</div>
@@ -151,7 +157,7 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
           </ul>
         ) : (
           <div className="flex justify-center items-center h-full">
-            <Loader size={30} className="animate-spin" />
+            <LoaderCircle size={50} className="animate-spin text-[#1EA66D]" />
           </div>
         )}
       </div>

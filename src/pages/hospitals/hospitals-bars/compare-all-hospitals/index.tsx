@@ -10,7 +10,7 @@ import {
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/common/components/ui/form";
 import { PopoverContent } from "@/common/components/ui/popover";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
-import { Check, Loader } from "lucide-react";
+import { Check, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { clearUndefinedValues, cn, mergeObjects } from "@/common/lib/utils";
 import { useFieldArray, useFormContext } from "react-hook-form";
@@ -156,7 +156,7 @@ const CompareAllHospitals = () => {
               })
             ) : (
               <div className="flex h-80 justify-center items-center">
-                <Loader size={30} className="animate-spin" />
+                <LoaderCircle size={50} className="animate-spin text-[#1EA66D]" />
               </div>
             )}
           </ul>
