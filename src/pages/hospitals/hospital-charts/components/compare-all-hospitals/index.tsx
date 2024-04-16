@@ -9,7 +9,7 @@ import { clearUndefinedValues, mergeObjects } from "@/common/lib/utils";
 export default function CompareByCharts() {
   const form = useFormContext();
 
-  const { data: charts, trigger: postParams } = useSWRMutation(hospitalEndpoints.charts, getDataViaPost);
+  const { data: charts, trigger: postParams, isMutating : chartsLoading } = useSWRMutation(hospitalEndpoints.charts, getDataViaPost);
 
   const postedParams = clearUndefinedValues({
     dates: form.watch("chart_date"),
@@ -19,7 +19,7 @@ export default function CompareByCharts() {
 
   useEffect(() => {
     getCompareInfos();
-  }, [form.watch("hospital_ids"), form.watch("chart_date")]);
+  }, [form.watch("hospital_ids"), form.watch("chart_date"), form.watch('annotate_type')]);
 
   const getCompareInfos = async () => {
     try {
@@ -31,7 +31,7 @@ export default function CompareByCharts() {
   };
   return (
     <div className="h-[360px] bg-[#FFFFFF] border border-[#E8E8E8] rounded p-3 grow">
-      <Chart chartsInfo={charts} />
+      <Chart chartsInfo={charts} loading={chartsLoading} />
     </div>
   );
 }
