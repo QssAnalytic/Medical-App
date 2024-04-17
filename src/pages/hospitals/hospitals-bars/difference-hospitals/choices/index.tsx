@@ -1,5 +1,12 @@
 import { Button } from "@/common/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, } from "@/common/components/ui/command";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/common/components/ui/command";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/common/components/ui/form";
 import { PopoverContent } from "@/common/components/ui/popover";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
@@ -15,13 +22,9 @@ import Vector from "/icons/vector.svg";
 import useSWRMutation from "swr/mutation";
 import useSWR from "swr";
 
-
 const Choices = ({ mainKey }: { mainKey: string }) => {
   const form = useFormContext();
   const [open, setOpen] = useState<boolean>(false);
-
-
-
 
   const { data: services } = useSWR(hospitalEndpoints.services, getData);
   const {
@@ -30,13 +33,15 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
     isMutating: loadingLineBars,
   } = useSWRMutation(hospitalEndpoints?.lineBar, getDataViaPost);
 
-
   const postServicesParams = async () => {
     try {
       if (form.watch(`service_id_${mainKey}`)) {
         const filteredKeys = Object.fromEntries(
           Object.entries(form.getValues()).filter(
-            ([_, value]: any) => (value !== undefined && typeof value !== "object") || value?.length > 0,
+            ([_, value]: any) =>
+              (value !== undefined && typeof value !== "object") ||
+              value?.length > 0 ||
+              (typeof value === "object" && Object.values(value).length > 0),
           ),
         );
 
