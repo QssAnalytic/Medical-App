@@ -7,18 +7,27 @@ import { useFormContext } from "react-hook-form";
 import useSWRMutation from "swr/mutation";
 
 export default function DifferenceByCharts() {
+  const form = useFormContext();
 
-  const form = useFormContext()
-
-  const { data: charts_st, isMutating: chartsLoading_st, trigger: postParams_st } = useSWRMutation(hospitalEndpoints.charts, getDataViaPost)
-  const { data: charts_nd, isMutating: chartsLoading_nd, trigger: postParams_nd } = useSWRMutation(hospitalEndpoints.charts, getDataViaPost)
+  const {
+    data: charts_st,
+    isMutating: chartsLoading_st,
+    trigger: postParams_st,
+  } = useSWRMutation(hospitalEndpoints.charts, getDataViaPost);
+  const {
+    data: charts_nd,
+    isMutating: chartsLoading_nd,
+    trigger: postParams_nd,
+  } = useSWRMutation(hospitalEndpoints.charts, getDataViaPost);
 
   const postServicesParams_st = async () => {
     try {
       if (form.watch(`service_id_st`)) {
         const filteredKeys = Object.fromEntries(
           Object.entries(form.getValues()).filter(
-            ([_, value]: any) => (value !== undefined && typeof value !== "object") || value?.length > 0,),);
+            ([_, value]: any) => (value !== undefined && typeof value !== "object") || value?.length > 0,
+          ),
+        );
 
         const postedData: TFormValues = {
           ...filteredKeys,
@@ -33,20 +42,21 @@ export default function DifferenceByCharts() {
     }
   };
 
-
   const postServicesParams_nd = async () => {
     try {
       if (form.watch(`service_id_nd`)) {
         const filteredKeys = Object.fromEntries(
           Object.entries(form.getValues()).filter(
-            ([_, value]: any) => (value !== undefined && typeof value !== "object") || value?.length > 0,),);
+            ([_, value]: any) => (value !== undefined && typeof value !== "object") || value?.length > 0,
+          ),
+        );
 
         const postedData: TFormValues = {
           ...filteredKeys,
           service_id: form.watch(`service_id_nd`),
           dates: form.watch("chart_date"),
         };
-        delete postedData?.[`service_id_nd`]; 
+        delete postedData?.[`service_id_nd`];
         await postParams_nd(postedData);
       }
     } catch (err) {
@@ -54,16 +64,15 @@ export default function DifferenceByCharts() {
     }
   };
 
-
+  // For triggering first service (choice)
   useEffect(() => {
     postServicesParams_st();
-    postServicesParams_nd();
-  }, [
-    form.watch(`service_id_st`),
-    form.watch(`service_id_nd`),
-    form.watch("chart_date")
-  ]);
+  }, [form.watch(`service_id_st`), form.watch("chart_date"), form.watch("annotate_type")]);
 
+  // For triggering second service (choice)
+  useEffect(() => {
+    postServicesParams_nd();
+  }, [form.watch(`service_id_nd`), form.watch("chart_date"), form.watch("annotate_type")]);
 
   return (
     <>
@@ -73,7 +82,6 @@ export default function DifferenceByCharts() {
       <div className="basis-[33%] flex justify-center items-center border border-[#E8E8E8] rounded py-6">
         <Chart loading={chartsLoading_nd} chartsInfo={charts_nd} />
       </div>
-
     </>
   );
 }

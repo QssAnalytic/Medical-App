@@ -13,16 +13,12 @@ import Vector from "/icons/vector.svg";
 import Patients from "/icons/patients.svg";
 import { days, months, years } from "@/common/static";
 import { useFormContext } from "react-hook-form";
-import { useEffect } from "react";
 import { TDay, TMonth, TYear } from "@/pages/hospitals/types";
 
 export default function Filter() {
   const form = useFormContext();
 
   const filterSubmit = (data: any) => console.log("filter datas", data);
-  useEffect(() => {
-    console.log("form dates", form.watch("dates"));
-  }, [form.watch("dates")?.year, form.watch("dates")?.month, form.watch("dates")?.day]);
 
   return (
     <div className="filter">
@@ -111,7 +107,7 @@ export default function Filter() {
                                       !field.value && "text-muted-foreground",
                                     )}>
                                     {field.value?.month
-                                      ? months.find((months) => months.data === field.value?.month)?.data
+                                      ? months.find((months) => months.id === field.value?.month)?.data
                                       : "Month"}
                                     <img src={Vector} alt="" />
                                   </Button>
@@ -133,7 +129,7 @@ export default function Filter() {
                                           }}>
                                           <Check
                                             className={cn(
-                                              item.data === field.value?.year ? "opacity-100" : "opacity-0",
+                                              item.id === field.value?.month ? "opacity-100" : "opacity-0",
                                             )}
                                           />
                                           {item.data}
@@ -250,7 +246,7 @@ export default function Filter() {
                                     : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
                                 }`}
                                 onClick={() => {
-                                  form.setValue("annotate_type", "Patients");
+                                  form.setValue("annotate_type", "number_patients");
                                 }}>
                                 Patients
                                 <span>
