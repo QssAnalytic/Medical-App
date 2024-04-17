@@ -5,4 +5,4 @@ const hospitalEndpoints = new (class {
   charts = `${this.services}chart/`;
 })();
 
-export { hospitalEndpoints };
+export { hospitalEndpoints }; 

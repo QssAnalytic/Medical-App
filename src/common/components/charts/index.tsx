@@ -10,7 +10,7 @@ interface HospitalStatistics {
 }
 
 interface HospitalInfo {
-  hospital__name: string;
+  hospital__name: string;    
   statistics: HospitalStatistics[];
 }
 
@@ -47,14 +47,14 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
       {chartsInfo?.length ? (
         <>
           <div
-            className="tooltip absolute border shadow rounded-md bg-gray-50 w-64 h-16 p-2 z-50 text-sm text-prettier break-all"
+            className="  absolute border shadow rounded-md bg-gray-50 w-64 h-16 p-2 z-50 text-sm text-prettier break-all"
             ref={tooltipRef}
             hidden></div>
           {!loading ? (
             <LineChart
               className="relative"
-              width={500}
-              height={350}
+              width={400}
+              height={300}
               data={chartData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid horizontal={true} vertical={false} verticalFill={["#D9D9D9"]} />
@@ -85,7 +85,7 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
                       }
                     },
                     onMouseLeave: () => {
-                      if (tooltipRef.current) {
+                      if (tooltipRef.current) {chartsInfo
                         tooltipRef.current.hidden = true;
                       }
                     },

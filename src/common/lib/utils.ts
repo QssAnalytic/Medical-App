@@ -7,8 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function clearUndefinedValues(obj: TFormValues) {
-  return Object.entries(obj)
-    ?.map(([key, value]) => {
+  return Object.entries(obj)?.map(([key, value]) => {
       if (
         (value !== undefined && typeof value !== "object") ||
         (Array.isArray(value) && value.length > 0) ||

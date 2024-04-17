@@ -3,7 +3,7 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
+  CommandInput, 
   CommandItem,
   CommandList,
 } from "@/common/components/ui/command";
@@ -22,6 +22,7 @@ import useSWR from "swr";
 import { THospital, THospitalSecondary } from "../../types";
 import { colorsForHospital } from "@/common/static";
 
+
 const CompareAllHospitals = () => {
   const form = useFormContext();
   const [open, setOpen] = useState<boolean>(false);
@@ -37,8 +38,8 @@ const CompareAllHospitals = () => {
   // Important key-values for comparing all hospitals
   const postedParams = clearUndefinedValues({
     dates: form.watch("dates"),
+    hospital_ids: form.watch("hospital_ids"), 
     annotate_type: form.watch("annotate_type"),
-    hospital_ids: form.watch("hospital_ids"),
   }).reduce((acc, obj) => mergeObjects(acc, obj), {});
 
   const getLineBars = async () => {
@@ -52,7 +53,6 @@ const CompareAllHospitals = () => {
 
   useEffect(() => {
     getLineBars();
-    console.log('annotate_type compare all', form.watch('annotate_type') )
   }, [form.watch("hospital_ids", form.watch("annotate_type")), form.watch("dates")]);
 
   return (

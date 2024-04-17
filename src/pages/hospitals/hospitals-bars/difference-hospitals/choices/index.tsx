@@ -1,30 +1,27 @@
 import { Button } from "@/common/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/common/components/ui/command";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, } from "@/common/components/ui/command";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/common/components/ui/form";
 import { PopoverContent } from "@/common/components/ui/popover";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { cn } from "@/common/lib/utils";
 import { useFormContext } from "react-hook-form";
-import Vector from "/icons/vector.svg";
-import useSWRMutation from "swr/mutation";
-import useSWR from "swr";
 import { hospitalEndpoints } from "@/services/api/endpoints";
 import { getData, getDataViaPost } from "@/services/api/requests";
 import { useEffect, useState } from "react";
 import { LoaderCircle } from "lucide-react";
 import { TFormValues } from "@/common/types";
 import { colorsForHospital } from "@/common/static";
+import Vector from "/icons/vector.svg";
+import useSWRMutation from "swr/mutation";
+import useSWR from "swr";
+
 
 const Choices = ({ mainKey }: { mainKey: string }) => {
   const form = useFormContext();
   const [open, setOpen] = useState<boolean>(false);
+
+
+
 
   const { data: services } = useSWR(hospitalEndpoints.services, getData);
   const {
@@ -32,6 +29,7 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
     trigger: postParams,
     isMutating: loadingLineBars,
   } = useSWRMutation(hospitalEndpoints?.lineBar, getDataViaPost);
+
 
   const postServicesParams = async () => {
     try {
