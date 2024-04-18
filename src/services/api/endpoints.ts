@@ -6,3 +6,4 @@ const hospitalEndpoints = new (class {
 })();
 
 export { hospitalEndpoints }; 
+ 

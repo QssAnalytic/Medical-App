@@ -6,7 +6,7 @@ export default function HospitalsBars( ) {
   return (
     <section className="w-full flex gap-8">
       <div className="w-1/3 ">
-        <CompareAllHospitals />
+        <CompareAllHospitals /> 
       </div>
       <div className="w-2/3 ">
         <DifferenceHospitals />
