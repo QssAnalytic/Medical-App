@@ -1,63 +1,17 @@
 import { Button } from "@/common/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/common/components/ui/command";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/common/components/ui/command";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/common/components/ui/form";
 import { PopoverContent } from "@/common/components/ui/popover";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
-import { Check, LoaderCircle } from "lucide-react";
-import { useEffect, useState } from "react";
-import { clearUndefinedValues, cn, mergeObjects } from "@/common/lib/utils";
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { Check } from "lucide-react";
+import { cn } from "@/common/lib/utils";
+import { useFormContext } from "react-hook-form";
 import Vector from "/icons/vector.svg";
-import useSWRMutation from "swr/mutation";
-import { hospitalEndpoints } from "@/services/api/endpoints";
-import { getData, getDataViaPost } from "@/services/api/requests";
-import useSWR from "swr";
-// import { THospital, THospitalSecondary } from "";
-import { THospital } from "@/pages/hospitals/types";
-import { colorsForHospital } from "@/common/static";
+
 
 
 const CompareAllServicesbars = () => {
   const form = useFormContext();
-  const [open, setOpen] = useState<boolean>(false);
-  useFieldArray({ name: "hospital_ids", control: form.control });
-
-  const { data: services } = useSWR<THospital[]>(hospitalEndpoints.services, getData);
-  const {
-    data: lineBars,
-    trigger: postParams,
-    isMutating: loading,
-  } = useSWRMutation(form.watch("hospital_ids") ? hospitalEndpoints.lineBar : null, getDataViaPost);
-
-
-
-  // Important key-values for comparing all hospitals
-  const postedParams = clearUndefinedValues({
-    dates: form.watch("dates"),
-    hospital_ids: form.watch("hospital_ids"),
-    annotate_type: form.watch("annotate_type"),
-  }).reduce((acc, obj) => mergeObjects(acc, obj), {});
-
-  const getLineBars = async () => {
-    try {
-      console.log("posted params", postedParams);
-      await postParams(postedParams);
-    } catch (err) {
-      console.log("err");
-    }
-  };
-
-  useEffect(() => {
-    getLineBars();
-  }, [form.watch("hospital_ids", form.watch("annotate_type")), form.watch("dates")]);
-
   return (
     <div>
       <h3 className="text-center text-sm mb-2 text-[#068F84]">Compare hospitals by all services based on price</h3>
@@ -69,21 +23,17 @@ const CompareAllServicesbars = () => {
                 <FormField
                   control={form.control}
                   name="service_id"
-                  render={({ field }) => (
+                  render={({ }) => (
                     <FormItem className="flex flex-col w-full">
-                      <Popover open={open} onOpenChange={setOpen}>
+                      <Popover >
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                "w-full h-10 flex justify-center bg-[#E3F2F1] gap-3",
-                                !field.value && "text-muted-foreground",
-                              )}>
-                              {field.value
-                                ? services?.find((service: THospital) => field.value.includes(service.id))?.name
-                                : "Services"}
+                                "w-full h-10 flex justify-center bg-[#E3F2F1] gap-3",)}>
+                              Services
                               <img src={Vector} alt="" />
                             </Button>
                           </FormControl>
@@ -94,32 +44,14 @@ const CompareAllServicesbars = () => {
                             <CommandList>
                               <CommandEmpty>No service found.</CommandEmpty>
                               <CommandGroup>
-                                {services?.map((item: THospital) => (
-                                  <CommandItem
-                                    value={item.name}
-                                    key={item.name}
-                                    onSelect={() => {
-                                      const currValues = form.watch("service_id");
-                                      if (!currValues.includes(item.id)) {
-                                        form.setValue("service_id", [...currValues, item.id]);
-                                        setOpen(false);
-                                      } else {
-                                        form.setValue(
-                                          "service_id",
-                                          currValues.filter((val: any) => val !== item.id),
-                                        );
-                                        setOpen(false);
-                                      }
-                                    }}>
-                                    <Check
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        field.value?.find((id: number) => id === item.id) ? "opacity-100" : "opacity-0",
-                                      )}
-                                    />
-                                    {item.name}
-                                  </CommandItem>
-                                ))}
+
+                                <CommandItem
+                                  value=''
+                                  key=''
+                                  onSelect={() => { }}>
+                                  <Check className={cn("mr-2 h-4 w-4")} />
+                                  data
+                                </CommandItem>
                               </CommandGroup>
                             </CommandList>
                           </Command>
@@ -134,36 +66,31 @@ const CompareAllServicesbars = () => {
           </Form>
         </div>
 
-        <div className="scroll overflow-y-auto h-80">
+        {/* <div className="scroll overflow-y-auto h-80">
           <ul>
-            {!loading ? (
-              services?.map((item: any, index: number) => {
-                return (
-                  <div key={index} className="flex justify-between items-center mt-3 px-5 text-sm">
-                    <li className="">{index + 1}</li>
-                    <li className="w-40 text-end">{item?.name}</li>
-                    <div>
-                      <div className="w-[11rem] pl-2">
-                        <div className="bg-[#d8d8d8] rounded h-3">
-                          <div
-                            className="h-3 rounded"
-                            style={{
-                              width: `${(item?.data / lineBars?.max_count) * 100}%`,
-                              background: `${colorsForHospital[index]}`,
-                            }}></div>
-                        </div>
-                      </div>
-                    </div>
+
+            return (
+            <div className="flex justify-between items-center mt-3 px-5 text-sm">
+              <li className="">test</li>
+              <li className="w-40 text-end">test</li>
+              <div>
+                <div className="w-[11rem] pl-2">
+                  <div className="bg-[#d8d8d8] rounded h-3">
+                    <div
+                      className="h-3 rounded"
+                    ></div>
                   </div>
-                );
-              })
-            ) : (
-              <div className="flex h-80 justify-center items-center">
-                <LoaderCircle size={50} className="animate-spin text-[#1EA66D]" />
+                </div>
               </div>
-            )}
+            </div>
+            );
+            ) : (
+            <div className="flex h-80 justify-center items-center">
+              <LoaderCircle size={50} className="animate-spin text-[#1EA66D]" />
+            </div>
+            )
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );
