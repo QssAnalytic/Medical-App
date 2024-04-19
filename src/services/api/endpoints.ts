@@ -1,3 +1,8 @@
+const authEndpoints = new (class{
+  signIn = `api/account/login/`;
+  currentUser = 'api/account/user/'
+})
+
 const hospitalEndpoints = new (class {
   base = "hospitals/";
   services = `${this.base}services/`;
@@ -5,5 +10,5 @@ const hospitalEndpoints = new (class {
   charts = `${this.services}chart/`;
 })();
 
-export { hospitalEndpoints }; 
+export { hospitalEndpoints, authEndpoints }; 
  
