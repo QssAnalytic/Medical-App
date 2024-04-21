@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getUser, postData } from "../api/requests";
+import { getData, postData } from "../api/requests";
 import { authEndpoints } from "../api/endpoints";
 import { SignInPayload, SignInResponse, User } from "@/pages/login/models";
 
@@ -11,8 +11,10 @@ type State = {
 };
 
 type Action = {
-  currentUser: (access: string) => void;
+  currentUser: () => void;
   signIn: (data: SignInPayload) => void;
+  signOut: () => void;
+  setIsAuth: (isAuth: boolean) => void;
 };
 
 type UseAuthStore = Action & State;
@@ -22,14 +24,12 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
   isSignInLoading: false,
   isUserLoading: false,
   isAuth: false,
-  currentUser: async (access: string) => {
+  setIsAuth: (isAuth) => set({ isAuth }),
+  currentUser: async () => {
     set({ isUserLoading: true });
     try {
-      const currentUser = await getUser(authEndpoints.currentUser, {
-        headers: {
-          Authorization: "Bearer " + access,
-        },
-      });
+      const currentUser = await getData(authEndpoints.currentUser);
+      console.log("current user", currentUser);
       set({ user: currentUser });
       set({ isAuth: true });
     } catch (err) {
@@ -44,12 +44,19 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
       const { access, refresh } = (await postData(authEndpoints.signIn, { arg: data })) as unknown as SignInResponse;
       localStorage.setItem("accessToken", `Bearer ${access}`);
       localStorage.setItem("refreshToken", `Bearer ${refresh}`);
-      //   get().currentUser(access);
+      get().currentUser();
       console.log("access", access, "refresh", refresh);
     } catch (err) {
       console.log("signIn error", err);
     }
     set({ isSignInLoading: false });
+  },
+
+  signOut: () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    set({ user: null });
+    set({ isAuth: false });
   },
 }));
 

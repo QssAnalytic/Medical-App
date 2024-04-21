@@ -25,4 +25,9 @@ type TFormValues = {
   };
 };
 
+enum Role {
+  SuperUser = "superuser",
+}
+
 export type { TSelectProps, TSelectItem, TFormValues };
+export { Role };

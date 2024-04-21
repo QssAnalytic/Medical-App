@@ -1,4 +1,4 @@
-import { Form, FormControl, FormField, FormItem} from "../ui/form";
+import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Check } from "lucide-react";
@@ -14,11 +14,18 @@ import Patients from "/icons/patients.svg";
 import { days, months, years } from "@/common/static";
 import { useFormContext } from "react-hook-form";
 import { TDay, TMonth, TYear } from "@/pages/hospitals/types";
+import useAuthStore from "@/services/store/authStore";
+import { Role } from "@/common/types";
 
 export default function Filter() {
   const form = useFormContext();
+  const { user, signOut } = useAuthStore();
 
   const filterSubmit = (data: any) => console.log("filter datas", data);
+
+  const handleLogOut = () => {
+    signOut();
+  };
 
   return (
     <div className="filter">
@@ -40,7 +47,7 @@ export default function Filter() {
           <div className="w-full">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(filterSubmit)}>
-                <div className="flex justify-between">
+                <div className="flex justify-between gap-4">
                   {/* DATE */}
                   <div>
                     <FormField
@@ -128,9 +135,7 @@ export default function Filter() {
                                             form.setValue("dates", { ...form.watch("dates"), month: item.id });
                                           }}>
                                           <Check
-                                            className={cn(
-                                              item.id === field.value?.month ? "opacity-100" : "opacity-0",
-                                            )}
+                                            className={cn(item.id === field.value?.month ? "opacity-100" : "opacity-0")}
                                           />
                                           {item.data}
                                         </CommandItem>
@@ -193,71 +198,82 @@ export default function Filter() {
                   </div>
 
                   {/* MODES */}
-                  <div className="flex justify-end ml-auto gap-7  ">
+                  <div className="flex justify-end ml-auto gap-7">
                     <FormField
                       control={form.control}
                       name="annotate_type"
                       render={({ field }) => (
                         <div className="flex gap-7">
-                          <FormItem>
-                            <FormControl>
-                              <Button
-                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
-                                  field.value === "price"
-                                    ? "bg-[#068F84] text-white"
-                                    : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
-                                }`}
-                                onClick={() => {
-                                  form.setValue("annotate_type", "price");
-                                }}>
-                                Price
-                                <span>
-                                  <img width={22} src={Price} alt="" />
-                                </span>
-                              </Button>
-                            </FormControl>
-                          </FormItem>
+                          {user?.role === Role.SuperUser ? (
+                            <FormItem>
+                              <FormControl>
+                                <Button
+                                  className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
+                                    field.value === "price"
+                                      ? "bg-[#068F84] text-white"
+                                      : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
+                                  }`}
+                                  onClick={() => {
+                                    form.setValue("annotate_type", "price");
+                                  }}>
+                                  Price
+                                  <span>
+                                    <img width={22} src={Price} alt="" />
+                                  </span>
+                                </Button>
+                              </FormControl>
+                            </FormItem>
+                          ) : (
+                            <>
+                              <FormItem>
+                                <FormControl>
+                                  <Button
+                                    className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
+                                      field.value === "count"
+                                        ? "bg-[#068F84] text-white"
+                                        : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
+                                    }`}
+                                    onClick={() => {
+                                      form.setValue("annotate_type", "count");
+                                    }}>
+                                    Count
+                                    <span>
+                                      <img width={22} src={Count} alt="" />
+                                    </span>
+                                  </Button>
+                                </FormControl>
+                              </FormItem>
 
-                          <FormItem>
-                            <FormControl>
-                              <Button
-                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
-                                  field.value === "count"
-                                    ? "bg-[#068F84] text-white"
-                                    : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
-                                }`}
-                                onClick={() => {
-                                  form.setValue("annotate_type", "count");
-                                }}>
-                                Count
-                                <span>
-                                  <img width={22} src={Count} alt="" />
-                                </span>
-                              </Button>
-                            </FormControl>
-                          </FormItem>
-
-                          <FormItem>
-                            <FormControl>
-                              <Button
-                                className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
-                                  field.value === "Patients"
-                                    ? "bg-[#068F84] text-white"
-                                    : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
-                                }`}
-                                onClick={() => {
-                                  form.setValue("annotate_type", "number_patients");
-                                }}>
-                                Patients
-                                <span>
-                                  <img width={22} src={Patients} alt="" />
-                                </span>
-                              </Button>
-                            </FormControl>
-                          </FormItem>
+                              <FormItem>
+                                <FormControl>
+                                  <Button
+                                    className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
+                                      field.value === "Patients"
+                                        ? "bg-[#068F84] text-white"
+                                        : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
+                                    }`}
+                                    onClick={() => {
+                                      form.setValue("annotate_type", "number_patients");
+                                    }}>
+                                    Patients
+                                    <span>
+                                      <img width={22} src={Patients} alt="" />
+                                    </span>
+                                  </Button>
+                                </FormControl>
+                              </FormItem>
+                            </>
+                          )}
                         </div>
                       )}
                     />
+                  </div>
+                  <div className="log-out">
+                    <Button
+                      className="px-6 py-6 flex justify-between text-sm gap-2 font-semibold"
+                      onClick={handleLogOut}>
+                      Log Out
+                    </Button>
                   </div>
                 </div>
               </form>
