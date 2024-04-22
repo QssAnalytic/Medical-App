@@ -1,7 +1,7 @@
-const authEndpoints = new (class{
+const authEndpoints = new (class {
   signIn = `api/account/login/`;
-  currentUser = 'api/account/user/'
-})
+  currentUser = "api/account/user/";
+})();
 
 const hospitalEndpoints = new (class {
   base = "hospitals/";
@@ -10,5 +10,9 @@ const hospitalEndpoints = new (class {
   charts = `${this.services}chart/`;
 })();
 
-export { hospitalEndpoints, authEndpoints }; 
- 
+const servicesEndpoints = new (class {
+  base = "services/";
+  lineBar = `${this.base}hospitals/line-bar/`;
+})();
+
+export { hospitalEndpoints, authEndpoints, servicesEndpoints };

@@ -1,16 +1,14 @@
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Check } from "lucide-react";
+import { Check, CircleDollarSign, FileSearch } from "lucide-react";
 import { cn } from "@/common/lib/utils";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { CommandList } from "cmdk";
-import Count from "/icons/count.svg";
-import Price from "/icons/price.svg";
+import { PiUsersLight } from "react-icons/pi";
 import Vector from "/icons/vector.svg";
-import Patients from "/icons/patients.svg";
 import { days, months, years } from "@/common/static";
 import { useFormContext } from "react-hook-form";
 import { TDay, TMonth, TYear } from "@/pages/hospitals/types";
@@ -20,6 +18,7 @@ import { Role } from "@/common/types";
 export default function Filter() {
   const form = useFormContext();
   const { user, signOut } = useAuthStore();
+  const { pathname } = useLocation();
 
   const filterSubmit = (data: any) => console.log("filter datas", data);
 
@@ -33,12 +32,20 @@ export default function Filter() {
         <div className="filter-inner flex gap-[40px]  items-center">
           <div className="navigation flex gap-5 items-center ml-3">
             <Link to={"/"}>
-              <Badge className="px-6 py-3 rounded-[8px] bg-[#068F84] text-lg cursor-pointer hover:bg-[#FFFFFF] border border-transparent hover:text-[#068F84] hover:border-[#068F84]">
+              <Badge
+                className={`px-6 py-3 rounded-[8px] ${
+                  pathname === "/" ? "bg-[#068F84] border-transparent" : "bg-[#FFFFFF] text-[#068F84] border-[#E8E8E8]"
+                }  text-lg cursor-pointer hover:bg-[#FFFFFF] border hover:text-[#068F84] hover:border-[#068F84]`}>
                 Hospitals
               </Badge>
             </Link>
             <Link to={"/services"}>
-              <Badge className="px-6 py-3 rounded-[8px] text-[#068F84] bg-[#FFFFFF] text-lg cursor-pointer hover:bg-[#FFFFFF] border border-[#E8E8E8] hover:text-[#068F84] hover:border-[#068F84]">
+              <Badge
+                className={`px-6 py-3 rounded-[8px] ${
+                  pathname === "/services"
+                    ? "bg-[#068F84] border-transparent"
+                    : "bg-[#FFFFFF] text-[#068F84] border-[#E8E8E8]"
+                }  text-lg cursor-pointer hover:bg-[#FFFFFF] border hover:text-[#068F84] hover:border-[#068F84]`}>
                 Services
               </Badge>
             </Link>
@@ -204,11 +211,13 @@ export default function Filter() {
                       name="annotate_type"
                       render={({ field }) => (
                         <div className="flex gap-7">
-                          {user?.role === Role.SuperUser ? (
+                          {user?.role === Role.SuperUser ||
+                          user?.role === Role.Admin ||
+                          user?.role === Role.Financer ? (
                             <FormItem>
                               <FormControl>
                                 <Button
-                                  className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
+                                  className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold  border border-transparent hover:border-[#068F84] hover:bg-white hover:text-[#068F84] ${
                                     field.value === "price"
                                       ? "bg-[#068F84] text-white"
                                       : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
@@ -217,53 +226,48 @@ export default function Filter() {
                                     form.setValue("annotate_type", "price");
                                   }}>
                                   Price
-                                  <span>
-                                    <img width={22} src={Price} alt="" />
-                                  </span>
+                                  <CircleDollarSign size={20} />
                                 </Button>
                               </FormControl>
                             </FormItem>
-                          ) : (
-                            <>
-                              <FormItem>
-                                <FormControl>
-                                  <Button
-                                    className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
-                                      field.value === "count"
-                                        ? "bg-[#068F84] text-white"
-                                        : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
-                                    }`}
-                                    onClick={() => {
-                                      form.setValue("annotate_type", "count");
-                                    }}>
-                                    Count
-                                    <span>
-                                      <img width={22} src={Count} alt="" />
-                                    </span>
-                                  </Button>
-                                </FormControl>
-                              </FormItem>
+                          ) : null}
 
-                              <FormItem>
-                                <FormControl>
-                                  <Button
-                                    className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold ${
-                                      field.value === "Patients"
-                                        ? "bg-[#068F84] text-white"
-                                        : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
-                                    }`}
-                                    onClick={() => {
-                                      form.setValue("annotate_type", "number_patients");
-                                    }}>
-                                    Patients
-                                    <span>
-                                      <img width={22} src={Patients} alt="" />
-                                    </span>
-                                  </Button>
-                                </FormControl>
-                              </FormItem>
-                            </>
-                          )}
+                          {user?.role === Role.Manager || user?.role === Role.SuperUser || user?.role === Role.Admin ? (
+                            <FormItem>
+                              <FormControl>
+                                <Button
+                                  className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold border border-transparent hover:border-[#068F84] hover:bg-white hover:text-[#068F84] ${
+                                    field.value === "count"
+                                      ? "bg-[#068F84] text-white"
+                                      : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
+                                  }`}
+                                  onClick={() => {
+                                    form.setValue("annotate_type", "count");
+                                  }}>
+                                  Count
+                                  <FileSearch size={20} className="hover:text-[#068F84]" />
+                                </Button>
+                              </FormControl>
+                            </FormItem>
+                          ) : null}
+                          {user?.role === Role.SuperUser || user?.role === Role.Admin ? (
+                            <FormItem>
+                              <FormControl>
+                                <Button
+                                  className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold border border-transparent hover:border-[#068F84] hover:bg-white hover:text-[#068F84] ${
+                                    field.value === "number_patients"
+                                      ? "bg-[#068F84] text-white"
+                                      : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
+                                  }`}
+                                  onClick={() => {
+                                    form.setValue("annotate_type", "number_patients");
+                                  }}>
+                                  Number of Patients
+                                  <PiUsersLight size={20} />
+                                </Button>
+                              </FormControl>
+                            </FormItem>
+                          ) : null}
                         </div>
                       )}
                     />

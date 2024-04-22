@@ -15,6 +15,7 @@ type TSelectProps = {
 type TFormValues = {
   annotate_type?: string;
   hospital_ids?: number[];
+  services_ids? : number[]
   service_id?: number;
   service_id_st?: number;
   service_id_nd?: number;
@@ -27,6 +28,9 @@ type TFormValues = {
 
 enum Role {
   SuperUser = "superuser",
+  Admin = "admin",
+  Manager = "manager",
+  Financer = "financer",
 }
 
 export type { TSelectProps, TSelectItem, TFormValues };

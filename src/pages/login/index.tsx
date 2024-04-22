@@ -2,11 +2,10 @@ import { useNavigate } from "react-router-dom";
 import SignInForm from "./components/sign-in-form";
 import useAuthStore from "@/services/store/authStore";
 import { useEffect } from "react";
-import Spinner from "@/common/components/spinner";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { isAuth, isSignInLoading } = useAuthStore();
+  const { isAuth } = useAuthStore();
 
   useEffect(() => {
     isAuth && navigate("/");
@@ -14,7 +13,6 @@ const Login = () => {
 
   return (
     <>
-      {!isSignInLoading ? (
         <div className="relative font-inter">
           <div className="bg-contain  bg-no-repeat w-full h-screen absolute top-0 left-0 bg-[url('/images/LoginBG.svg')]">
             <div className="flex h-full ">
@@ -23,9 +21,6 @@ const Login = () => {
             </div>
           </div>
         </div>
-      ) : (
-        <Spinner />
-      )}
     </>
   );
 };
