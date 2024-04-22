@@ -1,11 +1,22 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Filter from "../filter";
 import { FormProvider, useForm } from "react-hook-form";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import Spinner from "../spinner";
+import useAuthStore from "@/services/store/authStore";
+import { checkPermission } from "@/common/lib/utils";
 
 export default function Layout() {
-  const form = useForm({ mode: "onChange", defaultValues: { annotate_type: "price" } });
+  const { user } = useAuthStore();
+  const { pathname } = useLocation();
+  let ANNOTATE_TYPE: string | undefined = checkPermission(user?.role);
+
+  const form = useForm({ mode: "onChange", defaultValues: { annotate_type: ANNOTATE_TYPE } });
+
+  useEffect(() => {
+    form.reset();
+    form.setValue("annotate_type", ANNOTATE_TYPE ? ANNOTATE_TYPE : "");
+  }, [pathname]);
 
   return (
     <Suspense fallback={<Spinner />}>

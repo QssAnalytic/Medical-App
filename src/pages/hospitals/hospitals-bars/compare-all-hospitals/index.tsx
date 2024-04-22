@@ -3,7 +3,7 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput, 
+  CommandInput,
   CommandItem,
   CommandList,
 } from "@/common/components/ui/command";
@@ -22,7 +22,6 @@ import useSWR from "swr";
 import { THospital, THospitalSecondary } from "../../types";
 import { colorsForHospital } from "@/common/static";
 
-
 const CompareAllHospitals = () => {
   const form = useFormContext();
   const [open, setOpen] = useState<boolean>(false);
@@ -33,12 +32,12 @@ const CompareAllHospitals = () => {
     data: lineBars,
     trigger: postParams,
     isMutating: loading,
-  } = useSWRMutation(form.watch("hospital_ids") ? hospitalEndpoints.lineBar : null, getDataViaPost);
+  } = useSWRMutation(hospitalEndpoints.lineBar, getDataViaPost);
 
   // Important key-values for comparing all hospitals
   const postedParams = clearUndefinedValues({
     dates: form.watch("dates"),
-    hospital_ids: form.watch("hospital_ids"), 
+    hospital_ids: form.watch("hospital_ids"),
     annotate_type: form.watch("annotate_type"),
   }).reduce((acc, obj) => mergeObjects(acc, obj), {});
 
@@ -58,7 +57,7 @@ const CompareAllHospitals = () => {
   return (
     <div>
       <h3 className="text-center text-sm mb-2 text-[#068F84]">Compare hospitals by all services based on price</h3>
-      <div className="border rounded-lg p-3 h-96 ">
+      <div className="border rounded-lg p-3 h-96 flex gap-3 flex-col ">
         <div className="w-full">
           <Form {...form}>
             <form className="flex justify-between">
@@ -78,7 +77,7 @@ const CompareAllHospitals = () => {
                                 "w-full h-10 flex justify-center bg-[#E3F2F1] gap-3",
                                 !field.value && "text-muted-foreground",
                               )}>
-                              {field.value
+                              {field.value?.length > 0
                                 ? hospitals?.find((hospital: THospital) => field.value.includes(hospital.id))?.name
                                 : "Hospital"}
                               <img src={Vector} alt="" />
@@ -131,7 +130,7 @@ const CompareAllHospitals = () => {
           </Form>
         </div>
 
-        <div className="scroll overflow-y-auto h-80">
+        <div className="scroll overflow-y-auto h-80 bg-white">
           <ul>
             {!loading ? (
               lineBars?.statistics?.map((item: THospitalSecondary, index: number) => {

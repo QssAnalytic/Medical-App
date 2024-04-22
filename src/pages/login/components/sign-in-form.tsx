@@ -7,8 +7,9 @@ import { z } from "zod";
 import { SignInSchema } from "../models";
 import useAuthStore from "@/services/store/authStore";
 import { useEffect } from "react";
+import { Loader2Icon } from "lucide-react";
 export default function SignInForm() {
-  const { signIn, user } = useAuthStore();
+  const { signIn, user, isSignInLoading } = useAuthStore();
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -67,8 +68,8 @@ export default function SignInForm() {
                 <Button className="text-sm mt-2 text-[#068F84] bg-white hover:bg-white">Forgotten password </Button>
               </div>
             </div>
-            <Button type="submit" className="w-full bg-[#068F84] text-lg ">
-              Sign In
+            <Button type="submit" className="w-full bg-[#068F84] text-lg" disabled={isSignInLoading}>
+              {isSignInLoading ? <Loader2Icon className="animate-spin" /> : "Sign In"}
             </Button>
           </form>
         </Form>
