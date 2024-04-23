@@ -149,7 +149,7 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
                             }}></div>
                         </div>
                       </div>
-                      <div className=" w-5">{item?.data}</div>
+                      <div className="truncate">{item?.data}</div>
                     </div>
                   </div>
                 );
