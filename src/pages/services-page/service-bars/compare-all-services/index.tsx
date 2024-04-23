@@ -34,7 +34,6 @@ const CompareAllServicesbars = () => {
     isMutating: loading,
   } = useSWRMutation(servicesEndpoints.lineBar, getDataViaPost);
 
-
   const postedParams = clearUndefinedValues({
     dates: form.watch("dates"),
     services_ids: form.watch("services_ids"),
@@ -54,15 +53,14 @@ const CompareAllServicesbars = () => {
     getLineBars();
   }, [form.watch("services_ids", form.watch("annotate_type")), form.watch("dates")]);
 
-
   return (
     <div>
       <h3 className="text-center text-sm mb-2 text-[#068F84]">Compare hospitals by all services based on price</h3>
-      <div className="border rounded-lg p-3 h-80">
+      <div className="border rounded-lg p-3 h-96">
         <div className="w-full">
           <Form {...form}>
             <form className="flex justify-between">
-              <div className="w-full">
+              <div className="w-full h-auto">
                 <FormField
                   control={form.control}
                   name="services_ids"

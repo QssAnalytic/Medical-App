@@ -11,7 +11,10 @@ export default function Layout() {
   const { pathname } = useLocation();
   let ANNOTATE_TYPE: string | undefined = checkPermission(user?.role);
 
-  const form = useForm({ mode: "onChange", defaultValues: { annotate_type: ANNOTATE_TYPE } });
+  const form = useForm({
+    mode: "onChange",
+    defaultValues: { annotate_type: ANNOTATE_TYPE, hospital_ids: [], services_ids: [] },
+  });
 
   useEffect(() => {
     form.reset();

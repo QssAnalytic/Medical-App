@@ -94,7 +94,7 @@ const CompareAllHospitals = () => {
                                   <CommandItem
                                     value={item.name}
                                     key={item.name}
-                                    onSelect={() => {
+                                    onSelect={() => { 
                                       const currValues = form.watch("hospital_ids");
                                       if (!currValues.includes(item.id)) {
                                         form.setValue("hospital_ids", [...currValues, item.id]);

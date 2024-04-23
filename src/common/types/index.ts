@@ -15,10 +15,13 @@ type TSelectProps = {
 type TFormValues = {
   annotate_type?: string;
   hospital_ids?: number[];
-  services_ids? : number[]
+  services_ids?: number[];
   service_id?: number;
   service_id_st?: number;
   service_id_nd?: number;
+  hospital_id?: number;
+  hospital_id_st?: number;
+  hospital_id_nd?: number;
   dates?: {
     year?: number;
     month?: number;
