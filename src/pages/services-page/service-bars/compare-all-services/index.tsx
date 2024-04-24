@@ -7,6 +7,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/common/components/ui/command";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/common/components/ui/tooltip";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/common/components/ui/form";
 import { PopoverContent } from "@/common/components/ui/popover";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
@@ -133,14 +134,39 @@ const CompareAllServicesbars = () => {
                     <li className="">{index + 1}</li>
                     <li className="w-40 text-end">{item?.name}</li>
                     <div>
-                      <div className="w-[11rem] pl-2">
+                      {/*
+                       <div className="w-[11rem] pl-2">
                         <div className="bg-[#d8d8d8] rounded h-3">
                           <div
-                            className="h-3 rounded"
+                            className="h-3 rounded hover:cursor-pointer"
                             style={{
-                              width: `${(item?.data / lineBars?.max_count) * 100}%`,
+                              width: barWidth,
                               background: `${colorsForHospital[index]}`,
                             }}></div>
+                        </div>
+                      </div> 
+                      */}
+                      <div>
+                        <div className="w-[11rem] pl-2">
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div className="bg-[#d8d8d8] rounded h-3 hover:cursor-pointer">
+                                  <div
+                                    className="h-3 rounded "
+                                    style={{
+                                      width: `${(item?.data / lineBars?.max_count) * 100}%`,
+                                      background: `${colorsForHospital[index]}`,
+                                    }}></div>
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p className="text-orange-700">
+                                  {item?.data} / <span className="text-green-500 font-bold">{lineBars?.max_count}</span>
+                                </p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
                         </div>
                       </div>
                     </div>
