@@ -1,6 +1,5 @@
-import CompareAllServicesCharts from "./compare-all-services"
-import DifferenceServicesCharts from "./difference-services"
-
+import CompareAllServicesCharts from "./compare-all-services";
+import DifferenceServicesCharts from "./difference-services";
 
 import { FormField, Form, FormItem, FormControl } from "@/common/components/ui/form";
 import { PopoverContent } from "@/common/components/ui/popover";

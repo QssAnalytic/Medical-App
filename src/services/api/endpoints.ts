@@ -13,6 +13,7 @@ const hospitalEndpoints = new (class {
 const servicesEndpoints = new (class {
   base = "services/";
   lineBar = `${this.base}hospitals/line-bar/`;
+  charts = `${this.base}hospitals/chart/`;
 })();
 
 export { hospitalEndpoints, authEndpoints, servicesEndpoints };

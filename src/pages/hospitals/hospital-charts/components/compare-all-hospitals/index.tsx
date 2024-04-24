@@ -14,7 +14,7 @@ export default function CompareByCharts() {
   const postedParams = clearUndefinedValues({
     dates: form.watch("chart_date"),
     hospital_ids: form.watch("hospital_ids"),
-    annotate_type: form.watch("annotate_type"),
+    annotate_type: form.watch("annotate_type"), 
   }).reduce((acc, obj) => mergeObjects(acc, obj), {});
 
   const getCompareInfos = async () => {

@@ -7,12 +7,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/common/components/ui/command";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/common/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/common/components/ui/tooltip";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/common/components/ui/form";
 import { PopoverContent } from "@/common/components/ui/popover";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
@@ -20,7 +15,7 @@ import { Check, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { clearUndefinedValues, cn, mergeObjects } from "@/common/lib/utils";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import Vector from "/icons/vector.svg"; 
+import Vector from "/icons/vector.svg";
 import useSWRMutation from "swr/mutation";
 import { hospitalEndpoints } from "@/services/api/endpoints";
 import { getData, getDataViaPost } from "@/services/api/requests";
@@ -100,7 +95,7 @@ const CompareAllHospitals = () => {
                                   <CommandItem
                                     value={item.name}
                                     key={item.name}
-                                    onSelect={() => { 
+                                    onSelect={() => {
                                       const currValues = form.watch("hospital_ids");
                                       if (!currValues.includes(item.id)) {
                                         form.setValue("hospital_ids", [...currValues, item.id]);
@@ -145,26 +140,27 @@ const CompareAllHospitals = () => {
                     <li className="">{index + 1}</li>
                     <li className="w-40 text-end">{item?.name}</li>
                     <div>
-                    <div className="w-[11rem] pl-2">
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <div className="bg-[#d8d8d8] rounded h-3 hover:cursor-pointer">
-                                  <div className="h-3 rounded "
-                                    style={{
-                                      width: `${(item?.data / lineBars?.max_count) * 100}%`,
-                                      background: `${colorsForHospital[index]}`,
-                                    }}></div>
-                                </div>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p className="text-orange-700">
-                                  {`${((Math.floor(item?.data) / lineBars?.max_count) * 100).toFixed(1)}%`}
-                                </p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        </div>
+                      <div className="w-[11rem] pl-2">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="bg-[#d8d8d8] rounded h-3 hover:cursor-pointer">
+                                <div
+                                  className="h-3 rounded "
+                                  style={{
+                                    width: `${(item?.data / lineBars?.max_count) * 100}%`,
+                                    background: `${colorsForHospital[index]}`,
+                                  }}></div>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p className="text-orange-700">
+                                {item?.data} / <span className="text-green-500 font-bold">{lineBars?.max_count}</span>
+                              </p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
                     </div>
                   </div>
                 );

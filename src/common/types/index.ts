@@ -22,6 +22,10 @@ type TFormValues = {
   hospital_id?: number;
   hospital_id_st?: number;
   hospital_id_nd?: number;
+  chart_date? : {
+    year?: number;
+    month?: number;
+  }
   dates?: {
     year?: number;
     month?: number;
