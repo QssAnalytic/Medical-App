@@ -7,12 +7,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/common/components/ui/command";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/common/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/common/components/ui/tooltip";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/common/components/ui/form";
 import { PopoverContent } from "@/common/components/ui/popover";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
@@ -58,8 +53,6 @@ const CompareAllServicesbars = () => {
   useEffect(() => {
     getLineBars();
   }, [form.watch("services_ids", form.watch("annotate_type")), form.watch("dates")]);
-
-
 
   return (
     <div>
@@ -159,7 +152,8 @@ const CompareAllServicesbars = () => {
                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <div className="bg-[#d8d8d8] rounded h-3 hover:cursor-pointer">
-                                  <div className="h-3 rounded "
+                                  <div
+                                    className="h-3 rounded "
                                     style={{
                                       width: `${(item?.data / lineBars?.max_count) * 100}%`,
                                       background: `${colorsForHospital[index]}`,
@@ -168,7 +162,7 @@ const CompareAllServicesbars = () => {
                               </TooltipTrigger>
                               <TooltipContent>
                                 <p className="text-orange-700">
-                                  {`${((parseFloat(item?.data) / lineBars?.max_count) * 100).toFixed(1)}%`}
+                                  {item?.data} / <span className="text-green-500 font-bold">{lineBars?.max_count}</span>
                                 </p>
                               </TooltipContent>
                             </Tooltip>

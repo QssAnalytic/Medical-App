@@ -159,7 +159,7 @@ const CompareAllHospitals = () => {
                               </TooltipTrigger>
                               <TooltipContent>
                                 <p className="text-orange-700">
-                                  {`${((parseFloat(item?.data) / lineBars?.max_count) * 100).toFixed(1)}%`}
+                                  {`${((Math.floor(item?.data) / lineBars?.max_count) * 100).toFixed(1)}%`}
                                 </p>
                               </TooltipContent>
                             </Tooltip>
