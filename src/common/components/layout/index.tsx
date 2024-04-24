@@ -13,7 +13,7 @@ export default function Layout() {
 
   const form = useForm({
     mode: "onChange",
-    defaultValues: { annotate_type: ANNOTATE_TYPE, hospital_ids: [], services_ids: [] },
+    defaultValues: { annotate_type: ANNOTATE_TYPE, hospital_ids: [], services_ids: [] , chart_date : {}},
   });
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { colorsForHospital } from "@/common/static";
+// import { colorsForHospital } from "@/common/static";
 import { LoaderCircle } from "lucide-react";
 import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
@@ -10,7 +10,7 @@ interface HospitalStatistics {
 }
 
 interface HospitalInfo {
-  hospital__name: string;    
+  name: string;    
   statistics: HospitalStatistics[];
 }
 
@@ -22,6 +22,18 @@ interface ChartProps {
 export default function Chart({ chartsInfo, loading }: ChartProps) {
   const tooltipRef = useRef<HTMLDivElement>(null);
   const form = useFormContext();
+
+  function generateRandomColor() {
+    // Generate random values for red, green, and blue components
+    var r = Math.floor(Math.random() * 256);
+    var g = Math.floor(Math.random() * 256);
+    var b = Math.floor(Math.random() * 256);
+  
+    // Construct the RGB color string
+    var color = "rgb(" + r + ", " + g + ", " + b + ")";
+  
+    return color;
+  }
 
   const chartData: any[] = [];
 
@@ -35,19 +47,21 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
         name: date,
       };
       chartsInfo?.forEach((hospital) => {
-        monthData[hospital.hospital__name] =
+        monthData[hospital.name] =
           hospital?.statistics?.find((stat) => stat.date === monthData.name)?.data || 0;
       });
 
       chartData.push(monthData);
     });
 
+    console.log('chartdata', chartData)
+
   return (
     <div className="relative h-full">
       {chartsInfo?.length ? (
         <>
           <div
-            className="  absolute border shadow rounded-md bg-gray-50 w-64 h-16 p-2 z-50 text-sm text-prettier break-all"
+            className="absolute border shadow rounded-md bg-gray-50 w-64 h-16 p-2 z-50 text-sm text-prettier break-all"
             ref={tooltipRef}
             hidden></div>
           {!loading ? (
@@ -61,9 +75,10 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
               <XAxis dataKey="name" interval="preserveStartEnd" />
               <YAxis width={30} tickSize={1} />
 
-              {chartsInfo?.map((hospital: HospitalInfo, idx: number) => (
+              {chartsInfo?.map((hospital: HospitalInfo) => (
                 <Line
-                  key={hospital.hospital__name}
+                  key={hospital.name}
+                  strokeWidth={1.7}
                   type="monotone"
                   dot={{
                     onMouseMove: (e: DotProps & { dataKey: string; value: number }) => {
@@ -90,8 +105,9 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
                       }
                     },
                   }}
-                  dataKey={hospital.hospital__name}
-                  stroke={`${colorsForHospital[idx]}`}
+                  dataKey={hospital.name}
+                  // stroke={`${colorsForHospital[idx]}`}
+                  stroke={generateRandomColor()}
                 />
               ))}
             </LineChart>
