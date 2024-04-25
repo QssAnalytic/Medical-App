@@ -26,13 +26,15 @@ export default function CompareByCharts() {
     }
   };
 
+  console.log('chart compare all', chart)
+
   useEffect(() => {
     getCompareInfos();
   }, [form.watch("hospital_ids"), form.watch("chart_date"), form.watch('annotate_type')]);
 
 
   return (
-    <div className=" flex justify-center items-center border border-[#E8E8E8] rounded py-6 grow">
+    <div className=" flex justify-center items-center border border-[#E8E8E8] bg-white rounded py-6 grow">
       <Chart chartsInfo={chart} loading={chartsLoading} />
     </div>
   );

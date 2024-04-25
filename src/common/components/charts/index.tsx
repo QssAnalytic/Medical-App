@@ -54,7 +54,7 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
       chartData.push(monthData);
     });
 
-    console.log('chartdata', chartData)
+    console.log('chartdata compare all', chartData)
 
   return (
     <div className="relative h-full">
@@ -67,8 +67,8 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
           {!loading ? (
             <LineChart
               className="relative"
-              width={400}
-              height={300}
+              width={520}
+              height={320}
               data={chartData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid horizontal={true} vertical={false} verticalFill={["#D9D9D9"]} />

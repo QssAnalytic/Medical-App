@@ -15,13 +15,13 @@ import { Check, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { clearUndefinedValues, cn, mergeObjects } from "@/common/lib/utils";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import Vector from "/icons/vector.svg";
 import useSWRMutation from "swr/mutation";
 import { hospitalEndpoints } from "@/services/api/endpoints";
 import { getData, getDataViaPost } from "@/services/api/requests";
 import useSWR from "swr";
 import { THospital, THospitalSecondary } from "../../types";
 import { colorsForHospital } from "@/common/static";
+import { BiSolidDownArrow } from "react-icons/bi";
 
 const CompareAllHospitals = () => {
   const form = useFormContext();
@@ -57,8 +57,8 @@ const CompareAllHospitals = () => {
 
   return (
     <div>
-      <h3 className="text-center text-sm mb-2 text-[#068F84]">Compare hospitals by all services based on price</h3>
-      <div className="border rounded-lg p-3 h-96 flex gap-3 flex-col ">
+      <h3 className="text-center text-sm mb-2 text-mainText">Compare hospitals by all services based on price</h3>
+      <div className="border border-transparent rounded-lg p-3 h-96 flex gap-3 flex-col bg-white">
         <div className="w-full">
           <Form {...form}>
             <form className="flex justify-between">
@@ -75,13 +75,12 @@ const CompareAllHospitals = () => {
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                "w-full h-10 flex justify-center bg-[#E3F2F1] gap-3",
-                                !field.value && "text-muted-foreground",
+                                "w-full h-10 flex justify-center bg-filter gap-3 text-activeNavText border-none",
                               )}>
                               {field.value?.length > 0
                                 ? hospitals?.find((hospital: THospital) => field.value.includes(hospital.id))?.name
                                 : "Hospital"}
-                              <img src={Vector} alt="" />
+                              <BiSolidDownArrow className="text-icon"/>
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
@@ -131,7 +130,7 @@ const CompareAllHospitals = () => {
           </Form>
         </div>
 
-        <div className="scroll overflow-y-auto h-80 bg-white">
+        <div className="scroll overflow-y-auto h-80">
           <ul>
             {!loading ? (
               lineBars?.statistics?.map((item: THospitalSecondary, index: number) => {

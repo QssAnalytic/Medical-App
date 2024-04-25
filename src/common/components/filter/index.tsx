@@ -8,17 +8,28 @@ import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { CommandList } from "cmdk";
 import { PiUsersLight } from "react-icons/pi";
-import Vector from "/icons/vector.svg";
 import { days, months, years } from "@/common/static";
 import { useFormContext } from "react-hook-form";
 import { TDay, TMonth, TYear } from "@/pages/hospitals/types";
 import useAuthStore from "@/services/store/authStore";
 import { Role } from "@/common/types";
+import { useEffect } from "react";
+import { BiSolidDownArrow } from "react-icons/bi";
 
 export default function Filter() {
   const form = useFormContext();
   const { user, signOut } = useAuthStore();
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (user?.role === "admin" || user?.role === "superuser") {
+      document.documentElement.setAttribute("data-theme", "admin");
+    } else if (user?.role === "financer") {
+      document.documentElement.setAttribute("data-theme", "price");
+    } else if (user?.role === "manager") {
+      document.documentElement.setAttribute("data-theme", "count");
+    }
+  }, [user?.role]);
 
   const filterSubmit = (data: any) => console.log("filter datas", data);
 
@@ -34,8 +45,8 @@ export default function Filter() {
             <Link to={"/"}>
               <Badge
                 className={`px-6 py-3 rounded-[8px] ${
-                  pathname === "/" ? "bg-[#068F84] border-transparent" : "bg-[#FFFFFF] text-[#068F84] border-[#E8E8E8]"
-                }  text-lg cursor-pointer hover:bg-[#FFFFFF] border hover:text-[#068F84] hover:border-[#068F84]`}>
+                  pathname === "/" ? "bg-filter border-transparent" : "bg-[#FFFFFF] text-[#068F84] border-[#E8E8E8]"
+                }  text-lg cursor-pointer hover:bg-[#FFFFFF] border hover:text-nonActiveNavText hover:border-[#068F84]`}>
                 Hospitals
               </Badge>
             </Link>
@@ -43,9 +54,9 @@ export default function Filter() {
               <Badge
                 className={`px-6 py-3 rounded-[8px] ${
                   pathname === "/services"
-                    ? "bg-[#068F84] border-transparent"
-                    : "bg-[#FFFFFF] text-[#068F84] border-[#E8E8E8]"
-                }  text-lg cursor-pointer hover:bg-[#FFFFFF] border hover:text-[#068F84] hover:border-[#068F84]`}>
+                    ? "bg-filter border-transparent"
+                    : "bg-backg text-nonActiveNavText border-filterBorder"
+                }  text-lg cursor-pointer hover:bg-[#FFFFFF] border hover:text-nonActiveNavText hover:border-[#068F84]`}>
                 Services
               </Badge>
             </Link>
@@ -70,13 +81,13 @@ export default function Filter() {
                                     variant="outline"
                                     role="combobox"
                                     className={cn(
-                                      "w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3",
-                                      !field.value && "text-muted-foreground",
+                                      "w-28 h-12 flex justify-between bg-filter border border-filterBorder gap-3",
+                                      !field.value && "text-activeNavText",
                                     )}>
                                     {field.value?.year
                                       ? years.find((years) => years.data === field.value?.year)?.data
                                       : "Year"}
-                                    <img src={Vector} alt="" />
+                                    <BiSolidDownArrow className="text-icon" />
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
@@ -117,13 +128,13 @@ export default function Filter() {
                                     variant="outline"
                                     role="combobox"
                                     className={cn(
-                                      "w-36 h-12 flex justify-between bg-[#E3F2F1] gap-3",
-                                      !field.value && "text-muted-foreground",
+                                      "w-36 h-12 flex justify-between bg-filter gap-3 border border-filterBorder",
+                                      !field.value && "text-activeNavText",
                                     )}>
                                     {field.value?.month
                                       ? months.find((months) => months.id === field.value?.month)?.data
                                       : "Month"}
-                                    <img src={Vector} alt="" />
+                                    <BiSolidDownArrow className="text-icon" />
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
@@ -162,13 +173,13 @@ export default function Filter() {
                                     variant="outline"
                                     role="combobox"
                                     className={cn(
-                                      "w-28 h-12 flex justify-between bg-[#E3F2F1] gap-3",
-                                      !field.value && "text-muted-foreground",
+                                      "w-28 h-12 flex justify-between bg-filter border border-filterBorder gap-3",
+                                      !field.value && "text-activeNavText",
                                     )}>
                                     {field.value?.day
                                       ? days.find((days) => days.data === field.value?.day)?.data
                                       : "Day"}
-                                    <img src={Vector} alt="" />
+                                    <BiSolidDownArrow className="text-icon" />
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
@@ -211,62 +222,63 @@ export default function Filter() {
                       name="annotate_type"
                       render={({ field }) => (
                         <div className="flex gap-7">
-                          {user?.role === Role.SuperUser ||
-                          user?.role === Role.Admin ||
-                          user?.role === Role.Financer ? (
-                            <FormItem>
-                              <FormControl>
-                                <Button
-                                  className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold  border border-transparent hover:border-[#068F84] hover:bg-white hover:text-[#068F84] ${
-                                    field.value === "price"
-                                      ? "bg-[#068F84] text-white"
-                                      : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
-                                  }`}
-                                  onClick={() => {
-                                    form.setValue("annotate_type", "price");
-                                  }}>
-                                  Price
-                                  <CircleDollarSign size={20} />
-                                </Button>
-                              </FormControl>
-                            </FormItem>
-                          ) : null}
-
-                          {user?.role === Role.Manager || user?.role === Role.SuperUser || user?.role === Role.Admin ? (
-                            <FormItem>
-                              <FormControl>
-                                <Button
-                                  className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold border border-transparent hover:border-[#068F84] hover:bg-white hover:text-[#068F84] ${
-                                    field.value === "count"
-                                      ? "bg-[#068F84] text-white"
-                                      : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
-                                  }`}
-                                  onClick={() => {
-                                    form.setValue("annotate_type", "count");
-                                  }}>
-                                  Count
-                                  <FileSearch size={20} className="hover:text-[#068F84]" />
-                                </Button>
-                              </FormControl>
-                            </FormItem>
-                          ) : null}
                           {user?.role === Role.SuperUser || user?.role === Role.Admin ? (
-                            <FormItem>
-                              <FormControl>
-                                <Button
-                                  className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold border border-transparent hover:border-[#068F84] hover:bg-white hover:text-[#068F84] ${
-                                    field.value === "number_patients"
-                                      ? "bg-[#068F84] text-white"
-                                      : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
-                                  }`}
-                                  onClick={() => {
-                                    form.setValue("annotate_type", "number_patients");
-                                  }}>
-                                  Number of Patients
-                                  <PiUsersLight size={20} />
-                                </Button>
-                              </FormControl>
-                            </FormItem>
+                            <>
+                              <FormItem>
+                                <FormControl>
+                                  <Button
+                                    className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold  border border-transparent hover:border-[#068F84] hover:bg-white hover:text-[#068F84] ${
+                                      field.value === "price"
+                                        ? "bg-[#068F84] text-white"
+                                        : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
+                                    }`}
+                                    onClick={() => {
+                                      form.setValue("annotate_type", "price");
+                                    }}>
+                                    Price
+                                    <CircleDollarSign size={20} />
+                                  </Button>
+                                </FormControl>
+                              </FormItem>
+                              <FormItem>
+                                <FormControl>
+                                  <Button
+                                    className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold border border-transparent hover:border-[#068F84] hover:bg-white hover:text-[#068F84] ${
+                                      field.value === "count"
+                                        ? "bg-[#068F84] text-white"
+                                        : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
+                                    }`}
+                                    onClick={() => {
+                                      form.setValue("annotate_type", "count");
+                                    }}>
+                                    Count
+                                    <FileSearch size={20} className="hover:text-[#068F84]" />
+                                  </Button>
+                                </FormControl>
+                              </FormItem>
+                              <FormItem>
+                                <FormControl>
+                                  <Button
+                                    className={`px-6 py-6 flex justify-between text-sm gap-2 font-semibold border border-transparent hover:border-[#068F84] hover:bg-white hover:text-[#068F84] ${
+                                      field.value === "number_patients"
+                                        ? "bg-[#068F84] text-white"
+                                        : "bg-white text-[#7A7A7A] border border-[#E8E8E8]"
+                                    }`}
+                                    onClick={() => {
+                                      form.setValue("annotate_type", "number_patients");
+                                    }}>
+                                    Number of Patients
+                                    <PiUsersLight size={20} />
+                                  </Button>
+                                </FormControl>
+                              </FormItem>
+                            </>
+                          ) : null}
+                          {user?.role === Role.Manager ? (
+                            <h1 className="text-mainText text-[30px]">Supply Sales Dashboard</h1>
+                          ) : null}
+                          {user?.role === Role.Financer ? (
+                            <h1 className="text-mainText text-[30px]">Revenue Dashboard</h1>
                           ) : null}
                         </div>
                       )}
@@ -274,7 +286,7 @@ export default function Filter() {
                   </div>
                   <div className="log-out">
                     <Button
-                      className="px-6 py-6 flex justify-between text-sm gap-2 font-semibold"
+                      className="px-6 py-6 bg-filter flex justify-between text-sm gap-2 font-semibold"
                       onClick={handleLogOut}>
                       Log Out
                     </Button>
