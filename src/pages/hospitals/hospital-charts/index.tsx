@@ -9,10 +9,10 @@ import { Button } from "@/common/components/ui/button";
 import { cn } from "@/common/lib/utils";
 import { months, years } from "@/common/static";
 import { useFormContext } from "react-hook-form";
-import Vector from "/icons/vector.svg";
 import { useEffect } from "react";
 import CompareByCharts from "./components/compare-all-hospitals";
 import DifferenceByCharts from "./components/difference-hospitals";
+import { BiSolidDownArrow } from "react-icons/bi";
 
 const HospitalsCharts = () => {
   const form = useFormContext();
@@ -39,13 +39,13 @@ const HospitalsCharts = () => {
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                "w-52 h-12 flex justify-center bg-[#E3F2F1] gap-3",
-                                !field.value && "text-muted-foreground",
+                                "w-52 h-12 flex justify-center bg-filter border border-filterBorder text-activeNavText gap-3",
+                                !field.value && "text-activeNavText",
                               )}>
                               {field.value?.year
                                 ? years.find((years) => years.data === field.value?.year)?.data
                                 : "Year"}
-                              <img src={Vector} alt="" />
+                              <BiSolidDownArrow className="text-icon"/>
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
@@ -85,13 +85,13 @@ const HospitalsCharts = () => {
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                "w-52 h-12 flex justify-center bg-[#E3F2F1] gap-3",
-                                !field.value && "text-muted-foreground",
+                                "w-52 h-12 flex justify-center bg-filter border border-filterBorder text-activeNavText gap-3",
+                                !field.value && "text-activeNavText",
                               )}>
                               {field.value?.month
                                 ? months.find((month) => month.id === field.value?.month)?.data
                                 : "Month"}
-                              <img src={Vector} alt="" />
+                              <BiSolidDownArrow className="text-icon"/>
                             </Button>
                           </FormControl>
                         </PopoverTrigger>

@@ -76,10 +76,10 @@ export default function DifferenceByCharts() {
 
   return (
     <>
-      <div className="basis-[33%] flex justify-center items-center  border border-[#E8E8E8] rounded py-6">
+      <div className="basis-[33%] flex justify-center items-center  border border-[#E8E8E8] rounded py-6 bg-white">
         <Chart loading={chartsLoading_st} chartsInfo={charts_st} />
       </div>
-      <div className="basis-[33%] flex justify-center items-center border border-[#E8E8E8] rounded py-6">
+      <div className="basis-[33%] flex justify-center items-center border border-[#E8E8E8] rounded py-6 bg-white">
         <Chart loading={chartsLoading_nd} chartsInfo={charts_nd} />
       </div>
     </>

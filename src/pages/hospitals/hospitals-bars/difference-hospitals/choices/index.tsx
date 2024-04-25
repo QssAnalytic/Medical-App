@@ -18,9 +18,9 @@ import { useEffect, useState } from "react";
 import { LoaderCircle } from "lucide-react";
 import { TFormValues } from "@/common/types";
 import { colorsForHospital } from "@/common/static";
-import Vector from "/icons/vector.svg";
 import useSWRMutation from "swr/mutation";
 import useSWR from "swr";
+import { BiSolidDownArrow } from "react-icons/bi";
 
 const Choices = ({ mainKey }: { mainKey: string }) => {
   const form = useFormContext();
@@ -87,12 +87,11 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                "w-1/2 h flex justify-center bg-[#E3F2F1] gap-3",
-                                !field.value && "text-muted-foreground",
+                                "w-1/2 h flex justify-center bg-filter border-filterBorder gap-3 text-activeNavText",
+                                !field.value && "text-activeNavText",
                               )}>
                               {services?.find((item: { id: number }) => item.id === field.value)?.name || "Service"}
-
-                              <img src={Vector} alt="" />
+                             <BiSolidDownArrow className="text-icon"/>
                             </Button>
                           </FormControl>
                         </PopoverTrigger>

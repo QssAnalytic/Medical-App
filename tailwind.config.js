@@ -1,12 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
+  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     container: {
@@ -18,7 +13,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        "inter": ["Inter", "sans-serif"]
+        inter: ["Inter", "sans-serif"],
       },
       textColor: {
         skin: {
@@ -36,12 +31,25 @@ module.exports = {
       gradientColorStops: {
         skin: {
           hue: "var(--fill-color)",
-        }
+        },
       },
 
-
-
       colors: {
+        backg: "var(--backg)",
+        activeNav: "var(--activeNav)",
+        activeNavText: "var(--activeNavText)",
+        nonActiveNav: "var(--nonActiveNav)",
+        nonActiveNavText: "var(--nonActiveNavText)",
+        filter: "var(--filter)",
+        filterBorder: "var(--filterBorder)",
+        compareBg: "var(--compareBg)",
+        mainText: "var(--mainText)",
+        icon : "var(--icon)",
+        mainBorder : "var(--mainBorder)",
+        chartBg : "var(--chartBg)",
+        chartBorder : "var(--chartBorder)",
+
+        //
         current: "var(--fill-color)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -102,4 +110,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
