@@ -45,7 +45,9 @@ export default function Filter() {
             <Link to={"/"}>
               <Badge
                 className={`px-6 py-3 rounded-[8px] ${
-                  pathname === "/" ? "bg-filter border-transparent" : "bg-[#FFFFFF] text-[#068F84] border-[#E8E8E8]"
+                  pathname === "/"
+                    ? "bg-filter border-transparent"
+                    : "bg-backg  border-filterBorder text-nonActiveNavText"
                 }  text-lg cursor-pointer hover:bg-[#FFFFFF] border hover:text-nonActiveNavText hover:border-[#068F84]`}>
                 Hospitals
               </Badge>
@@ -126,6 +128,7 @@ export default function Filter() {
                                 <FormControl>
                                   <Button
                                     variant="outline"
+                                    disabled={!form.watch("dates")?.year}
                                     role="combobox"
                                     className={cn(
                                       "w-36 h-12 flex justify-between bg-filter gap-3 border border-filterBorder",
@@ -171,6 +174,7 @@ export default function Filter() {
                                 <FormControl>
                                   <Button
                                     variant="outline"
+                                    disabled={!form.watch("dates")?.month}
                                     role="combobox"
                                     className={cn(
                                       "w-28 h-12 flex justify-between bg-filter border border-filterBorder gap-3",

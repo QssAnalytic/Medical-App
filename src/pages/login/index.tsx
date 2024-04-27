@@ -8,7 +8,7 @@ const Login = () => {
   const { isAuth } = useAuthStore();
 
   useEffect(() => {
-    isAuth && navigate("/");
+   isAuth && navigate('/')
   }, [isAuth, navigate]);
 
   return (

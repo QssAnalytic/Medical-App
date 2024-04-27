@@ -24,7 +24,7 @@ export default function Layout() {
   return (
     <Suspense fallback={<Spinner />}>
       <FormProvider {...form}>
-        <div className="bg-backg flex flex-col size-full">
+        <div className="bg-backg flex flex-col">
           <header className="header">
             <div className="header-container p-8">
               <div className="header-inner">

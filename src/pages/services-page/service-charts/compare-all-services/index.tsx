@@ -13,7 +13,7 @@ export default function CompareAllServicesCharts() {
     trigger: postParams,
     isMutating: chartsLoading,
   } = useSWRMutation(servicesEndpoints.charts, getDataViaPost);
-
+ 
   const postedParams = clearUndefinedValues({
     dates: form.watch("chart_date"),
     services_ids: form.watch("services_ids"),
@@ -34,7 +34,7 @@ export default function CompareAllServicesCharts() {
   }, [form.watch("services_ids"), form.watch("chart_date"), form.watch("annotate_type")]);
 
   return (
-    <div className=" flex justify-center items-center border border-[#E8E8E8] rounded py-6 grow h-96">
+    <div className="flex justify-center items-center border border-[#E8E8E8] bg-white rounded py-6 grow h-96">
       <Chart chartsInfo={chart} loading={chartsLoading} />
     </div>
   );

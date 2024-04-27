@@ -1,5 +1,6 @@
 const authEndpoints = new (class {
   signIn = `api/account/login/`;
+  refresh = "api/account/refresh/";
   currentUser = "api/account/user/";
 })();
 

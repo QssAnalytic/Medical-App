@@ -1,4 +1,5 @@
 import axios from "axios";
+import useAuthStore from "../store/authStore";
 
 const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
@@ -14,8 +15,22 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
-// instance.interceptors.response.use((response)=> response, async (error)=>{
-//   const originalRequest = error.config;
-//   const status = error.response ? error.response.status : null;
-// })
+instance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    const status = error.response ? error.response.status : null;
+
+    if (status === 401) {
+      const accessToken = await useAuthStore.getState().getNewAccessToken();
+      if (accessToken) {
+        instance.defaults.headers.Authorization = accessToken;
+        return instance(originalRequest);
+      }
+      return useAuthStore.getState().signOut();
+    }
+    return Promise.reject(error);
+  },
+);
+
 export { instance };
