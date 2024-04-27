@@ -34,7 +34,7 @@ export default function CompareByCharts() {
 
 
   return (
-    <div className=" flex justify-center items-center border border-[#E8E8E8] bg-white rounded py-6 grow">
+    <div className="h-96 flex justify-center items-center border border-[#E8E8E8] bg-white rounded py-6 grow">
       <Chart chartsInfo={chart} loading={chartsLoading} />
     </div>
   );

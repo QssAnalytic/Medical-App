@@ -11,7 +11,6 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/common/co
 import { PopoverContent } from "@/common/components/ui/popover";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { cn } from "@/common/lib/utils";
-import Vector from "/icons/vector.svg";
 import { useFormContext } from "react-hook-form";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
@@ -21,6 +20,7 @@ import { Check, LoaderCircle } from "lucide-react";
 import useSWRMutation from "swr/mutation";
 import { TFormValues } from "@/common/types";
 import { colorsForHospital } from "@/common/static";
+import { BiSolidDownArrow } from "react-icons/bi";
 
 type TChoiceProps = {
   mainKey: string;
@@ -33,7 +33,7 @@ const Choices = ({ mainKey }: TChoiceProps) => {
   const { data: hospitals } = useSWR(hospitalEndpoints.base, getData);
 
   const {
-    data: lineBars,
+    data: lineBars, 
     trigger: postParams,
     isMutating: loadingLineBars,
   } = useSWRMutation(servicesEndpoints?.lineBar, getDataViaPost);
@@ -91,9 +91,9 @@ const Choices = ({ mainKey }: TChoiceProps) => {
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn("w-1/2 h flex justify-center bg-[#E3F2F1] gap-3")}>
+                              className={cn("w-1/2 h flex justify-center bg-filter border-filterBorder gap-3 text-activeNavText")}>
                               {hospitals?.find((item: { id: number }) => item.id === field.value)?.name || "Hospital"}
-                              <img src={Vector} alt="" />
+                              <BiSolidDownArrow className="text-icon"/>
                             </Button>
                           </FormControl>
                         </PopoverTrigger>

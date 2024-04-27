@@ -6,6 +6,7 @@ import { SignInPayload, SignInResponse, User } from "@/pages/login/models";
 type State = {
   user: User | null;
   isAuth: boolean | undefined;
+  isRefresh: boolean | undefined;
   isUserLoading: boolean | undefined;
   isSignInLoading: boolean | undefined;
 };
@@ -15,12 +16,14 @@ type Action = {
   signIn: (data: SignInPayload) => void;
   signOut: () => void;
   setIsAuth: (isAuth: boolean) => void;
+  getNewAccessToken: () => any;
 };
 
 type UseAuthStore = Action & State;
 
 const useAuthStore = create<UseAuthStore>((set, get) => ({
   user: null,
+  isRefresh: false,
   isSignInLoading: false,
   isUserLoading: false,
   isAuth: false,
@@ -29,7 +32,6 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
     set({ isUserLoading: true });
     try {
       const currentUser = await getData(authEndpoints.currentUser);
-      console.log("current user", currentUser);
       set({ user: currentUser });
       set({ isAuth: true });
     } catch (err) {
@@ -45,7 +47,6 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
       localStorage.setItem("accessToken", `Bearer ${access}`);
       localStorage.setItem("refreshToken", `Bearer ${refresh}`);
       get().currentUser();
-      console.log("access", access, "refresh", refresh);
     } catch (err) {
       console.log("signIn error", err);
     }
@@ -57,6 +58,23 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
     localStorage.removeItem("refreshToken");
     set({ user: null });
     set({ isAuth: false });
+  },
+
+  getNewAccessToken: async () => {
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    if (!get().isAuth) get().signOut();
+
+    try {
+      const { access } = (await postData(authEndpoints.refresh, {
+        arg: { refresh: refreshToken?.replace("Bearer", "").trim() },
+      })) as unknown as SignInResponse;
+      localStorage.setItem("accessToken", `Bearer ${access}`);
+      set({ isAuth: true });
+      return access;
+    } catch (err) {
+      set({ isAuth: false });
+    }
   },
 }));
 

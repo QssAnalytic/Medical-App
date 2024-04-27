@@ -84,7 +84,7 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
-                              variant="outline"
+                              variant="outline" 
                               role="combobox"
                               className={cn(
                                 "w-1/2 h flex justify-center bg-filter border-filterBorder gap-3 text-activeNavText",

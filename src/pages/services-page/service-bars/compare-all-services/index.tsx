@@ -49,15 +49,15 @@ const CompareAllServicesbars = () => {
       console.log("err");
     }
   };
-
+ 
   useEffect(() => {
     getLineBars();
   }, [form.watch("services_ids", form.watch("annotate_type")), form.watch("dates")]);
 
   return (
     <div>
-      <h3 className="text-center text-sm mb-2 text-[#068F84]">Compare hospitals by all services based on price</h3>
-      <div className="border rounded-lg p-3 h-96">
+      <h3 className="text-center text-sm mb-2 text-mainText">Compare hospitals by all services based on price</h3>
+      <div className="border border-transparent rounded-lg p-3 h-96 bg-white">
         <div className="w-full">
           <Form {...form}>
             <form className="flex justify-between">
@@ -73,7 +73,7 @@ const CompareAllServicesbars = () => {
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn("w-full h-10 flex justify-center bg-[#E3F2F1] gap-3")}>
+                              className={cn("w-full h-10 flex justify-center gap-3 text-activeNavText bg-filter border-none")}>
                               Services
                               <img src={Vector} alt="" />
                             </Button>

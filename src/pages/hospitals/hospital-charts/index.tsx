@@ -45,7 +45,7 @@ const HospitalsCharts = () => {
                               {field.value?.year
                                 ? years.find((years) => years.data === field.value?.year)?.data
                                 : "Year"}
-                              <BiSolidDownArrow className="text-icon"/>
+                              <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
@@ -82,6 +82,7 @@ const HospitalsCharts = () => {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              disabled={!form.watch("chart_date")?.year}
                               variant="outline"
                               role="combobox"
                               className={cn(
@@ -91,7 +92,7 @@ const HospitalsCharts = () => {
                               {field.value?.month
                                 ? months.find((month) => month.id === field.value?.month)?.data
                                 : "Month"}
-                              <BiSolidDownArrow className="text-icon"/>
+                              <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>

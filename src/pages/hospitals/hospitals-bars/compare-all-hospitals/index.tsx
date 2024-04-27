@@ -128,7 +128,7 @@ const CompareAllHospitals = () => {
               </div>
             </form>
           </Form>
-        </div>
+        </div> 
 
         <div className="scroll overflow-y-auto h-80">
           <ul>

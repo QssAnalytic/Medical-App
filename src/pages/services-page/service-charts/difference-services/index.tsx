@@ -68,19 +68,19 @@ export default function DifferenceServicesCharts() {
   // For triggering first service (choice)
   useEffect(() => {
     postServicesParams_st();
-  }, [form.watch(`hospital_id_st`), form.watch("chart_date"), form.watch("annotate_type")]);
+  }, [form.watch(`hospital_id_st`), form.watch("chart_date"), form.watch("annotate_type"), form.watch('services_ids')]);
 
   // For triggering second service (choice)
   useEffect(() => {
     postServicesParams_nd();
-  }, [form.watch(`hospital_id_nd`), form.watch("chart_date"), form.watch("annotate_type")]);
+  }, [form.watch(`hospital_id_nd`), form.watch("chart_date"), form.watch("annotate_type") , form.watch('services_ids')]);
 
   return (
     <>
-      <div className="basis-[33%] flex justify-center items-center  border border-[#E8E8E8] rounded py-6 h-96">
+      <div className="basis-[33%] flex justify-center items-center bg-white  border border-[#E8E8E8] rounded py-6 h-96">
         <Chart chartsInfo={charts_st} loading={chartsLoading_st} />
       </div>
-      <div className="basis-[33%] flex justify-center items-center border border-[#E8E8E8] rounded py-6 h-96">
+      <div className="basis-[33%] flex justify-center items-center bg-white border border-[#E8E8E8] rounded py-6 h-96">
         <Chart chartsInfo={charts_nd} loading={chartsLoading_nd} />
       </div>
     </>
