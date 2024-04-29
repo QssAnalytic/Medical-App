@@ -13,13 +13,23 @@ export default function Layout() {
 
   const form = useForm({
     mode: "onChange",
-    defaultValues: { annotate_type: ANNOTATE_TYPE, hospital_ids: [], services_ids: [] , chart_date : {}},
+    defaultValues: {
+      annotate_type: ANNOTATE_TYPE,
+      hospital_ids: [],
+      services_ids: [],
+      chart_date: {},
+      service_id_nd: 4,
+      service_id_st: 7,
+      hospital_id_nd: 4,
+      hospital_id_st: 1,
+    },
   });
 
   useEffect(() => {
     form.reset();
     form.setValue("annotate_type", ANNOTATE_TYPE ? ANNOTATE_TYPE : "");
   }, [pathname]);
+  4;
 
   return (
     <Suspense fallback={<Spinner />}>

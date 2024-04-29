@@ -10,7 +10,7 @@ interface HospitalStatistics {
 }
 
 interface HospitalInfo {
-  name: string;    
+  name: string;
   statistics: HospitalStatistics[];
 }
 
@@ -28,10 +28,10 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
     var r = Math.floor(Math.random() * 256);
     var g = Math.floor(Math.random() * 256);
     var b = Math.floor(Math.random() * 256);
-  
+
     // Construct the RGB color string
     var color = "rgb(" + r + ", " + g + ", " + b + ")";
-  
+
     return color;
   }
 
@@ -47,14 +47,13 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
         name: date,
       };
       chartsInfo?.forEach((hospital) => {
-        monthData[hospital.name] =
-          hospital?.statistics?.find((stat) => stat.date === monthData.name)?.data || 0;
+        monthData[hospital.name] = hospital?.statistics?.find((stat) => stat.date === monthData.name)?.data || 0;
       });
 
       chartData.push(monthData);
     });
 
-    console.log('chartdata compare all', chartData)
+  console.log("chartdata compare all", chartData);
 
   return (
     <div className="relative h-full">
@@ -67,7 +66,7 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
           {!loading ? (
             <LineChart
               className="relative"
-              width={520}
+              width={500}
               height={320}
               data={chartData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
@@ -100,7 +99,8 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
                       }
                     },
                     onMouseLeave: () => {
-                      if (tooltipRef.current) {chartsInfo
+                      if (tooltipRef.current) {
+                        chartsInfo;
                         tooltipRef.current.hidden = true;
                       }
                     },
