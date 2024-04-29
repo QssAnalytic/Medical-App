@@ -1,5 +1,6 @@
 import Chart from "@/common/components/charts";
 import { clearUndefinedValues, mergeObjects } from "@/common/lib/utils";
+import { TFormValues } from "@/common/types";
 import { servicesEndpoints } from "@/services/api/endpoints";
 import { getDataViaPost } from "@/services/api/requests";
 import { useEffect } from "react";
@@ -7,7 +8,6 @@ import { useFormContext } from "react-hook-form";
 import useSWRMutation from "swr/mutation";
 
 export default function DifferenceServicesCharts() {
-
   const form = useFormContext();
 
   const {
@@ -30,7 +30,7 @@ export default function DifferenceServicesCharts() {
           ),
         );
 
-        const postedData = clearUndefinedValues({
+        const postedData: TFormValues | undefined = clearUndefinedValues({
           ...filteredKeys,
           hospital_id: form.watch(`hospital_id_st`),
           dates: form.watch("chart_date"),
@@ -52,7 +52,7 @@ export default function DifferenceServicesCharts() {
           ),
         );
 
-        const postedData = clearUndefinedValues({
+        const postedData :  TFormValues | undefined = clearUndefinedValues({
           ...filteredKeys,
           hospital_id: form.watch(`hospital_id_nd`),
           dates: form.watch("chart_date"),
@@ -68,12 +68,12 @@ export default function DifferenceServicesCharts() {
   // For triggering first service (choice)
   useEffect(() => {
     postServicesParams_st();
-  }, [form.watch(`hospital_id_st`), form.watch("chart_date"), form.watch("annotate_type"), form.watch('services_ids')]);
+  }, [form.watch(`hospital_id_st`), form.watch("chart_date"), form.watch("annotate_type"), form.watch("services_ids")]);
 
   // For triggering second service (choice)
   useEffect(() => {
     postServicesParams_nd();
-  }, [form.watch(`hospital_id_nd`), form.watch("chart_date"), form.watch("annotate_type") , form.watch('services_ids')]);
+  }, [form.watch(`hospital_id_nd`), form.watch("chart_date"), form.watch("annotate_type"), form.watch("services_ids")]);
 
   return (
     <>

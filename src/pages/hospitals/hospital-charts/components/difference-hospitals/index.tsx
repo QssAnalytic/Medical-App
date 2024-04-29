@@ -1,5 +1,7 @@
 import Chart from "@/common/components/charts";
+import { clearUndefinedValues, mergeObjects } from "@/common/lib/utils";
 import { TFormValues } from "@/common/types";
+// import { TFormValues } from "@/common/types";
 import { hospitalEndpoints } from "@/services/api/endpoints";
 import { getDataViaPost } from "@/services/api/requests";
 import { useEffect } from "react";
@@ -29,11 +31,11 @@ export default function DifferenceByCharts() {
           ),
         );
 
-        const postedData: TFormValues = {
+        const postedData: TFormValues | undefined = clearUndefinedValues({
           ...filteredKeys,
           service_id: form.watch(`service_id_st`),
           dates: form.watch("chart_date"),
-        };
+        }).reduce((acc, obj) => mergeObjects(acc, obj), {});
         delete postedData?.[`service_id_st`];
         await postParams_st(postedData);
       }
@@ -51,11 +53,11 @@ export default function DifferenceByCharts() {
           ),
         );
 
-        const postedData: TFormValues = {
+        const postedData: TFormValues | undefined = clearUndefinedValues({
           ...filteredKeys,
           service_id: form.watch(`service_id_nd`),
           dates: form.watch("chart_date"),
-        };
+        }).reduce((acc, obj) => mergeObjects(acc, obj), {});
         delete postedData?.[`service_id_nd`];
         await postParams_nd(postedData);
       }
