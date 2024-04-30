@@ -84,14 +84,14 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
-                              variant="outline" 
+                              variant="outline"
                               role="combobox"
                               className={cn(
                                 "w-1/2 h flex justify-center bg-filter border-filterBorder gap-3 text-activeNavText",
                                 !field.value && "text-activeNavText",
                               )}>
                               {services?.find((item: { id: number }) => item.id === field.value)?.name || "Service"}
-                             <BiSolidDownArrow className="text-icon"/>
+                              <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
@@ -134,12 +134,12 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
             {lineBars?.statistics?.length > 0 ? (
               lineBars?.statistics?.map((item: any, index: number) => {
                 return (
-                  <div key={index} className="flex justify-between items-center mt-3 px- text-sm gap-3  px-3">
-                    <div className=" w-6 ">{index + 1}</div>
-                    <div className="w-36 truncate text-wrap  text-end">{item?.name}</div>
-                    <div className="flex justify-center items-center  gap-4 pl-1">
-                      <div className="w-36">
-                        <div className="bg-[#d8d8d8] rounded h-3">
+                  <div key={index} className="flex justify-between items-center mt-3 px- text-sm gap-3 px-3 ">
+                    <div className="basis-[10%]">{index + 1}</div>
+                    <div className="basis-[40%] truncate text-balance  text-end">{item?.name}</div>
+                    <div className="flex basis-[50%] justify-center items-center pl-1">
+                      <div className="w-full flex">
+                        <div className="bg-[#d8d8d8] rounded h-3 basis-[87%]">
                           <div
                             className="bg-gray-600 h-3 rounded"
                             style={{
@@ -148,7 +148,7 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
                             }}></div>
                         </div>
                       </div>
-                      <div className="truncate">{item?.data}</div>
+                      <div className="truncate basis-[25%]">{item?.data}</div>
                     </div>
                   </div>
                 );

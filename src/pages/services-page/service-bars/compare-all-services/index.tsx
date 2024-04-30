@@ -14,7 +14,6 @@ import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { Check, LoaderCircle } from "lucide-react";
 import { clearUndefinedValues, cn, mergeObjects } from "@/common/lib/utils";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import Vector from "/icons/vector.svg";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { hospitalEndpoints, servicesEndpoints } from "@/services/api/endpoints";
@@ -22,6 +21,7 @@ import { getData, getDataViaPost } from "@/services/api/requests";
 import { THospital, THospitalSecondary } from "@/pages/hospitals/types";
 import useSWRMutation from "swr/mutation";
 import { colorsForHospital } from "@/common/static";
+import { BiSolidDownArrow } from "react-icons/bi";
 
 const CompareAllServicesbars = () => {
   const form = useFormContext();
@@ -49,10 +49,10 @@ const CompareAllServicesbars = () => {
       console.log("err");
     }
   };
- 
+
   useEffect(() => {
     getLineBars();
-  }, [form.watch("services_ids", form.watch("annotate_type")), form.watch("dates")]);
+  }, [form.watch("services_ids"), form.watch("annotate_type"), form.watch("dates")]);
 
   return (
     <div>
@@ -73,9 +73,11 @@ const CompareAllServicesbars = () => {
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn("w-full h-10 flex justify-center gap-3 text-activeNavText bg-filter border-none")}>
+                              className={cn(
+                                "w-full h-10 flex justify-center gap-3 text-activeNavText bg-filter border-none",
+                              )}>
                               Services
-                              <img src={Vector} alt="" />
+                              <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
@@ -126,59 +128,54 @@ const CompareAllServicesbars = () => {
         </div>
 
         <div className="scroll overflow-y-auto h-80 bg-white">
-          <ul>
-            {!loading ? (
-              lineBars?.statistics?.map((item: THospitalSecondary, index: number) => {
-                return (
-                  <div key={index} className="flex justify-between items-center mt-3 px-5 text-sm">
-                    <li className="">{index + 1}</li>
-                    <li className="w-40 text-end">{item?.name}</li>
-                    <div>
-                      {/*
-                       <div className="w-[11rem] pl-2">
-                        <div className="bg-[#d8d8d8] rounded h-3">
-                          <div
-                            className="h-3 rounded hover:cursor-pointer"
-                            style={{
-                              width: barWidth,
-                              background: `${colorsForHospital[index]}`,
-                            }}></div>
-                        </div>
-                      </div> 
-                      */}
+          {!loading ? (
+            <ul>
+              {lineBars?.statistics?.length > 0 ? (
+                lineBars?.statistics?.map((item: THospitalSecondary, idx: number) => {
+                  let index = Math.floor(Math.random() * colorsForHospital.length);
+                  return (
+                    <div key={idx} className="flex justify-between items-center mt-3 px-5 text-sm">
+                      <li className="">{idx + 1}</li>
+                      <li className="w-40 text-end">{item?.name}</li>
                       <div>
-                        <div className="w-[11rem] pl-2">
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <div className="bg-[#d8d8d8] rounded h-3 hover:cursor-pointer">
-                                  <div
-                                    className="h-3 rounded "
-                                    style={{
-                                      width: `${(item?.data / lineBars?.max_count) * 100}%`,
-                                      background: `${colorsForHospital[index]}`,
-                                    }}></div>
-                                </div>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p className="text-orange-700">
-                                  {item?.data} / <span className="text-green-500 font-bold">{lineBars?.max_count}</span>
-                                </p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
+                        <div>
+                          <div className="w-[11rem] pl-2">
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <div className="bg-[#d8d8d8] rounded h-3 hover:cursor-pointer">
+                                    <div
+                                      className="h-3 rounded pl-1"
+                                      style={{
+                                        width: `${(item?.data / lineBars?.max_count) * 100}%`,
+                                        background: `${colorsForHospital[index]}`,
+                                        borderRadius: "4px",
+                                      }}></div>
+                                  </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p className="text-orange-700">
+                                    {item?.data} /{" "}
+                                    <span className="text-green-500 font-bold">{lineBars?.max_count}</span>
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })
-            ) : (
-              <div className="flex h-80 justify-center items-center">
-                <LoaderCircle size={50} className="animate-spin text-[#1EA66D]" />
-              </div>
-            )}
-          </ul>
+                  );
+                })
+              ) : (
+                <p className="flex justify-center items-center h-72">No data found</p>
+              )}
+            </ul>
+          ) : (
+            <div className="flex h-80 justify-center items-center">
+              <LoaderCircle size={50} className="animate-spin text-[#1EA66D]" />
+            </div>
+          )}
         </div>
       </div>
     </div>
