@@ -1,4 +1,5 @@
 // import { colorsForHospital } from "@/common/static";
+import { colorsForHospital } from "@/common/static";
 import { LoaderCircle } from "lucide-react";
 import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
@@ -23,17 +24,17 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
   const tooltipRef = useRef<HTMLDivElement>(null);
   const form = useFormContext();
 
-  function generateRandomColor() {
-    // Generate random values for red, green, and blue components
-    var r = Math.floor(Math.random() * 256);
-    var g = Math.floor(Math.random() * 256);
-    var b = Math.floor(Math.random() * 256);
+  // function generateRandomColor() {
+  //   // Generate random values for red, green, and blue components
+  //   var r = Math.floor(Math.random() * 256);
+  //   var g = Math.floor(Math.random() * 256);
+  //   var b = Math.floor(Math.random() * 256);
 
-    // Construct the RGB color string
-    var color = "rgb(" + r + ", " + g + ", " + b + ")";
+  //   // Construct the RGB color string
+  //   var color = "rgb(" + r + ", " + g + ", " + b + ")";
 
-    return color;
-  }
+  //   return color;
+  // }
 
   const chartData: any[] = [];
 
@@ -53,7 +54,9 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
       chartData.push(monthData);
     });
 
-  console.log("chartdata compare all", chartData);
+  const randomIndex = () => {
+    return Math.floor(Math.random() * colorsForHospital?.length);
+  };
 
   return (
     <div className="relative h-full">
@@ -106,8 +109,7 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
                     },
                   }}
                   dataKey={hospital.name}
-                  // stroke={`${colorsForHospital[idx]}`}
-                  stroke={generateRandomColor()}
+                  stroke={`${colorsForHospital[`${randomIndex()}`]}`}
                 />
               ))}
             </LineChart>

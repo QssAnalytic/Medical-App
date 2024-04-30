@@ -52,8 +52,9 @@ const CompareAllHospitals = () => {
   };
 
   useEffect(() => {
+    console.log("annotate in compare", form.watch("annotate_type"));
     getLineBars();
-  }, [form.watch("hospital_ids", form.watch("annotate_type")), form.watch("dates")]);
+  }, [form.watch("hospital_ids"), form.watch("annotate_type"), form.watch("dates")]);
 
   return (
     <div>
@@ -80,7 +81,7 @@ const CompareAllHospitals = () => {
                               {field.value?.length > 0
                                 ? hospitals?.find((hospital: THospital) => field.value.includes(hospital.id))?.name
                                 : "Hospital"}
-                              <BiSolidDownArrow className="text-icon"/>
+                              <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
@@ -128,27 +129,29 @@ const CompareAllHospitals = () => {
               </div>
             </form>
           </Form>
-        </div> 
+        </div>
 
-        <div className="scroll overflow-y-auto h-80">
-          <ul>
-            {!loading ? (
-              lineBars?.statistics?.map((item: THospitalSecondary, index: number) => {
-                return (
-                  <div key={index} className="flex justify-between items-center mt-3 px-5 text-sm">
-                    <li className="">{index + 1}</li>
-                    <li className="w-40 text-end">{item?.name}</li>
-                    <div>
+        <div className="scroll overflow-y-auto h-80 bg-white">
+          {!loading ? (
+            <ul>
+              {lineBars?.statistics?.length > 0 ? (
+                lineBars?.statistics?.map((item: THospitalSecondary, index: number) => {
+                  // let index = Math.floor(Math.random() * colorsForHospital.length);
+                  return (
+                    <li key={index} className="flex justify-between items-center mt-3 px-5 text-sm">
+                      <span className="">{index + 1}</span>
+                      <span className="w-40 text-end">{item?.name}</span>
                       <div className="w-[11rem] pl-2">
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <div className="bg-[#d8d8d8] rounded h-3 hover:cursor-pointer">
                                 <div
-                                  className="h-3 rounded "
+                                  className="h-3 rounded pl-1"
                                   style={{
                                     width: `${(item?.data / lineBars?.max_count) * 100}%`,
                                     background: `${colorsForHospital[index]}`,
+                                    borderRadius: "4px",
                                   }}></div>
                               </div>
                             </TooltipTrigger>
@@ -160,16 +163,18 @@ const CompareAllHospitals = () => {
                           </Tooltip>
                         </TooltipProvider>
                       </div>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <div className="flex h-80 justify-center items-center">
-                <LoaderCircle size={50} className="animate-spin text-[#1EA66D]" />
-              </div>
-            )}
-          </ul>
+                    </li>
+                  );
+                })
+              ) : (
+                <p className="flex justify-center items-center h-72">No data found</p>
+              )}
+            </ul>
+          ) : (
+            <div className="flex h-80 justify-center items-center">
+              <LoaderCircle size={50} className="animate-spin text-[#1EA66D]" />
+            </div>
+          )}
         </div>
       </div>
     </div>

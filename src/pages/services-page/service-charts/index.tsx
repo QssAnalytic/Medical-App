@@ -112,7 +112,7 @@ const HospitalsCharts = () => {
                                     <Check
                                       className={cn(
                                         "mr-2 h-4 w-4",
-                                        item.data === field.value?.month ? "opacity-100" : "opacity-0",
+                                        item.id === field.value?.month ? "opacity-100" : "opacity-0",
                                       )}
                                     />
                                     {item.data}

@@ -33,7 +33,7 @@ const Choices = ({ mainKey }: TChoiceProps) => {
   const { data: hospitals } = useSWR(hospitalEndpoints.base, getData);
 
   const {
-    data: lineBars, 
+    data: lineBars,
     trigger: postParams,
     isMutating: loadingLineBars,
   } = useSWRMutation(servicesEndpoints?.lineBar, getDataViaPost);
@@ -91,9 +91,11 @@ const Choices = ({ mainKey }: TChoiceProps) => {
                             <Button
                               variant="outline"
                               role="combobox"
-                              className={cn("w-1/2 h flex justify-center bg-filter border-filterBorder gap-3 text-activeNavText")}>
+                              className={cn(
+                                "w-1/2 h flex justify-center bg-filter border-filterBorder gap-3 text-activeNavText",
+                              )}>
                               {hospitals?.find((item: { id: number }) => item.id === field.value)?.name || "Hospital"}
-                              <BiSolidDownArrow className="text-icon"/>
+                              <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
@@ -139,14 +141,16 @@ const Choices = ({ mainKey }: TChoiceProps) => {
         {!loadingLineBars ? (
           <ul>
             {lineBars?.statistics?.length > 0 ? (
-              lineBars?.statistics?.map((item: any, index: number) => {
+              lineBars?.statistics?.map((item: any, idx: number) => {
+                let index = Math.floor(Math.random() * colorsForHospital.length);
+                console.log("indxxx", index);
                 return (
-                  <div key={index} className="flex justify-between items-center mt-3 px- text-sm gap-3  px-3">
-                    <div className=" w-6 ">{index + 1}</div>
-                    <div className="w-36 truncate text-wrap  text-end">{item?.name}</div>
-                    <div className="flex justify-center items-center  gap-4 pl-1">
-                      <div className="w-36">
-                        <div className="bg-[#d8d8d8] rounded h-3">
+                  <div key={idx} className="flex justify-between items-center mt-3 px- text-sm gap-3  px-3">
+                    <div className="basis-[10%]">{index + 1}</div>
+                    <div className="basis-[40%] truncate text-wrap  text-end">{item?.name}</div>
+                    <div className="flex justify-center basis-[50%] items-center  gap-4 pl-1">
+                      <div className="w-full">
+                        <div className="w-full flex bg-[#d8d8d8] rounded h-3">
                           <div
                             className="bg-gray-600 h-3 rounded"
                             style={{
@@ -155,7 +159,7 @@ const Choices = ({ mainKey }: TChoiceProps) => {
                             }}></div>
                         </div>
                       </div>
-                      <div className=" w-5">{item?.data}</div>
+                      <div className="basis-[25%]">{item?.data}</div>
                     </div>
                   </div>
                 );

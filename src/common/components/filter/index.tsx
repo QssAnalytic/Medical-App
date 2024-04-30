@@ -46,7 +46,7 @@ export default function Filter() {
               <Badge
                 className={`px-6 py-3 rounded-[8px] ${
                   pathname === "/"
-                    ? "bg-filter border-transparent"
+                    ? "bg-activeNav border-transparent"
                     : "bg-backg  border-filterBorder text-nonActiveNavText"
                 }  text-lg cursor-pointer hover:bg-[#FFFFFF] border hover:text-nonActiveNavText hover:border-[#068F84]`}>
                 Hospitals
@@ -56,7 +56,7 @@ export default function Filter() {
               <Badge
                 className={`px-6 py-3 rounded-[8px] ${
                   pathname === "/services"
-                    ? "bg-filter border-transparent"
+                    ? "bg-activeNav border-transparent"
                     : "bg-backg text-nonActiveNavText border-filterBorder"
                 }  text-lg cursor-pointer hover:bg-[#FFFFFF] border hover:text-nonActiveNavText hover:border-[#068F84]`}>
                 Services
@@ -83,7 +83,7 @@ export default function Filter() {
                                     variant="outline"
                                     role="combobox"
                                     className={cn(
-                                      "w-28 h-12 flex justify-between bg-filter border border-filterBorder gap-3",
+                                      "w-28 h-12 flex justify-between bg-filter border border-filterBorder text-activeNavText gap-3",
                                       !field.value && "text-activeNavText",
                                     )}>
                                     {field.value?.year
@@ -131,7 +131,7 @@ export default function Filter() {
                                     disabled={!form.watch("dates")?.year}
                                     role="combobox"
                                     className={cn(
-                                      "w-36 h-12 flex justify-between bg-filter gap-3 border border-filterBorder",
+                                      "w-36 h-12 flex justify-between bg-filter gap-3 border border-filterBorder text-activeNavText",
                                       !field.value && "text-activeNavText",
                                     )}>
                                     {field.value?.month
@@ -177,7 +177,7 @@ export default function Filter() {
                                     disabled={!form.watch("dates")?.month}
                                     role="combobox"
                                     className={cn(
-                                      "w-28 h-12 flex justify-between bg-filter border border-filterBorder gap-3",
+                                      "w-28 h-12 flex justify-between bg-filter border border-filterBorder gap-3 text-activeNavText",
                                       !field.value && "text-activeNavText",
                                     )}>
                                     {field.value?.day
@@ -199,11 +199,10 @@ export default function Filter() {
                                           key={item.data}
                                           onSelect={() => {
                                             form.setValue("dates", { ...form.watch("dates"), day: item.data });
-                                          }}>
+                                          }} className="flex gap-1">
                                           <Check
-                                            className={cn(
-                                              item.data === field.value?.year ? "opacity-100" : "opacity-0",
-                                            )}
+                                            size={15}
+                                            className={cn(item.data === field.value?.day ? "opacity-100" : "opacity-0")}
                                           />
                                           {item.data}
                                         </CommandItem>
@@ -290,7 +289,7 @@ export default function Filter() {
                   </div>
                   <div className="log-out">
                     <Button
-                      className="px-6 py-6 bg-filter flex justify-between text-sm gap-2 font-semibold"
+                      className="px-6 py-6 bg-activeNav flex justify-between text-sm gap-2 font-semibold"
                       onClick={handleLogOut}>
                       Log Out
                     </Button>

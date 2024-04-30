@@ -6,7 +6,6 @@ import { SignInPayload, SignInResponse, User } from "@/pages/login/models";
 type State = {
   user: User | null;
   isAuth: boolean | undefined;
-  isRefresh: boolean | undefined;
   isUserLoading: boolean | undefined;
   isSignInLoading: boolean | undefined;
 };
@@ -23,7 +22,6 @@ type UseAuthStore = Action & State;
 
 const useAuthStore = create<UseAuthStore>((set, get) => ({
   user: null,
-  isRefresh: false,
   isSignInLoading: false,
   isUserLoading: false,
   isAuth: false,
@@ -63,18 +61,13 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
   getNewAccessToken: async () => {
     const refreshToken = localStorage.getItem("refreshToken");
 
-    if (!get().isAuth) get().signOut();
+    const { access } = (await postData(authEndpoints.refresh, {
+      arg: { refresh: refreshToken?.replace("Bearer", "") },
+    })) as unknown as SignInResponse;
+    localStorage.setItem("accessToken", `Bearer ${access}`);
+    set({ isAuth: true });
 
-    try {
-      const { access } = (await postData(authEndpoints.refresh, {
-        arg: { refresh: refreshToken?.replace("Bearer", "").trim() },
-      })) as unknown as SignInResponse;
-      localStorage.setItem("accessToken", `Bearer ${access}`);
-      set({ isAuth: true });
-      return access;
-    } catch (err) {
-      set({ isAuth: false });
-    }
+    return access;
   },
 }));
 

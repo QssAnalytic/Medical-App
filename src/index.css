@@ -12,12 +12,12 @@ body,
   :root[data-theme="admin"] {
     --backg: #ffffff;
     --activeNav: #068f84;
-    --activeNavText: #ffffff;
+    --activeNavText: #2F2F2F;
     --nonActiveNav: #ffffff;
     --nonActiveNavText: #474a4a;
-    --filter: #068F84;
+    --filter: #cbe7e5;
     --filterBorder: #e8e8e8;
-    --compareBg: #068f84;
+    --compareBg: #cbe7e5;
     --mainText: #068f84;
     --mainBorder : #E3F2F1;
     --icon: #ffffff;
@@ -43,7 +43,7 @@ body,
     --backg: #081712;
     --activeNav: #036746;
     --activeNavText: #ffffff;
-    /* --chartBg : #3D7462; */
+    --chartBg : #162520;
     --mainBorder : #3D7462;
     --nonActiveNav: #081712;
     --nonActiveNavText: #0da272;
