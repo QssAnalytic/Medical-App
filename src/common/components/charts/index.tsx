@@ -1,5 +1,6 @@
 // import { colorsForHospital } from "@/common/static";
 import { colorsForHospital } from "@/common/static";
+import { ANNOTATES } from "@/pages/hospitals/types";
 import { LoaderCircle } from "lucide-react";
 import { useRef } from "react";
 import { useFormContext } from "react-hook-form";
@@ -90,14 +91,16 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
                         const x = e.cx;
                         const y = e.cy;
 
-                        console.log("ee", e);
-
-                        tooltipRef.current.innerHTML = `<p>Hospital : ${e.dataKey}</p> <p>${form.watch(
-                          "annotate_type",
-                        )} : ${value}</p>`;
+                        tooltipRef.current.innerHTML = `<p>Xəstəxana : ${e.dataKey}</p> <p>${
+                          form.watch("annotate_type") === ANNOTATES.Price
+                            ? "Gəlir"
+                            : form.watch("annotate_type") === ANNOTATES.Count
+                            ? "Satılmış xidmət sayı"
+                            : "Xəstələrin sayı "
+                        } : ${value}</p>`;
                         if (tooltipRef.current.style) {
                           tooltipRef.current.style.top = `${(y || 0) - 72}px`;
-                          tooltipRef.current.style.left = `${x}px`;
+                          tooltipRef.current.style.left = `${(x || 0) - 180}px`;
                         }
                       }
                     },
@@ -120,7 +123,7 @@ export default function Chart({ chartsInfo, loading }: ChartProps) {
           )}
         </>
       ) : (
-        <p className="flex justify-center items-center h-full">No data available</p>
+        <p className="flex justify-center items-center h-full">Məlumat yoxdur</p>
       )}
     </div>
   );

@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { hospitalEndpoints, servicesEndpoints } from "@/services/api/endpoints";
 import { getData, getDataViaPost } from "@/services/api/requests";
-import { THospital, THospitalSecondary } from "@/pages/hospitals/types";
+import { ANNOTATES, THospital, THospitalSecondary } from "@/pages/hospitals/types";
 import useSWRMutation from "swr/mutation";
 import { colorsForHospital } from "@/common/static";
 import { BiSolidDownArrow } from "react-icons/bi";
@@ -56,7 +56,14 @@ const CompareAllServicesbars = () => {
 
   return (
     <div>
-      <h3 className="text-center text-sm mb-2 text-mainText">Compare hospitals by all services based on price</h3>
+      <h3 className="text-center text-sm mb-2 text-mainText">
+        Xidmətlərin{" "}
+        {form.watch("annotate_type") === ANNOTATES.Price
+          ? "xəstəxanaya verdiyi ümumi gəlir"
+          : form.watch("annotate_type") === ANNOTATES.Count
+          ? "müvafiq xəstəxanalardakı mövcud sayları"
+          : "müvafiq xəstəxanalardakı həmin xidmətdən istifadə edən xəstələrin sayı"} əsasında müqaisəsi
+      </h3>
       <div className="border border-transparent rounded-lg p-3 h-96 bg-white">
         <div className="w-full">
           <Form {...form}>
@@ -76,7 +83,7 @@ const CompareAllServicesbars = () => {
                               className={cn(
                                 "w-full h-10 flex justify-center gap-3 text-activeNavText bg-filter border-none",
                               )}>
-                              Services
+                              Xidmətlər
                               <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
@@ -85,7 +92,7 @@ const CompareAllServicesbars = () => {
                           <Command>
                             <CommandInput placeholder="Search service" />
                             <CommandList>
-                              <CommandEmpty>No service found.</CommandEmpty>
+                              <CommandEmpty>Məlumat tapılmadı.</CommandEmpty>
                               <CommandGroup>
                                 {services?.map((item: THospital) => (
                                   <CommandItem
@@ -168,7 +175,7 @@ const CompareAllServicesbars = () => {
                   );
                 })
               ) : (
-                <p className="flex justify-center items-center h-72">No data found</p>
+                <p className="flex justify-center items-center h-72">Məlumat tapılmadı</p>
               )}
             </ul>
           ) : (

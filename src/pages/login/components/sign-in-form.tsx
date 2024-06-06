@@ -64,12 +64,12 @@ export default function SignInForm() {
                   )}
                 />
               </div>
-              <div className="flex justify-end">
-                <Button className="text-sm mt-2 text-[#068F84] bg-white hover:bg-white">Forgotten password </Button>
-              </div>
+              {/* <div className="flex justify-end">
+                <Button className="text-sm mt-2 text-[#068F84] bg-white hover:bg-white">Unudulmu </Button>
+              </div> */}
             </div>
             <Button type="submit" className="w-full bg-[#068F84] text-lg" disabled={isSignInLoading}>
-              {isSignInLoading ? <Loader2Icon className="animate-spin" /> : "Sign In"}
+              {isSignInLoading ? <Loader2Icon className="animate-spin" /> : "Daxil Ol"}
             </Button>
           </form>
         </Form>

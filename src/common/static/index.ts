@@ -12,18 +12,18 @@ export const days = [
 ];
 
 export const months = [
-  { data: "January", id: 1 },
-  { data: "February", id: 2 },
-  { data: "March", id: 3 },
-  { data: "April", id: 4 },
+  { data: "Yanvar", id: 1 },
+  { data: "Fevral", id: 2 },
+  { data: "Mart", id: 3 },
+  { data: "Aprel", id: 4 },
   { data: "May", id: 5 },
-  { data: "June", id: 6 },
-  { data: "July", id: 7 },
-  { data: "August", id: 8 },
-  { data: "September", id: 9 },
-  { data: "October", id: 10 },
-  { data: "November", id: 11 },
-  { data: "December", id: 12 },
+  { data: "İyun", id: 6 },
+  { data: "İyul", id: 7 },
+  { data: "Avqust", id: 8 },
+  { data: "Sentyabr", id: 9 },
+  { data: "Oktyabr", id: 10 },
+  { data: "Noyabr", id: 11 },
+  { data: "Dekabr", id: 12 },
 ];
 
 export const years = [

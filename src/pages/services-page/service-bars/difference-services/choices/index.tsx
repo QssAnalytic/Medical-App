@@ -85,7 +85,7 @@ const Choices = ({ mainKey }: TChoiceProps) => {
                   <FormItem className="flex flex-col w-full">
                     <Popover open={open} onOpenChange={setOpen}>
                       <div className="flex justify-end items-center gap-5">
-                        <p>Services</p>
+                        <p>Xidmətlər</p>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
@@ -94,7 +94,7 @@ const Choices = ({ mainKey }: TChoiceProps) => {
                               className={cn(
                                 "w-1/2 h flex justify-center bg-filter border-filterBorder gap-3 text-activeNavText",
                               )}>
-                              {hospitals?.find((item: { id: number }) => item.id === field.value)?.name || "Hospital"}
+                              {hospitals?.find((item: { id: number }) => item.id === field.value)?.name || "Xəstəxana"}
                               <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
@@ -102,7 +102,7 @@ const Choices = ({ mainKey }: TChoiceProps) => {
                       </div>
                       <PopoverContent className="w-[200px] p-0">
                         <Command>
-                          <CommandInput placeholder="Search services" />
+                          <CommandInput placeholder="Axtar..." />
                           <CommandList>
                             <CommandEmpty>No services found.</CommandEmpty>
                             <CommandGroup>

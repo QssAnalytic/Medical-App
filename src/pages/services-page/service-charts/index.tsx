@@ -44,16 +44,16 @@ const HospitalsCharts = () => {
                               )}>
                               {field.value?.year
                                 ? years.find((years) => years.data === field.value?.year)?.data
-                                : "Year"}
+                                : "İl"}
                               <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
                         <PopoverContent>
                           <Command>
-                            <CommandInput placeholder="Search..." />
+                            <CommandInput placeholder="Axtar..." />
                             <CommandList>
-                              <CommandEmpty>No year found.</CommandEmpty>
+                              <CommandEmpty>Məlumat tapılmadı</CommandEmpty>
                               <CommandGroup className="h-20 overflow-y-auto">
                                 {years.map((item: TYear) => (
                                   <CommandItem
@@ -91,16 +91,16 @@ const HospitalsCharts = () => {
                               )}>
                               {field.value?.month
                                 ? months.find((month) => month.id === field.value?.month)?.data
-                                : "Month"}
+                                : "Ay"}
                               <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
                         <PopoverContent>
                           <Command>
-                            <CommandInput placeholder="Search..." />
+                            <CommandInput placeholder="Axtar..." />
                             <CommandList>
-                              <CommandEmpty>No year found.</CommandEmpty>
+                              <CommandEmpty>Məlumat tapılmadı.</CommandEmpty>
                               <CommandGroup className="h-20 overflow-y-auto">
                                 {months.map((item: TMonth) => (
                                   <CommandItem

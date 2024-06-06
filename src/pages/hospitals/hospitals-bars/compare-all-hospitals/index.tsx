@@ -19,7 +19,7 @@ import useSWRMutation from "swr/mutation";
 import { hospitalEndpoints } from "@/services/api/endpoints";
 import { getData, getDataViaPost } from "@/services/api/requests";
 import useSWR from "swr";
-import { THospital, THospitalSecondary } from "../../types";
+import { ANNOTATES, THospital, THospitalSecondary } from "../../types";
 import { colorsForHospital } from "@/common/static";
 import { BiSolidDownArrow } from "react-icons/bi";
 
@@ -58,7 +58,15 @@ const CompareAllHospitals = () => {
 
   return (
     <div>
-      <h3 className="text-center text-sm mb-2 text-mainText">Compare hospitals by all services based on price</h3>
+      <h3 className="text-center text-sm mb-2 text-mainText">
+        Xəstəxanaların{" "}
+        {form.watch("annotate_type") === ANNOTATES.Price
+          ? "bütün xidmətlərdən əldə olunan gəlir"
+          : form.watch("annotate_type") === ANNOTATES.Count
+          ? "mövcud olan bütün xidmətlərin sayı"
+          : "bütün xidmətlərə görə sahib olduğu xəstə sayı"}{" "}
+        əsasında müqaisəsi 
+      </h3>
       <div className="border border-transparent rounded-lg p-3 h-96 flex gap-3 flex-col bg-white">
         <div className="w-full">
           <Form {...form}>
@@ -80,7 +88,7 @@ const CompareAllHospitals = () => {
                               )}>
                               {field.value?.length > 0
                                 ? hospitals?.find((hospital: THospital) => field.value.includes(hospital.id))?.name
-                                : "Hospital"}
+                                : "Xəstəxana"}
                               <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
@@ -89,7 +97,7 @@ const CompareAllHospitals = () => {
                           <Command>
                             <CommandInput placeholder="Search hospital" />
                             <CommandList>
-                              <CommandEmpty>No hospital found.</CommandEmpty>
+                              <CommandEmpty>Məlumat tapılmadı</CommandEmpty>
                               <CommandGroup>
                                 {hospitals?.map((item: THospital) => (
                                   <CommandItem
