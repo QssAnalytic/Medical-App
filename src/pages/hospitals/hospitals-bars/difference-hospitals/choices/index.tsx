@@ -80,7 +80,7 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
                   <FormItem className="flex flex-col w-full">
                     <Popover open={open} onOpenChange={setOpen}>
                       <div className="flex justify-end items-center gap-5">
-                        <p>Hospitals</p>
+                        <p>Xəstəxanalar</p>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
@@ -90,7 +90,7 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
                                 "w-1/2 h flex justify-center bg-filter border-filterBorder gap-3 text-activeNavText",
                                 !field.value && "text-activeNavText",
                               )}>
-                              {services?.find((item: { id: number }) => item.id === field.value)?.name || "Service"}
+                              {services?.find((item: { id: number }) => item.id === field.value)?.name || "Xidmət"}
                               <BiSolidDownArrow className="text-icon" />
                             </Button>
                           </FormControl>
@@ -98,9 +98,9 @@ const Choices = ({ mainKey }: { mainKey: string }) => {
                       </div>
                       <PopoverContent className="w-[200px] p-0">
                         <Command>
-                          <CommandInput placeholder="Search services" />
+                          <CommandInput placeholder="Axtar..." />
                           <CommandList>
-                            <CommandEmpty>No services found.</CommandEmpty>
+                            <CommandEmpty>Xidmət tapılmadı.</CommandEmpty>
                             <CommandGroup>
                               {services?.map((item: { name: string; id: number }) => (
                                 <CommandItem

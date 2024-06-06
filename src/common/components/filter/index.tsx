@@ -49,7 +49,7 @@ export default function Filter() {
                     ? "bg-activeNav border-transparent"
                     : "bg-backg  border-filterBorder text-nonActiveNavText"
                 }  text-lg cursor-pointer hover:bg-[#FFFFFF] border hover:text-nonActiveNavText hover:border-[#068F84]`}>
-                Hospitals
+                Xəstəxanalar
               </Badge>
             </Link>
             <Link to={"/services"}>
@@ -59,7 +59,7 @@ export default function Filter() {
                     ? "bg-activeNav border-transparent"
                     : "bg-backg text-nonActiveNavText border-filterBorder"
                 }  text-lg cursor-pointer hover:bg-[#FFFFFF] border hover:text-nonActiveNavText hover:border-[#068F84]`}>
-                Services
+                Xidmətlər
               </Badge>
             </Link>
           </div>
@@ -88,14 +88,14 @@ export default function Filter() {
                                     )}>
                                     {field.value?.year
                                       ? years.find((years) => years.data === field.value?.year)?.data
-                                      : "Year"}
+                                      : "İl"}
                                     <BiSolidDownArrow className="text-icon" />
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
                               <PopoverContent className="w-[200px] p-0">
                                 <Command>
-                                  <CommandInput placeholder="Search..." />
+                                  <CommandInput placeholder="Axtar..." />
                                   <CommandList>
                                     <CommandEmpty>No year found.</CommandEmpty>
                                     <CommandGroup>
@@ -136,7 +136,7 @@ export default function Filter() {
                                     )}>
                                     {field.value?.month
                                       ? months.find((months) => months.id === field.value?.month)?.data
-                                      : "Month"}
+                                      : "Ay"}
                                     <BiSolidDownArrow className="text-icon" />
                                   </Button>
                                 </FormControl>
@@ -182,7 +182,7 @@ export default function Filter() {
                                     )}>
                                     {field.value?.day
                                       ? days.find((days) => days.data === field.value?.day)?.data
-                                      : "Day"}
+                                      : "Gün"}
                                     <BiSolidDownArrow className="text-icon" />
                                   </Button>
                                 </FormControl>
@@ -238,7 +238,7 @@ export default function Filter() {
                                     onClick={() => {
                                       form.setValue("annotate_type", "price");
                                     }}>
-                                    Price
+                                    Gəlir
                                     <CircleDollarSign size={20} />
                                   </Button>
                                 </FormControl>
@@ -254,7 +254,7 @@ export default function Filter() {
                                     onClick={() => {
                                       form.setValue("annotate_type", "count");
                                     }}>
-                                    Count
+                                    Xidmətlərin sayı
                                     <FileSearch size={20} className="hover:text-[#068F84]" />
                                   </Button>
                                 </FormControl>
@@ -270,7 +270,7 @@ export default function Filter() {
                                     onClick={() => {
                                       form.setValue("annotate_type", "number_patients");
                                     }}>
-                                    Number of Patients
+                                    Xəstə sayı
                                     <PiUsersLight size={20} />
                                   </Button>
                                 </FormControl>
@@ -278,10 +278,10 @@ export default function Filter() {
                             </>
                           ) : null}
                           {user?.role === Role.Manager ? (
-                            <h1 className="text-mainText text-[30px]">Supply Sales Dashboard</h1>
+                            <h1 className="text-mainText text-[30px]">Xidmətlərin Satış Paneli</h1>
                           ) : null}
                           {user?.role === Role.Financer ? (
-                            <h1 className="text-mainText text-[30px]">Revenue Dashboard</h1>
+                            <h1 className="text-mainText text-[30px]">Ümumi Gəlir Paneli</h1>
                           ) : null}
                         </div>
                       )}
@@ -291,7 +291,7 @@ export default function Filter() {
                     <Button
                       className="px-6 py-6 bg-activeNav flex justify-between text-sm gap-2 font-semibold"
                       onClick={handleLogOut}>
-                      Log Out
+                      Çıxış
                     </Button>
                   </div>
                 </div>

@@ -23,6 +23,13 @@ type TMonth = {
   id: number;
 };
 
+enum ANNOTATES {
+  Price = "price",
+  Count = "count",
+  Patients = "number_patients",
+}
+
 type TDay = TYear;
 
-export type { THospital, THospitalSecondary, IHospitalStatistic, TDay, TMonth, TYear };
+export type { THospital, THospitalSecondary, IHospitalStatistic, TDay, TMonth, TYear};
+export {ANNOTATES}
